@@ -21,4 +21,3 @@ class Board:
             self.squares[(row, column)] = Square(column, row)
         self.history = None
         self.piece_list = {}
-

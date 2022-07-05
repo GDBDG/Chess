@@ -5,7 +5,6 @@ from itertools import product
 
 import pytest
 
-from app.src.back.chess_board.board import Board
 from app.src.back.chess_board.square import Square
 from app.src.back.miscenaleous.color import Color
 from app.src.back.miscenaleous.column import Column
@@ -49,7 +48,8 @@ class TestPiece:
         :return: None
         """
         expected_list = [self.square_list[Column.A, i] for i in range(3, 9)]
-        assert self.piece_list[Column.A, 1].available_squares(self.square_list, self.piece_list) == expected_list
+        assert self.piece_list[Column.A, 1].available_squares(self.square_list, self.piece_list)\
+               == expected_list
 
     def test_move_to_valid_destination(self):
         """
