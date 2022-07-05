@@ -20,3 +20,5 @@ class Board:
         for (column, row) in product(Column, range(1, 9)):
             self.squares[(row, column)] = Square(column, row)
         self.history = None
+        self.piece_list = {}
+
