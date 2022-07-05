@@ -1,0 +1,1 @@
+poetry run pylint --disable=R0903 ./app
