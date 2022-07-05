@@ -14,6 +14,7 @@ class TestSquare:
     """
     Testing class
     """
+
     def test_init_valid_square(self):
         """
         Check tha it is to instantiate all the valid squares

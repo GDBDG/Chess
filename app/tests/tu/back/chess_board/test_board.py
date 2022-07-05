@@ -9,6 +9,7 @@ class TestBoard:
     """
     Testing class
     """
+
     board = Board()
 
     def test_number_squares(self):

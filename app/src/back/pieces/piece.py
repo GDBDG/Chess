@@ -33,9 +33,12 @@ class Piece:
         Update the piece_list (it must be the piece_list of the board, and not a copy
         :return: list of Square
         """
-        return [square for square in square_list.values()
-                if ((square.column, square.row) not in piece_list.keys()) or
-                piece_list[(square.column, square.row)].color != self.color]
+        return [
+            square
+            for square in square_list.values()
+            if ((square.column, square.row) not in piece_list.keys())
+            or piece_list[(square.column, square.row)].color != self.color
+        ]
 
     def move_to(self, destination: Square, square_list, piece_list):
         """

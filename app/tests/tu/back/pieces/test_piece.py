@@ -17,9 +17,12 @@ class TestPiece:
     """
     test class
     """
-    piece_list = {(Column.A, 1): Piece(Column.A, 1),
-                  (Column.A, 2): Piece(Column.A, 2),
-                  (Column.A, 3): Piece(Column.A, 3, Color.BLACK), }
+
+    piece_list = {
+        (Column.A, 1): Piece(Column.A, 1),
+        (Column.A, 2): Piece(Column.A, 2),
+        (Column.A, 3): Piece(Column.A, 3, Color.BLACK),
+    }
     square_list = {(Column.A, i): Square(Column.A, i) for i in range(1, 9)}
 
     def test_valid_init(self):
@@ -48,8 +51,12 @@ class TestPiece:
         :return: None
         """
         expected_list = [self.square_list[Column.A, i] for i in range(3, 9)]
-        assert self.piece_list[Column.A, 1].available_squares(self.square_list, self.piece_list)\
-               == expected_list
+        assert (
+            self.piece_list[Column.A, 1].available_squares(
+                self.square_list, self.piece_list
+            )
+            == expected_list
+        )
 
     def test_move_to_valid_destination(self):
         """

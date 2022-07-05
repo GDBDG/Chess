@@ -12,6 +12,7 @@ class Board:
     Class that represent a chess board.
     Also contains the history of the game
     """
+
     def __init__(self):
         """
         Build a board instance

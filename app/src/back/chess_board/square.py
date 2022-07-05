@@ -10,6 +10,7 @@ class Square:
     Class tha represent a square in a chass game
     Contains coordinates, and the piece on it if there is one
     """
+
     def __init__(self, column: Column, row: int):
         """
         Build the instance
