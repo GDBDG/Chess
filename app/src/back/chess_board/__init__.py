@@ -1,7 +1,6 @@
 """
-src
+contains all board classes (Board, Square, ...)
 """
-__version__ = "0.1.0"
 from pkgutil import extend_path
 
 # Avoid pylint errors
