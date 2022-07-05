@@ -36,7 +36,7 @@ jobs:
                   flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
             - name: Pylint check
               run: |
-                  pylint ./app
+                  pylint --disable=R0903 ./app
             - name: Test with pytest
               run: |
                   pytest
