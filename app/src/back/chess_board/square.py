@@ -19,5 +19,8 @@ class Square:
         """
         if not 1 <= row <= 8:
             raise RowError(row)
-        self.column = column
+        self.column: Column = column
         self.row = row
+
+    def __repr__(self):
+        return f"({self.column.name},{self.row})"
