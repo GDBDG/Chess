@@ -3,7 +3,6 @@ Implementation of rook
 move in line, no piece in trajectory
 """
 from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.column import Column
 from app.src.back.pieces.piece import Piece
 
 

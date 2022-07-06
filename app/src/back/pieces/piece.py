@@ -39,7 +39,7 @@ class Piece:
             square
             for square in square_list.values()
             if ((square.column, square.row) not in piece_list.keys())
-               or piece_list[(square.column, square.row)].color != self.color
+            or piece_list[(square.column, square.row)].color != self.color
         ]
 
     def move_to(self, destination: Square, square_list, piece_list):
@@ -59,7 +59,11 @@ class Piece:
         self.column = destination.column
 
     def _available_square_on_side_line(
-            self, columns: [Column], rows: [int], square_list, piece_list,
+        self,
+        columns: [Column],
+        rows: [int],
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on only one side line (for ex on the right)
@@ -88,7 +92,11 @@ class Piece:
             available_squares.append(square_list[column, row])
         return available_squares
 
-    def _available_squares_on_right(self, square_list, piece_list, ):
+    def _available_squares_on_right(
+        self,
+        square_list,
+        piece_list,
+    ):
         """
         Returns the available squares on the right on the piece
         :param square_list: square_list of available squares
@@ -102,7 +110,11 @@ class Piece:
             piece_list,
         )
 
-    def _available_squares_on_left(self, square_list, piece_list, ):
+    def _available_squares_on_left(
+        self,
+        square_list,
+        piece_list,
+    ):
         """
         Returns the available squares on the right on the piece
         :param square_list: square_list of available squares
@@ -116,7 +128,11 @@ class Piece:
             piece_list,
         )
 
-    def _available_squares_upper(self, square_list, piece_list, ):
+    def _available_squares_upper(
+        self,
+        square_list,
+        piece_list,
+    ):
         """
         Returns the available squares on the right on the piece
         :param square_list: square_list of available squares
@@ -130,7 +146,11 @@ class Piece:
             piece_list,
         )
 
-    def _available_squares_below(self, square_list, piece_list, ):
+    def _available_squares_below(
+        self,
+        square_list,
+        piece_list,
+    ):
         """
         Returns the available squares on the right on the piece
         :param square_list: square_list of available squares

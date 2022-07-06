@@ -52,10 +52,10 @@ class TestPiece:
         """
         expected_list = [self.square_list[Column.A, i] for i in range(3, 9)]
         assert (
-                self.piece_list[Column.A, 1].available_squares(
-                    self.square_list, self.piece_list
-                )
-                == expected_list
+            self.piece_list[Column.A, 1].available_squares(
+                self.square_list, self.piece_list
+            )
+            == expected_list
         )
 
     def test_move_to_valid_destination(self):
@@ -93,7 +93,10 @@ class TestPiece:
             square_list[Column.D, 1],
             square_list[Column.E, 1],
         ]
-        assert piece._available_squares_on_right(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_right(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_right_case2(self):
         """
@@ -110,7 +113,10 @@ class TestPiece:
             square_list[Column.E, 1],
             square_list[Column.F, 1],
         ]
-        assert piece._available_squares_on_right(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_right(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_right_case3(self):
         """
@@ -120,7 +126,9 @@ class TestPiece:
         """
         piece = Piece(Column.C, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
-        piece_list = {(Column.C, 1): piece, }
+        piece_list = {
+            (Column.C, 1): piece,
+        }
         expected_squares = [
             square_list[Column.D, 1],
             square_list[Column.E, 1],
@@ -128,7 +136,10 @@ class TestPiece:
             square_list[Column.G, 1],
             square_list[Column.H, 1],
         ]
-        assert piece._available_squares_on_right(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_right(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_right_case4(self):
         """
@@ -138,9 +149,14 @@ class TestPiece:
         """
         piece = Piece(Column.H, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
-        piece_list = {(Column.H, 1): piece, }
+        piece_list = {
+            (Column.H, 1): piece,
+        }
         expected_squares = []
-        assert piece._available_squares_on_right(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_right(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_right_case5(self):
         """
@@ -153,7 +169,10 @@ class TestPiece:
         square_list = {(col, 1): Square(col, 1) for col in Column}
         piece_list = {(Column.C, 1): piece, (Column.D, 1): other}
         expected_squares = []
-        assert piece._available_squares_on_right(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_right(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_left_case1(self):
         """
@@ -169,7 +188,10 @@ class TestPiece:
             square_list[Column.E, 1],
             square_list[Column.D, 1],
         ]
-        assert piece._available_squares_on_left(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_left(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_left_case2(self):
         """
@@ -186,7 +208,10 @@ class TestPiece:
             square_list[Column.D, 1],
             square_list[Column.C, 1],
         ]
-        assert piece._available_squares_on_left(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_left(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_left_case3(self):
         """
@@ -196,12 +221,17 @@ class TestPiece:
         """
         piece = Piece(Column.C, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
-        piece_list = {(Column.C, 1): piece, }
+        piece_list = {
+            (Column.C, 1): piece,
+        }
         expected_squares = [
             square_list[Column.B, 1],
             square_list[Column.A, 1],
         ]
-        assert piece._available_squares_on_left(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_left(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_left_case4(self):
         """
@@ -211,9 +241,14 @@ class TestPiece:
         """
         piece = Piece(Column.A, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
-        piece_list = {(Column.A, 1): piece, }
+        piece_list = {
+            (Column.A, 1): piece,
+        }
         expected_squares = []
-        assert piece._available_squares_on_left(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_left(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_on_left_case5(self):
         """
@@ -226,7 +261,10 @@ class TestPiece:
         square_list = {(col, 1): Square(col, 1) for col in Column}
         piece_list = {(Column.D, 1): piece, (Column.C, 1): other}
         expected_squares = []
-        assert piece._available_squares_on_left(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_on_left(square_list, piece_list)
+            == expected_squares
+        )
 
     def test_available_square_upper_case1(self):
         """
@@ -250,7 +288,9 @@ class TestPiece:
             square_list[Column.A, 4],
             square_list[Column.A, 5],
         ]
-        assert piece._available_squares_upper(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_upper(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_upper_case2(self):
         """
@@ -275,7 +315,9 @@ class TestPiece:
             square_list[Column.A, 5],
             square_list[Column.A, 6],
         ]
-        assert piece._available_squares_upper(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_upper(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_upper_case3(self):
         """
@@ -292,7 +334,9 @@ class TestPiece:
         """
         piece = Piece(Column.A, 2)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
-        piece_list = {(Column.A, 2): piece,}
+        piece_list = {
+            (Column.A, 2): piece,
+        }
         expected_squares = [
             square_list[Column.A, 3],
             square_list[Column.A, 4],
@@ -301,7 +345,9 @@ class TestPiece:
             square_list[Column.A, 7],
             square_list[Column.A, 8],
         ]
-        assert piece._available_squares_upper(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_upper(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_upper_case4(self):
         """
@@ -318,9 +364,13 @@ class TestPiece:
         """
         piece = Piece(Column.A, 8)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
-        piece_list = {(Column.A, 8): piece,}
+        piece_list = {
+            (Column.A, 8): piece,
+        }
         expected_squares = []
-        assert piece._available_squares_upper(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_upper(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_upper_case5(self):
         """
@@ -340,7 +390,9 @@ class TestPiece:
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
         piece_list = {(Column.A, 2): piece, (Column.A, 3): other}
         expected_squares = []
-        assert piece._available_squares_upper(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_upper(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_below_case1(self):
         """
@@ -364,7 +416,9 @@ class TestPiece:
             square_list[Column.A, 4],
             square_list[Column.A, 3],
         ]
-        assert piece._available_squares_below(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_below(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_below_case2(self):
         """
@@ -389,7 +443,9 @@ class TestPiece:
             square_list[Column.A, 3],
             square_list[Column.A, 2],
         ]
-        assert piece._available_squares_below(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_below(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_below_case3(self):
         """
@@ -406,11 +462,15 @@ class TestPiece:
         """
         piece = Piece(Column.A, 2)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
-        piece_list = {(Column.A, 2): piece,}
+        piece_list = {
+            (Column.A, 2): piece,
+        }
         expected_squares = [
             square_list[Column.A, 1],
         ]
-        assert piece._available_squares_below(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_below(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_below_case4(self):
         """
@@ -427,9 +487,13 @@ class TestPiece:
         """
         piece = Piece(Column.A, 1)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
-        piece_list = {(Column.A, 1): piece,}
+        piece_list = {
+            (Column.A, 1): piece,
+        }
         expected_squares = []
-        assert piece._available_squares_below(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_below(square_list, piece_list) == expected_squares
+        )
 
     def test_available_square_below_case5(self):
         """
@@ -449,4 +513,6 @@ class TestPiece:
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
         piece_list = {(Column.A, 3): piece, (Column.A, 2): other}
         expected_squares = []
-        assert piece._available_squares_below(square_list, piece_list) == expected_squares
+        assert (
+            piece._available_squares_below(square_list, piece_list) == expected_squares
+        )
