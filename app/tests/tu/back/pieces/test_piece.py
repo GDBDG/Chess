@@ -108,7 +108,7 @@ class TestPiece:
         Piece._add_square(1, 9, self.square_list, available_squares)
         assert not available_squares
 
-    def test_is_in_check(self):
+    def test_is_square_in_check(self):
         """
         8 | | | | | | | | |
         7 | | | | | | | | |
@@ -130,11 +130,11 @@ class TestPiece:
             (Column.F, 6): other,
             (Column.C, 6): other2,
         }
-        assert Piece.is_in_check(
+        assert Piece.is_square_in_check(
             Color.WHITE, square_list[Column.D, 4], square_list, piece_list
         )
 
-    def test_is_not_in_check(self):
+    def test_is_square_not_in_check(self):
         """
         8 | | | | | | | | |
         7 | | | | | | | | |
@@ -154,11 +154,11 @@ class TestPiece:
         piece_list = {
             (Column.F, 6): other,
         }
-        assert not Piece.is_in_check(
+        assert not Piece.is_square_in_check(
             Color.WHITE, square_list[Column.D, 4], square_list, piece_list
         )
 
-    def test_is_not_in_check2(self):
+    def test_is_square_not_in_check2(self):
         """
         8 | | | | | | | | |
         7 | | | | | | | | |
@@ -178,6 +178,60 @@ class TestPiece:
         piece_list = {
             (Column.D, 4): other,
         }
-        assert not Piece.is_in_check(
+        assert not Piece.is_square_in_check(
             Color.WHITE, square_list[Column.D, 4], square_list, piece_list
+        )
+
+    def test_is_in_check(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | |W| | |B| | |
+        5 | | | | | | | | |
+        4 | | | |X| | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        :return:
+        """
+        piece = Piece(Column.D, 4)
+        other = Piece(Column.F, 6, Color.BLACK)
+        other2 = Piece(Column.C, 6)
+        square_list = {
+            (col, row): Square(col, 1) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.D, 4): piece,
+            (Column.F, 6): other,
+            (Column.C, 6): other2,
+        }
+        assert piece.is_in_check(
+            square_list, piece_list
+        )
+
+    def test_is_not_in_check(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | |B| | |
+        5 | | | | | | | | |
+        4 | | | |X| | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        :return:
+        """
+        piece = Piece(Column.D, 4)
+        other = Rook(Column.F, 6, Color.BLACK)
+        square_list = {
+            (col, row): Square(col, 1) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.D, 4): piece,
+            (Column.F, 6): other,
+        }
+        assert not piece.is_in_check(
+            square_list, piece_list
         )
