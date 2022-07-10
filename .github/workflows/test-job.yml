@@ -42,7 +42,7 @@ jobs:
                   poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
             - name: Pylint check
               run: |
-                  poetry run pylint --disable=R0903,W0212 ./app
+                  poetry run pylint --disable=R0903,,R0801,W0212 ./app
             - name: Test with pytest
               run: |
                   poetry run pytest
