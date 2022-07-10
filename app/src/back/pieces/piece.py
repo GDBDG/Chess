@@ -27,6 +27,7 @@ class Piece:
         self.column = column
         self.row = row
         self.color = color
+        self.has_moved = False
 
     @staticmethod
     def _add_square(
@@ -95,6 +96,7 @@ class Piece:
         # Set new coordinates
         self.row = destination.row
         self.column = destination.column
+        self.has_moved = True
 
     def _available_square_on_side_line(
         self,
