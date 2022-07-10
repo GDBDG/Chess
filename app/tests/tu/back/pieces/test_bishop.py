@@ -1,3 +1,6 @@
+"""
+Tests for the bishop
+"""
 from itertools import product
 
 from app.src.back.chess_board.square import Square
