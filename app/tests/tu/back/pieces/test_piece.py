@@ -156,3 +156,27 @@ class TestPiece:
         assert not Piece.is_in_check(
             Color.WHITE, square_list[Column.D, 4], square_list, piece_list
         )
+
+    def test_is_not_in_check2(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | | | |B| | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        :return:
+        """
+        other = Rook(Column.D, 4, Color.BLACK)
+        square_list = {
+            (col, row): Square(col, 1) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.D, 4): other,
+        }
+        assert not Piece.is_in_check(
+            Color.WHITE, square_list[Column.D, 4], square_list, piece_list
+        )
