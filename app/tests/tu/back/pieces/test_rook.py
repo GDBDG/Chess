@@ -29,7 +29,9 @@ def test_rook():
     piece = Rook(Column.D, 4)
     other1 = Piece(Column.D, 6)
     other2 = Piece(Column.G, 4, Color.BLACK)
-    square_list = {(col, row): Square(col, row) for col, row in product(Column, range(1, 9))}
+    square_list = {
+        (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+    }
     piece_list = {
         (Column.D, 4): piece,
         (Column.D, 6): other1,
@@ -46,8 +48,5 @@ def test_rook():
         square_list[Column.D, 3],
         square_list[Column.D, 2],
         square_list[Column.D, 1],
-
     ]
-    assert (
-            piece.available_squares(square_list, piece_list) == expected_squares
-    )
+    assert piece.available_squares(square_list, piece_list) == expected_squares
