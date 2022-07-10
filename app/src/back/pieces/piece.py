@@ -1,7 +1,6 @@
 """
 Piece classes
 """
-from itertools import product
 
 from app.src.back.chess_board.square import Square
 from app.src.back.miscenaleous.color import Color
@@ -66,14 +65,11 @@ class Piece:
         piece_list,
     ):
         """
-        Returns the available squares on only one side line (for ex on the right)
-        For that : takes a lists of columns, that must correspond to the columns in the right
-        or left of the piece, and its row
-        Or, take a list of rows, that correspond to the rows on itertools or underneath self,
-        and its column
-        To make it generic, both are list
-        In practice, make the product of columns and rows, so one must have only one element to
-        have a meaning with a rook.
+        Returns the available squares on only one side.@
+        (for ex on the right side, or diagonal right).
+        Take a list of rows and a list of columns, and iterate on the squares
+        with these coordinates.
+        columns and rows must have the same size.
         :param columns: list of column to iterate on,
         :param rows: list of rows to iterate on
         :param square_list: list of squares available
@@ -81,7 +77,7 @@ class Piece:
         :return: square_list of available squares designated by th product of columns and rows
         """
         available_squares = []
-        for column, row in product(columns, rows):
+        for column, row in zip(columns, rows):
             # if there is a piece on the square
             if (column, row) in piece_list:
                 # if the piece can take the other piece
@@ -105,7 +101,7 @@ class Piece:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value + 1, 9)),
-            [self.row],
+            [self.row] * (8 - self.column.value),
             square_list,
             piece_list,
         )
@@ -123,7 +119,7 @@ class Piece:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value - 1, 0, -1)),
-            [self.row],
+            [self.row] * (self.column.value - 1),
             square_list,
             piece_list,
         )
@@ -140,7 +136,7 @@ class Piece:
         :return:
         """
         return self._available_square_on_side_line(
-            [self.column],
+            [self.column] * (8 - self.row),
             range(self.row + 1, 9),
             square_list,
             piece_list,
@@ -158,7 +154,79 @@ class Piece:
         :return:
         """
         return self._available_square_on_side_line(
-            [self.column],
+            [self.column] * (self.row - 1),
+            range(self.row - 1, 0, -1),
+            square_list,
+            piece_list,
+        )
+
+    def _available_squares_diagonal_right_up(
+        self,
+        square_list,
+        piece_list,
+    ):
+        """
+        Returns the available squares on the right on the piece
+        :param square_list: square_list of available squares
+        :param piece_list: list of pieces (represent the pieces in the game)
+        :return:
+        """
+        return self._available_square_on_side_line(
+            map(Column, range(self.column.value + 1, 9)),
+            range(self.row + 1, 9),
+            square_list,
+            piece_list,
+        )
+
+    def _available_squares_diagonal_right_down(
+        self,
+        square_list,
+        piece_list,
+    ):
+        """
+        Returns the available squares on the right on the piece
+        :param square_list: square_list of available squares
+        :param piece_list: list of pieces (represent the pieces in the game)
+        :return:
+        """
+        return self._available_square_on_side_line(
+            map(Column, range(self.column.value + 1, 9)),
+            range(self.row - 1, 0, -1),
+            square_list,
+            piece_list,
+        )
+
+    def _available_squares_diagonal_left_up(
+        self,
+        square_list,
+        piece_list,
+    ):
+        """
+        Returns the available squares on the right on the piece
+        :param square_list: square_list of available squares
+        :param piece_list: list of pieces (represent the pieces in the game)
+        :return:
+        """
+        return self._available_square_on_side_line(
+            map(Column, range(self.column.value - 1, 0, -1)),
+            range(self.row + 1, 9),
+            square_list,
+            piece_list,
+        )
+
+    def _available_squares_diagonal_left_down(
+        self,
+        square_list,
+        piece_list,
+    ):
+        """
+        Returns the available squares on the right on the piece
+        :param square_list: square_list of available squares
+        :param piece_list: list of pieces (represent the pieces in the game)
+        :return:
+        """
+        return self._available_square_on_side_line(
+            map(Column, range(self.column.value - 1, 0, -1)),
             range(self.row - 1, 0, -1),
             square_list,
             piece_list,
