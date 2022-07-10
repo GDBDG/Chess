@@ -78,3 +78,30 @@ class TestPiece:
             piece.move_to(Square(Column.B, 1), self.square_list, self.piece_list)
         with pytest.raises(UnavailableSquareError):
             piece.move_to(Square(Column.A, 2), self.square_list, self.piece_list)
+
+    def test_add_square_valid_coordinates(self):
+        """
+        test _add_square with valid coordinates
+        :return: None
+        """
+        available_squares = []
+        Piece._add_square(1, 7, self.square_list, available_squares)
+        assert available_squares == [self.square_list[Column.A, 7]]
+
+    def test_add_square_invalid_column(self):
+        """
+        test _add_square with invalid column
+        :return: None
+        """
+        available_squares = []
+        Piece._add_square(9, 7, self.square_list, available_squares)
+        assert not available_squares
+
+    def test_add_square_invalid_row(self):
+        """
+        test _add_square with invalid column
+        :return: None
+        """
+        available_squares = []
+        Piece._add_square(1, 9, self.square_list, available_squares)
+        assert not available_squares

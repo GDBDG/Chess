@@ -15,7 +15,7 @@ class Piece:
     Has no gaming meaning, but contains methods for all pieces
     """
 
-    def __init__(self, column: Column, row: int, color: Color = Color.WHITE):
+    def __init__(self, column: Column, row: int, color: Color = Color.WHITE) -> object:
         """
         Constructor of piece
         :param row: between 1 and 8, column coordinate
@@ -27,6 +27,28 @@ class Piece:
         self.column = column
         self.row = row
         self.color = color
+
+    @staticmethod
+    def _add_square(
+        column: int, row: int, square_list, available_squares: [Square]
+    ) -> [Square]:
+        """
+        Add the square with coordinates column and row in available_squares
+        if it is in square_list
+        :param row: row coordinate int value
+        :param column: column coordinate (int value)
+        :param square_list: {(col, row): Square} dict of the squares present in the game
+        :param available_squares: list of square where the square will be added
+        :return: available_squares
+        """
+        try:
+            column = Column(column)
+        except ValueError:
+            pass
+        else:
+            if (column, row) in square_list:
+                available_squares.append(square_list[column, row])
+        return available_squares
 
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
