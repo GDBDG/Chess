@@ -50,6 +50,23 @@ class Piece:
                 available_squares.append(square_list[column, row])
         return available_squares
 
+    @staticmethod
+    def is_in_check(color: Color, square: Square, square_list, piece_list) -> bool:
+        """
+        Return a boolean indicating if a piece in a different color can move
+        to square (indicates if a piece of color *color* is in check)
+        :param color: color of the piece that we check if it can be taken
+        :param square: the square where we check if it can be taken
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: boolean
+        """
+        return any(
+            piece.color != color
+            and square in piece.available_squares(square_list, piece_list)
+            for piece in piece_list.values()
+        )
+
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
         Return all squares empty or with a piece in the opposite team
