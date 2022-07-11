@@ -4,7 +4,7 @@ Custom error, for invalid square
 from app.src.back.chess_board.square import Square
 
 
-class UnavailableSquareError(Exception):
+class InvalidMovementError(Exception):
     """
     Exception raised when square isn't valid. (Several rules)
     """

@@ -5,8 +5,8 @@ Piece classes
 from app.src.back.chess_board.square import Square
 from app.src.back.miscenaleous.color import Color
 from app.src.back.miscenaleous.column import Column
+from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
-from app.src.exceptions.unavailable_square_error import UnavailableSquareError
 
 
 class Piece:
@@ -15,7 +15,7 @@ class Piece:
     Has no gaming meaning, but contains methods for all pieces
     """
 
-    def __init__(self, column: Column, row: int, color: Color = Color.WHITE) -> object:
+    def __init__(self, column: Column, row: int, color: Color = Color.WHITE):
         """
         Constructor of piece
         :param row: between 1 and 8, column coordinate
@@ -109,7 +109,7 @@ class Piece:
         """
         # Raises an exception if the asked destination is not available
         if destination not in self.available_squares(square_list, piece_list):
-            raise UnavailableSquareError(destination)
+            raise InvalidMovementError(destination)
         # Set new coordinates
         self.row = destination.row
         self.column = destination.column

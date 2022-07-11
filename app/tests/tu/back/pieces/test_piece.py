@@ -10,8 +10,8 @@ from app.src.back.miscenaleous.color import Color
 from app.src.back.miscenaleous.column import Column
 from app.src.back.pieces.piece import Piece
 from app.src.back.pieces.rook import Rook
+from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
-from app.src.exceptions.unavailable_square_error import UnavailableSquareError
 
 
 class TestPiece:
@@ -76,9 +76,9 @@ class TestPiece:
         :return: None
         """
         piece = self.piece_list[Column.A, 1]
-        with pytest.raises(UnavailableSquareError):
+        with pytest.raises(InvalidMovementError):
             piece.move_to(Square(Column.B, 1), self.square_list, self.piece_list)
-        with pytest.raises(UnavailableSquareError):
+        with pytest.raises(InvalidMovementError):
             piece.move_to(Square(Column.A, 2), self.square_list, self.piece_list)
 
     def test_add_square_valid_coordinates(self):
@@ -206,9 +206,7 @@ class TestPiece:
             (Column.F, 6): other,
             (Column.C, 6): other2,
         }
-        assert piece.is_in_check(
-            square_list, piece_list
-        )
+        assert piece.is_in_check(square_list, piece_list)
 
     def test_is_not_in_check(self):
         """
@@ -232,6 +230,4 @@ class TestPiece:
             (Column.D, 4): piece,
             (Column.F, 6): other,
         }
-        assert not piece.is_in_check(
-            square_list, piece_list
-        )
+        assert not piece.is_in_check(square_list, piece_list)
