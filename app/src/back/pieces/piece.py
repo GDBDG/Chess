@@ -5,8 +5,8 @@ Piece classes
 from app.src.back.chess_board.square import Square
 from app.src.back.miscenaleous.color import Color
 from app.src.back.miscenaleous.column import Column
+from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
-from app.src.exceptions.unavailable_square_error import UnavailableSquareError
 
 
 class Piece:
@@ -15,7 +15,7 @@ class Piece:
     Has no gaming meaning, but contains methods for all pieces
     """
 
-    def __init__(self, column: Column, row: int, color: Color = Color.WHITE) -> object:
+    def __init__(self, column: Column, row: int, color: Color = Color.WHITE):
         """
         Constructor of piece
         :param row: between 1 and 8, column coordinate
@@ -27,6 +27,7 @@ class Piece:
         self.column = column
         self.row = row
         self.color = color
+        self.has_moved = False
 
     @staticmethod
     def _add_square(
@@ -49,6 +50,40 @@ class Piece:
             if (column, row) in square_list:
                 available_squares.append(square_list[column, row])
         return available_squares
+
+    @staticmethod
+    def is_square_in_check(
+        color: Color, square: Square, square_list, piece_list
+    ) -> bool:
+        """
+        Return a boolean indicating if a piece in a different color can move
+        to square (indicates if a piece of color *color* is in check)
+        :param color: color of the piece that we check if it can be taken
+        :param square: the square where we check if it can be taken
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: boolean
+        """
+        return any(
+            piece.color != color
+            and square in piece.available_squares(square_list, piece_list)
+            for piece in piece_list.values()
+        )
+
+    def is_in_check(self, square_list, piece_list) -> bool:
+        """
+        Return a boolean indicating if a piece in a different color can move
+        to square (indicates if a piece of color *color* is in check)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: boolean
+        """
+        return any(
+            piece.color != self.color
+            and square_list[self.column, self.row]
+            in piece.available_squares(square_list, piece_list)
+            for piece in piece_list.values()
+        )
 
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
@@ -74,10 +109,11 @@ class Piece:
         """
         # Raises an exception if the asked destination is not available
         if destination not in self.available_squares(square_list, piece_list):
-            raise UnavailableSquareError(destination)
+            raise InvalidMovementError(destination)
         # Set new coordinates
         self.row = destination.row
         self.column = destination.column
+        self.has_moved = True
 
     def _available_square_on_side_line(
         self,
