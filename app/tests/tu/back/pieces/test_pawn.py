@@ -15,6 +15,7 @@ class TestPawn:
     """
     Test class
     """
+
     square_list = {
         (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
     }
@@ -43,8 +44,12 @@ class TestPawn:
         }
         expected_white = [self.square_list[Column.E, 4]]
         expected_black = [self.square_list[Column.C, 5]]
-        assert white_pawn.available_squares(self.square_list, piece_list) == expected_white
-        assert black_pawn.available_squares(self.square_list, piece_list) == expected_black
+        assert (
+            white_pawn.available_squares(self.square_list, piece_list) == expected_white
+        )
+        assert (
+            black_pawn.available_squares(self.square_list, piece_list) == expected_black
+        )
 
     def test_available_squares_initial_movement(self):
         """
@@ -66,10 +71,20 @@ class TestPawn:
             (Column.E, 2): white_pawn,
             (Column.C, 7): black_pawn,
         }
-        expected_white = [self.square_list[Column.E, 3], self.square_list[Column.E, 4], ]
-        expected_black = [self.square_list[Column.C, 6], self.square_list[Column.C, 5], ]
-        assert white_pawn.available_squares(self.square_list, piece_list) == expected_white
-        assert black_pawn.available_squares(self.square_list, piece_list) == expected_black
+        expected_white = [
+            self.square_list[Column.E, 3],
+            self.square_list[Column.E, 4],
+        ]
+        expected_black = [
+            self.square_list[Column.C, 6],
+            self.square_list[Column.C, 5],
+        ]
+        assert (
+            white_pawn.available_squares(self.square_list, piece_list) == expected_white
+        )
+        assert (
+            black_pawn.available_squares(self.square_list, piece_list) == expected_black
+        )
 
     def test_available_squares_to_capture(self):
         """
@@ -91,8 +106,14 @@ class TestPawn:
         other_black2 = Piece(Column.F, 4, Color.BLACK)
         black_pawn = Pawn(Column.C, 6, Color.BLACK)
         black_pawn.has_moved = True
-        other_white1 = Piece(Column.B, 5, )
-        other_white2 = Piece(Column.D, 5, )
+        other_white1 = Piece(
+            Column.B,
+            5,
+        )
+        other_white2 = Piece(
+            Column.D,
+            5,
+        )
         piece_list = {
             (Column.E, 3): white_pawn,
             (Column.C, 6): black_pawn,
@@ -101,7 +122,19 @@ class TestPawn:
             (Column.B, 5): other_white1,
             (Column.D, 5): other_white2,
         }
-        expected_white = [self.square_list[Column.F, 4], self.square_list[Column.D, 4], ]
-        expected_black = [self.square_list[Column.D, 5], self.square_list[Column.B, 5], ]
-        assert white_pawn.available_squares_to_capture(self.square_list, piece_list) == expected_white
-        assert black_pawn.available_squares_to_capture(self.square_list, piece_list) == expected_black
+        expected_white = [
+            self.square_list[Column.F, 4],
+            self.square_list[Column.D, 4],
+        ]
+        expected_black = [
+            self.square_list[Column.D, 5],
+            self.square_list[Column.B, 5],
+        ]
+        assert (
+            white_pawn.available_squares_to_capture(self.square_list, piece_list)
+            == expected_white
+        )
+        assert (
+            black_pawn.available_squares_to_capture(self.square_list, piece_list)
+            == expected_black
+        )

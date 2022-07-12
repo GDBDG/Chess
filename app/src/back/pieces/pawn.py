@@ -27,7 +27,9 @@ class Pawn(Piece):
         :param step: number of rows the pawn moves
         :return:
         """
-        return self.row + step * ((self.color == Color.WHITE) - (self.color == Color.BLACK))
+        return self.row + step * (
+            (self.color == Color.WHITE) - (self.color == Color.BLACK)
+        )
 
     def available_squares_to_capture(self, square_list, piece_list) -> [Square]:
         """
@@ -39,13 +41,25 @@ class Pawn(Piece):
         """
         available_squares = []
         # capture on right
-        if (Column(self.column.value + 1), self._next_row()) in piece_list and \
-                piece_list[Column(self.column.value + 1), self._next_row()].color != self.color:
-            available_squares.append(square_list[(Column(self.column.value + 1), self._next_row())])
+        if (
+            Column(self.column.value + 1),
+            self._next_row(),
+        ) in piece_list and piece_list[
+            Column(self.column.value + 1), self._next_row()
+        ].color != self.color:
+            available_squares.append(
+                square_list[(Column(self.column.value + 1), self._next_row())]
+            )
         # capture on left
-        if (Column(self.column.value - 1), self._next_row()) in piece_list and \
-                piece_list[Column(self.column.value - 1), self._next_row()].color != self.color:
-            available_squares.append(square_list[(Column(self.column.value - 1), self._next_row())])
+        if (
+            Column(self.column.value - 1),
+            self._next_row(),
+        ) in piece_list and piece_list[
+            Column(self.column.value - 1), self._next_row()
+        ].color != self.color:
+            available_squares.append(
+                square_list[(Column(self.column.value - 1), self._next_row())]
+            )
         return available_squares
 
     def available_squares(self, square_list, piece_list) -> [Square]:
@@ -54,7 +68,10 @@ class Pawn(Piece):
         if (self.column, self._next_row()) not in piece_list:
             available_squares.append(square_list[self.column, self._next_row()])
         # first movement
-        if not self.has_moved and (self.column, self._next_row()) not in piece_list and \
-                (self.column, self._next_row(2)) not in piece_list:
+        if (
+            not self.has_moved
+            and (self.column, self._next_row()) not in piece_list
+            and (self.column, self._next_row(2)) not in piece_list
+        ):
             available_squares.append(square_list[self.column, self._next_row(2)])
         return available_squares
