@@ -81,7 +81,7 @@ class Piece:
         return any(
             piece.color != self.color
             and square_list[self.column, self.row]
-            in piece.available_squares(square_list, piece_list)
+            in piece.available_squares_to_capture(square_list, piece_list)
             for piece in piece_list.values()
         )
 
@@ -97,6 +97,16 @@ class Piece:
             if ((square.column, square.row) not in piece_list.keys())
             or piece_list[(square.column, square.row)].color != self.color
         ]
+
+    def available_squares_to_capture(self, square_list, piece_list) -> [Square]:
+        """
+        Return all squares where a piece can capture an opposite piece
+        Same as available_squares, except for the pawn
+        :param square_list: squares in the game
+        :param piece_list: pieces in the game
+        :return:  square list
+        """
+        return self.available_squares(square_list, piece_list)
 
     def move_to(self, destination: Square, square_list, piece_list):
         """
