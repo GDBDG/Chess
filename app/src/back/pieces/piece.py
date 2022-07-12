@@ -102,8 +102,8 @@ class Piece:
         """
         Return all squares where a piece can capture an opposite piece
         Same as available_squares, except for the pawn
-        :param square_list: squares in the game
-        :param piece_list: pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:  square list
         """
         return self.available_squares(square_list, piece_list)
@@ -113,9 +113,9 @@ class Piece:
         Move the piece to a new square
         * Checks if the square is available
         * update piece list
-        :param piece_list:
-        :param square_list: dict containing squares
         :param destination: instance of Square where self is moved
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: None
         """
         # Raises an exception if the asked destination is not available
@@ -145,7 +145,7 @@ class Piece:
         columns and rows must have the same size.
         :param columns: list of column to iterate on,
         :param rows: list of rows to iterate on
-        :param square_list: list of squares available
+        :param square_list: {(column, row): Square} dict of the squares in the game
         :param piece_list: list of pieces (represents the pieces in the game)
         :return: square_list of available squares designated by th product of columns and rows
         """
@@ -168,8 +168,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -186,8 +186,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -204,8 +204,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -222,8 +222,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -240,8 +240,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -258,8 +258,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -276,8 +276,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
@@ -294,8 +294,8 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: square_list of available squares
-        :param piece_list: list of pieces (represent the pieces in the game)
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         return self._available_square_on_side_line(
