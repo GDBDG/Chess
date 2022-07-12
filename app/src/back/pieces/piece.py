@@ -18,8 +18,8 @@ class Piece:
     def __init__(self, column: Column, row: int, color: Color = Color.WHITE):
         """
         Constructor of piece
-        :param row: between 1 and 8, column coordinate
-        :param column: between A and H (Column enum), row
+        :param row: between 1 and 8, row coordinate
+        :param column: between A and H (Column enum),
         :param color:
         """
         if not 1 <= row <= 8:
@@ -102,6 +102,7 @@ class Piece:
         """
         Move the piece to a new square
         * Checks if the square is available
+        * update piece list
         :param piece_list:
         :param square_list: dict containing squares
         :param destination: instance of Square where self is moved
@@ -110,10 +111,14 @@ class Piece:
         # Raises an exception if the asked destination is not available
         if destination not in self.available_squares(square_list, piece_list):
             raise InvalidMovementError(destination)
+        # Remove older piece in piece list
+        piece_list.pop((self.column, self.row))
         # Set new coordinates
         self.row = destination.row
         self.column = destination.column
         self.has_moved = True
+        # Add new piece in piece_list
+        piece_list[self.column, self.row] = self
 
     def _available_square_on_side_line(
         self,
