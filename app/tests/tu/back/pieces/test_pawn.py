@@ -10,6 +10,7 @@ from app.src.back.chess_board.square import Square
 from app.src.back.miscenaleous.color import Color
 from app.src.back.miscenaleous.column import Column
 from app.src.back.miscenaleous.move import Move
+from app.src.back.miscenaleous.piece_type import PieceType
 from app.src.back.pieces.pawn import Pawn
 from app.src.back.pieces.piece import Piece
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
@@ -152,18 +153,16 @@ class TestPawn:
         :return:
         """
         black_pawn = Pawn(Column.B, 4, Color.BLACK)
-        white_target_pawn = Pawn(Column.C, 4)
         white_pawn = Pawn(Column.G, 5)
-        black_target_pawn = Pawn(Column.F, 5, Color.BLACK)
         last_move_white = Move(
             self.square_list[Column.C, 2],
             self.square_list[Column.C, 4],
-            white_target_pawn,
+            PieceType.PAWN,
         )
         last_move_black = Move(
             self.square_list[Column.F, 7],
             self.square_list[Column.F, 5],
-            black_target_pawn,
+            PieceType.PAWN,
         )
         assert (
             black_pawn.en_passant_available_destination(
@@ -193,18 +192,16 @@ class TestPawn:
         :return:
         """
         black_pawn = Pawn(Column.B, 4, Color.BLACK)
-        white_target_pawn = Pawn(Column.C, 4)
         white_pawn = Pawn(Column.G, 5)
-        black_target_pawn = Pawn(Column.F, 5, Color.BLACK)
         last_move_white = Move(
             self.square_list[Column.C, 3],
             self.square_list[Column.C, 4],
-            white_target_pawn,
+            PieceType.PAWN,
         )
         last_move_black = Move(
             self.square_list[Column.F, 6],
             self.square_list[Column.F, 5],
-            black_target_pawn,
+            PieceType.PAWN,
         )
         assert (
             black_pawn.en_passant_available_destination(
@@ -248,12 +245,12 @@ class TestPawn:
         last_move_white = Move(
             self.square_list[Column.C, 2],
             self.square_list[Column.C, 4],
-            white_target_pawn,
+            PieceType.PAWN,
         )
         last_move_black = Move(
             self.square_list[Column.F, 7],
             self.square_list[Column.F, 5],
-            black_target_pawn,
+            PieceType.PAWN,
         )
         black_pawn.en_passant(self.square_list, piece_list, last_move_white)
         assert piece_list[(Column.C, 3)] == black_pawn
@@ -295,12 +292,12 @@ class TestPawn:
         last_move_white = Move(
             self.square_list[Column.C, 3],
             self.square_list[Column.C, 4],
-            white_target_pawn,
+            PieceType.PAWN,
         )
         last_move_black = Move(
             self.square_list[Column.F, 6],
             self.square_list[Column.F, 5],
-            black_target_pawn,
+            PieceType.PAWN,
         )
         with pytest.raises(InvalidMovementError):
             black_pawn.en_passant(self.square_list, piece_list, last_move_white)

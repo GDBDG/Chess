@@ -1,5 +1,5 @@
 """
-Pawn :
+PAWN :
 A pawn moves straight forward one square, if that square is vacant.
 If it has not yet moved, a pawn also has the option of moving two squares straight forward,
 provided both squares are vacant. Pawns cannot move backwards.
@@ -135,4 +135,4 @@ class Pawn(Piece):
         # Add new piece in piece_list
         piece_list[self.column, self.row] = self
         # Delete the other pawn
-        piece_list.pop((last_move.piece.column, last_move.piece.row))
+        piece_list.pop((last_move.destination.column, last_move.destination.row))
