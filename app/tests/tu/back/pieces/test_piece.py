@@ -65,9 +65,14 @@ class TestPiece:
         :return: None
         """
         piece = self.piece_list[Column.A, 1]
-        piece.move_to(self.square_list[Column.A, 3], self.square_list, self.piece_list)
+        piece_list = {
+            (Column.A, 1): piece,
+        }
+        piece.move_to(self.square_list[Column.A, 3], self.square_list, piece_list)
         assert piece.row == 3 and piece.column == Column.A
         assert piece.has_moved
+        assert (Column.A, 1) not in piece_list
+        assert piece_list[Column.A, 3] == piece
 
     def test_move_to_invalid_destination(self):
         """

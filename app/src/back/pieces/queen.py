@@ -15,8 +15,8 @@ class Queen(Piece):
         """
         A queen move in line and diagonal, and can't go threw another piece,
         but can take a piece with a different color.
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: list of reachable squares
         """
         available_squares: list[Square] = []

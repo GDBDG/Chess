@@ -16,8 +16,8 @@ class Knight(Piece):
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
         Return the available squares
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: list of reachable squares
         """
         available_squares = []

@@ -21,8 +21,8 @@ class King(Piece):
         """
         A king can move like a queen, but only of one square
         Can't be in check (makes the verification)
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: list of reachable squares
         """
         available_squares: list[Square] = []
@@ -103,8 +103,8 @@ class King(Piece):
 
         Check if the king can make a short castling,
         and return the square destination
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: bool
         """
         row = self.row
@@ -147,8 +147,8 @@ class King(Piece):
 
         Check if the king can make a short castling,
         and return the square destination
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: square destination if available, else None
         """
         row = self.row
@@ -189,8 +189,8 @@ class King(Piece):
         * Move the king
         * Move the rook (the piece_list must contain the real pieces, and not a copy)
         Raises an error if the short castling is unavailable
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         message = self.is_short_castling_valid(square_list, piece_list)
@@ -222,8 +222,8 @@ class King(Piece):
         * Move the king
         * Move the rook (the piece_list must contain the real pieces, and not a copy)
         Raises an error if the short castling is unavailable
-        :param square_list: list of available squares
-        :param piece_list: list of others pieces in the game
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return:
         """
         message = self.is_long_castling_valid(square_list, piece_list)
