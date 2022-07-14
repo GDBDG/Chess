@@ -11,8 +11,10 @@ from app.src.back.miscenaleous.color import Color
 from app.src.back.miscenaleous.column import Column
 from app.src.back.miscenaleous.move import Move
 from app.src.back.miscenaleous.piece_type import PieceType
+from app.src.back.pieces.knight import Knight
 from app.src.back.pieces.pawn import Pawn
 from app.src.back.pieces.piece import Piece
+from app.src.back.pieces.queen import Queen
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
 
 
@@ -303,3 +305,20 @@ class TestPawn:
             black_pawn.en_passant(self.square_list, piece_list, last_move_white)
         with pytest.raises(InvalidMovementError):
             white_pawn.en_passant(self.square_list, piece_list, last_move_black)
+
+    def test_transformation(self):
+        """
+        Test that the transformation applies the changes to
+        the piece_list
+        :return:
+        """
+        black_pawn = Pawn(Column.A, 1, Color.BLACK)
+        white_pawn = Pawn(Column.A, 8)
+        piece_list = {
+            (Column.A, 1): black_pawn,
+            (Column.A, 8): white_pawn,
+        }
+        black_pawn._transformation(piece_list, Queen)
+        white_pawn._transformation(piece_list, Knight)
+        assert isinstance(piece_list[Column.A, 1], Queen)
+        assert isinstance(piece_list[Column.A, 8], Knight)

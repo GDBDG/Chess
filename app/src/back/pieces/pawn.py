@@ -136,3 +136,15 @@ class Pawn(Piece):
         piece_list[self.column, self.row] = self
         # Delete the other pawn
         piece_list.pop((last_move.destination.column, last_move.destination.row))
+
+    def _transformation(self, piece_list, piece_type: Piece.__class__):
+        """
+        Apply the transformation for a pawn if is access the last row
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :param piece_type: child Class of Piece
+        :return: None
+        """
+        if self.row in [1, 8]:
+            piece_list[self.column, self.row] = piece_type(
+                self.column, self.row, self.color
+            )
