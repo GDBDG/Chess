@@ -1,5 +1,5 @@
 # run pytest, generate coverage report and open it in navigator
-evho "==================================="
+echo "==================================="
 echo "Run pytest, with coverage analysis"
 poetry run pytest --cov ./app/src
 echo "Build html report"

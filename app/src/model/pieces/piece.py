@@ -71,7 +71,7 @@ class Piece:
         """
         return any(
             piece.color != color
-            and square in piece.available_squares(square_list, piece_list)
+            and square in piece.available_squares_to_capture(square_list, piece_list)
             for piece in piece_list.values()
         )
 

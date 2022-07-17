@@ -4,6 +4,7 @@ Store square destination, piece, and origin square
 Method to know if a movement allow an en passant capture
 """
 from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.piece_type import PieceType
 
 
@@ -22,6 +23,9 @@ class Move:
         self.origin = origin
         self.destination = destination
         self.piece_type = piece_type
+
+    def __hash__(self):
+        return hash(repr(self))
 
     def allow_en_passant(self) -> bool:
         """
@@ -47,6 +51,18 @@ class Move:
             f"Origin : {self.origin}, \nDestination : {self.destination}\n"
             f"PieceType : {self.piece_type}"
         )
+
+
+class EmptyMove(Move):
+    """
+    Used only to initialize a game.
+    """
+
+    def __init__(self):
+        super().__init__(Square(Column.A, 1), Square(Column.A, 1), PieceType.PIECE)
+
+    def allow_en_passant(self) -> bool:
+        return False
 
 
 class ShortCastling(Move):

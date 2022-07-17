@@ -6,7 +6,7 @@ from itertools import product
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.move import Move, EmptyMove
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
@@ -28,10 +28,10 @@ class Board:
         self.piece_list = {}
         self.squares = {}
         for (column, row) in product(Column, range(1, 9)):
-            self.squares[(row, column)] = Square(column, row)
+            self.squares[(column, row)] = Square(column, row)
         self.set_initial_config()
         self.player = Color.WHITE
-        self.historic: [Move] = []
+        self.historic: [Move] = [EmptyMove()]
 
     def set_initial_config(self):
         """
@@ -91,4 +91,12 @@ class Board:
         """
         available_moves = []
         for piece in self.piece_list.values():
-            pass
+            if piece.color == self.player:
+                available_moves.extend(
+                    piece.available_moves(
+                        self.squares,
+                        self.piece_list,
+                        self.historic[-1],
+                    )
+                )
+        return available_moves
