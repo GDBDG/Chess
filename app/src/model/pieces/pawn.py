@@ -52,21 +52,29 @@ class Pawn(Piece):
         available_squares = []
         # capture on right
         if (
-            Column(self.column.value + 1),
-            self._next_row(),
-        ) in piece_list and piece_list[
-            Column(self.column.value + 1), self._next_row()
-        ].color != self.color:
+            self.column != Column.H
+            and (
+                Column(self.column.value + 1),
+                self._next_row(),
+            )
+            in piece_list
+            and piece_list[Column(self.column.value + 1), self._next_row()].color
+            != self.color
+        ):
             available_squares.append(
                 square_list[(Column(self.column.value + 1), self._next_row())]
             )
         # capture on left
         if (
-            Column(self.column.value - 1),
-            self._next_row(),
-        ) in piece_list and piece_list[
-            Column(self.column.value - 1), self._next_row()
-        ].color != self.color:
+            self.column != Column.A
+            and (
+                Column(self.column.value - 1),
+                self._next_row(),
+            )
+            in piece_list
+            and piece_list[Column(self.column.value - 1), self._next_row()].color
+            != self.color
+        ):
             available_squares.append(
                 square_list[(Column(self.column.value - 1), self._next_row())]
             )

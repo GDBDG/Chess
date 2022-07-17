@@ -58,6 +58,34 @@ class TestPawn:
             black_pawn.available_squares(self.square_list, piece_list) == expected_black
         )
 
+    def test_available_squares_border_case(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | | | | | | | | |
+        3 |W| | | | | | |W|
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        :return:
+        """
+        white_pawn = Pawn(Column.A, 3)
+        white_pawn.has_moved = True
+        white_pawn2 = Pawn(Column.H, 3)
+        white_pawn2.has_moved = True
+        piece_list = {(Column.A, 3): white_pawn, (Column.H, 3): white_pawn2}
+        expected_white = [self.square_list[Column.A, 4]]
+        expected_white2 = [self.square_list[Column.H, 4]]
+        assert (
+            white_pawn.available_squares(self.square_list, piece_list) == expected_white
+        )
+        assert (
+            white_pawn2.available_squares(self.square_list, piece_list)
+            == expected_white2
+        )
+
     def test_available_squares_initial_movement(self):
         """
         8 | | | | | | | | |
