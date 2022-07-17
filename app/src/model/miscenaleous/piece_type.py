@@ -13,5 +13,6 @@ class PieceType(Enum):
     KING = "King"
     KNIGHT = "knight"
     PAWN = "pawn"
+    PIECE = "piece"
     QUEEN = "queen"
     ROOK = "rook"

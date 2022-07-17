@@ -1,8 +1,8 @@
 """
 square class
 """
-from app.src.back.miscenaleous.column import Column
 from app.src.exceptions.row_error import RowError
+from app.src.model.miscenaleous.column import Column
 
 
 class Square:

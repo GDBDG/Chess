@@ -5,9 +5,9 @@ from itertools import product
 
 import pytest
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.column import Column
 from app.src.exceptions.row_error import RowError
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.column import Column
 
 
 class TestSquare:

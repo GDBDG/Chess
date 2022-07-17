@@ -1,12 +1,15 @@
 """
 Piece classes
 """
+from typing import Optional
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.piece_type import PieceType
 
 
 class Piece:
@@ -14,6 +17,8 @@ class Piece:
     Generic class of a chess piece.
     Has no gaming meaning, but contains methods for all pieces
     """
+
+    piece_type = PieceType.PIECE
 
     def __init__(self, column: Column, row: int, color: Color = Color.WHITE):
         """
@@ -97,6 +102,27 @@ class Piece:
             if ((square.column, square.row) not in piece_list.keys())
             or piece_list[(square.column, square.row)].color != self.color
         ]
+
+    def available_moves(
+        self, square_list, piece_list, _: Optional[Move] = None
+    ) -> [Move]:
+        """
+        Return a list of available moves
+        :param _:
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: A list of the moves
+        """
+        return list(
+            map(
+                lambda x: Move(
+                    square_list[self.column, self.row],
+                    square_list[x.column, x.row],
+                    self.piece_type,
+                ),
+                self.available_squares(square_list, piece_list),
+            )
+        )
 
     def available_squares_to_capture(self, square_list, piece_list) -> [Square]:
         """

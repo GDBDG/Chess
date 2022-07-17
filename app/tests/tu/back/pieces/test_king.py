@@ -5,14 +5,14 @@ from itertools import product
 
 import pytest
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.castling_errors import CastlingErrors
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.pieces.king import King
-from app.src.back.pieces.piece import Piece
-from app.src.back.pieces.rook import Rook
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.castling_errors import CastlingErrors
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.pieces.king import King
+from app.src.model.pieces.piece import Piece
+from app.src.model.pieces.rook import Rook
 
 
 class TestKing:
@@ -98,8 +98,7 @@ class TestKing:
         1 |W| | | |B| | | |
            A B C D E F G H
         No need to do extensive tests, since they are done in the Piece tests
-        (The rook moves uses _available_square_on_side_line, already completely
-        tested)
+        Test that a king can't go on a square if it is checked
         :return:
         """
         piece = King(Column.A, 1)

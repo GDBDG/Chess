@@ -2,14 +2,17 @@
 Implementation of bishop
 moves in line, no piece in trajectory
 """
-from app.src.back.chess_board.square import Square
-from app.src.back.pieces.piece import Piece
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
 
 
 class Bishop(Piece):
     """
     Bishop class
     """
+
+    piece_type = PieceType.BISHOP
 
     def available_squares(self, square_list, piece_list) -> [Square]:
         """

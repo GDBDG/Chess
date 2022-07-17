@@ -6,16 +6,16 @@ from itertools import product
 
 import pytest
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.miscenaleous.move import Move
-from app.src.back.miscenaleous.piece_type import PieceType
-from app.src.back.pieces.knight import Knight
-from app.src.back.pieces.pawn import Pawn
-from app.src.back.pieces.piece import Piece
-from app.src.back.pieces.queen import Queen
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move, EnPassant, Promotion
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.knight import Knight
+from app.src.model.pieces.pawn import Pawn
+from app.src.model.pieces.piece import Piece
+from app.src.model.pieces.queen import Queen
 
 
 class TestPawn:
@@ -306,9 +306,9 @@ class TestPawn:
         with pytest.raises(InvalidMovementError):
             white_pawn.en_passant(self.square_list, piece_list, last_move_black)
 
-    def test_transformation(self):
+    def test_promotion(self):
         """
-        Test that the transformation applies the changes to
+        Test that the promotion applies the changes to
         the piece_list
         :return:
         """
@@ -318,7 +318,145 @@ class TestPawn:
             (Column.A, 1): black_pawn,
             (Column.A, 8): white_pawn,
         }
-        black_pawn._transformation(piece_list, Queen)
-        white_pawn._transformation(piece_list, Knight)
+        black_pawn._promotion(piece_list, Queen)
+        white_pawn._promotion(piece_list, Knight)
         assert isinstance(piece_list[Column.A, 1], Queen)
         assert isinstance(piece_list[Column.A, 8], Knight)
+
+    def test_available_moves(self):
+        """
+        Test that the standard moves return the correct output
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | |B| | | | | | |
+        4 | | |W| | | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        :return:
+        """
+        white_pawn = Pawn(Column.C, 4)
+        white_pawn.has_moved = True
+        other = Piece(Column.B, 5, Color.BLACK)
+        last_move = Move(
+            self.square_list[Column.B, 4],
+            self.square_list[Column.B, 5],
+            PieceType.PIECE,
+        )
+        piece_list = {
+            (Column.C, 4): white_pawn,
+            (Column.B, 5): other,
+        }
+        expected_moves = [
+            Move(
+                self.square_list[Column.C, 4],
+                self.square_list[Column.B, 5],
+                PieceType.PAWN,
+            ),
+            Move(
+                self.square_list[Column.C, 4],
+                self.square_list[Column.C, 5],
+                PieceType.PAWN,
+            ),
+        ]
+        assert (
+            white_pawn.available_moves(self.square_list, piece_list, last_move)
+            == expected_moves
+        )
+
+    def test_available_move_en_passant(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | |B|W| | | | | |
+        3 | | |x| | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        Test a correct move is returned if en passant is available
+        :return:
+        """
+        white_pawn = Pawn(Column.C, 4)
+        other = Pawn(Column.B, 4, Color.BLACK)
+        other.has_moved = True
+        last_move = Move(
+            self.square_list[Column.C, 2],
+            self.square_list[Column.C, 4],
+            PieceType.PAWN,
+        )
+        piece_list = {
+            (Column.C, 4): white_pawn,
+            (Column.B, 4): other,
+        }
+        expected_moves = [
+            Move(
+                self.square_list[Column.B, 4],
+                self.square_list[Column.B, 3],
+                PieceType.PAWN,
+            ),
+            EnPassant(
+                self.square_list[Column.B, 4],
+                self.square_list[Column.C, 3],
+            ),
+        ]
+        assert (
+            other.available_moves(self.square_list, piece_list, last_move)
+            == expected_moves
+        )
+
+    def test_available_promotion_move(self):
+        """
+        8 | | | | |B| | | |
+        7 | | | | | |W| | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | | | | | | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        Test that a promotion return 2 Moves
+        :return:
+        """
+        white_pawn = Pawn(Column.F, 7)
+        white_pawn.has_moved = True
+        other = Piece(Column.E, 8, Color.BLACK)
+        last_move = Move(
+            self.square_list[Column.E, 7],
+            self.square_list[Column.E, 8],
+            PieceType.PIECE,
+        )
+        piece_list = {
+            (Column.F, 7): white_pawn,
+            (Column.E, 8): other,
+        }
+        expected_moves = [
+            Promotion(
+                self.square_list[Column.F, 7],
+                self.square_list[Column.E, 8],
+                PieceType.QUEEN,
+            ),
+            Promotion(
+                self.square_list[Column.F, 7],
+                self.square_list[Column.E, 8],
+                PieceType.KNIGHT,
+            ),
+            Promotion(
+                self.square_list[Column.F, 7],
+                self.square_list[Column.F, 8],
+                PieceType.QUEEN,
+            ),
+            Promotion(
+                self.square_list[Column.F, 7],
+                self.square_list[Column.F, 8],
+                PieceType.KNIGHT,
+            ),
+        ]
+        assert (
+            white_pawn.available_moves(self.square_list, piece_list, last_move)
+            == expected_moves
+        )

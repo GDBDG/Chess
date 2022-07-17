@@ -1,8 +1,8 @@
 """
 Tests for class Board
 """
-from app.src.back.chess_board.board import Board
-from app.src.back.constantes import SQUARE_NUMBER
+from app.src.model.chess_board.board import Board
+from app.src.model.constantes import SQUARE_NUMBER
 
 
 class TestBoard:

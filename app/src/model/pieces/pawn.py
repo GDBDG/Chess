@@ -11,21 +11,24 @@ Promotion :
 """
 from typing import Optional
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.miscenaleous.move import Move
-from app.src.back.pieces.piece import Piece
 from app.src.exceptions.invalid_movement_error import (
     InvalidMovementError,
     EN_PASSANT_UNAVAILABLE_MESSAGE,
 )
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move, Promotion, EnPassant
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
 
 
 class Pawn(Piece):
     """
     White pawn class
     """
+
+    piece_type = PieceType.PAWN
 
     def _next_row(self, step: int = 1) -> int:
         """
@@ -89,6 +92,49 @@ class Pawn(Piece):
             available_squares.append(square_list[self.column, self._next_row(2)])
         return available_squares
 
+    def available_moves(
+        self, square_list, piece_list, last_move: Optional[Move] = None
+    ) -> [Move]:
+        available_moves = []
+        for available_square in self.available_squares(square_list, piece_list):
+            # All promotions
+            if available_square.row in [1, 8]:
+                available_moves.extend(
+                    (
+                        Promotion(
+                            square_list[self.column, self.row],
+                            square_list[available_square.column, available_square.row],
+                            PieceType.QUEEN,
+                        ),
+                        Promotion(
+                            square_list[self.column, self.row],
+                            square_list[available_square.column, available_square.row],
+                            PieceType.KNIGHT,
+                        ),
+                    )
+                )
+            # Standard Move
+            else:
+                available_moves.append(
+                    Move(
+                        square_list[self.column, self.row],
+                        square_list[available_square.column, available_square.row],
+                        PieceType.PAWN,
+                    )
+                )
+            # En Passant
+            if (
+                self.en_passant_available_destination(square_list, last_move)
+                is not None
+            ):
+                available_moves.append(
+                    EnPassant(
+                        square_list[self.column, self.row],
+                        self.en_passant_available_destination(square_list, last_move),
+                    )
+                )
+        return available_moves
+
     def en_passant_available_destination(
         self, square_list, last_move: Move
     ) -> Optional[Square]:
@@ -137,9 +183,9 @@ class Pawn(Piece):
         # Delete the other pawn
         piece_list.pop((last_move.destination.column, last_move.destination.row))
 
-    def _transformation(self, piece_list, piece_type: Piece.__class__):
+    def _promotion(self, piece_list, piece_type: Piece.__class__):
         """
-        Apply the transformation for a pawn if is access the last row
+        Apply the promotion for a pawn if is access the last row
         :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :param piece_type: child Class of Piece
         :return: None

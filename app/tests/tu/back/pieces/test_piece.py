@@ -5,13 +5,13 @@ from itertools import product
 
 import pytest
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.pieces.piece import Piece
-from app.src.back.pieces.rook import Rook
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.pieces.piece import Piece
+from app.src.model.pieces.rook import Rook
 
 
 class TestPiece:

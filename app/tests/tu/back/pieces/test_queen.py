@@ -3,14 +3,16 @@ Tests for the queen
 """
 from itertools import product
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.pieces.piece import Piece
-from app.src.back.pieces.queen import Queen
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
+from app.src.model.pieces.queen import Queen
 
 
-def test_queen():
+def test_available_squares():
     """
     8 | | | | | | | | |
     7 | | | | | | | | |
@@ -22,7 +24,7 @@ def test_queen():
     1 | | | | | | | | |
        A B C D E F G H
     No need to do extensive tests, since they are done in the Piece tests
-    (The rook moves uses _available_square_on_side_line, already completely
+    (The queen moves uses _available_square_on_side_line, already completely
     tested)
     :return:
     """
@@ -62,3 +64,36 @@ def test_queen():
         square_list[Column.A, 7],
     ]
     assert piece.available_squares(square_list, piece_list) == expected_squares
+
+
+def test_available_moves():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | | | | |
+    5 | | | | | | | | |
+    4 | | | | | | | | |
+    3 | | |W| | | | | |
+    2 |W| | | | | | | |
+    1 |W| |W| | | | | |
+       A B C D E F G H
+    :return:
+    """
+    piece = Queen(Column.A, 1)
+    other1 = Piece(Column.A, 2)
+    other2 = Piece(Column.C, 1)
+    other3 = Piece(Column.C, 3)
+    square_list = {
+        (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+    }
+    piece_list = {
+        (Column.A, 1): piece,
+        (Column.A, 2): other1,
+        (Column.C, 1): other2,
+        (Column.C, 3): other3,
+    }
+    expected_moves = [
+        Move(square_list[Column.A, 1], square_list[Column.B, 1], PieceType.QUEEN),
+        Move(square_list[Column.A, 1], square_list[Column.B, 2], PieceType.QUEEN),
+    ]
+    assert piece.available_moves(square_list, piece_list) == expected_moves

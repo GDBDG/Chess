@@ -3,14 +3,16 @@ Tests for the rook
 """
 from itertools import product
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.pieces.piece import Piece
-from app.src.back.pieces.rook import Rook
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
+from app.src.model.pieces.rook import Rook
 
 
-def test_rook():
+def test_available_squares():
     """
     8 | | | | | | | | |
     7 | | | | | | | | |
@@ -50,3 +52,33 @@ def test_rook():
         square_list[Column.D, 1],
     ]
     assert piece.available_squares(square_list, piece_list) == expected_squares
+
+
+def test_available_moves():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | | | | |
+    5 | | | | | | | | |
+    4 | | | | | | | | |
+    3 | | | | | | | | |
+    2 |W| | | | | | | |
+    1 |R| |W| | | | | |
+       A B C D E F G H
+    :return:
+    """
+    piece = Rook(Column.A, 1)
+    other1 = Piece(Column.A, 2)
+    other2 = Piece(Column.C, 1)
+    square_list = {
+        (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+    }
+    piece_list = {
+        (Column.A, 1): piece,
+        (Column.A, 2): other1,
+        (Column.C, 1): other2,
+    }
+    expected_moves = [
+        Move(square_list[Column.A, 1], square_list[Column.B, 1], PieceType.ROOK)
+    ]
+    assert piece.available_moves(square_list, piece_list) == expected_moves

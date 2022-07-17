@@ -3,11 +3,13 @@ test knight
 """
 from itertools import product
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.color import Color
-from app.src.back.miscenaleous.column import Column
-from app.src.back.pieces.knight import Knight
-from app.src.back.pieces.piece import Piece
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.color import Color
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.knight import Knight
+from app.src.model.pieces.piece import Piece
 
 
 class TestKnight:
@@ -19,7 +21,7 @@ class TestKnight:
         (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
     }
 
-    def test_knight1(self):
+    def test_available_square1(self):
         """
         8 | | | | | | | | |
         7 | | | | | | | | |
@@ -48,7 +50,7 @@ class TestKnight:
         ]
         assert piece.available_squares(self.square_list, piece_list) == expected_squares
 
-    def test_knight2(self):
+    def test_available_square2(self):
         """
         8 | | | | | | | | |
         7 | | | | | | | | |
@@ -73,7 +75,7 @@ class TestKnight:
         ]
         assert piece.available_squares(self.square_list, piece_list) == expected_squares
 
-    def test_knight3(self):
+    def test_available_square3(self):
         """
         8 | | | | | | | | |
         7 | | | | | | | | |
@@ -107,3 +109,36 @@ class TestKnight:
             self.square_list[Column.B, 3],
         ]
         assert piece.available_squares(self.square_list, piece_list) == expected_squares
+
+    def test_available_moves(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 |W| |W| | | | | |
+        3 | | | |W| | | | |
+        2 | |W| | | | | | |
+        1 | | | |x| | | | |
+           A B C D E F G H
+        :return: None
+        """
+        piece = Knight(Column.B, 2)
+        other1 = Piece(Column.A, 4)
+        other2 = Piece(Column.C, 4)
+        other3 = Piece(Column.D, 3)
+
+        piece_list = {
+            (Column.B, 2): piece,
+            (Column.A, 4): other1,
+            (Column.C, 4): other2,
+            (Column.D, 3): other3,
+        }
+        expected_moves = [
+            Move(
+                self.square_list[Column.B, 2],
+                self.square_list[Column.D, 1],
+                PieceType.KNIGHT,
+            )
+        ]
+        assert piece.available_moves(self.square_list, piece_list) == expected_moves

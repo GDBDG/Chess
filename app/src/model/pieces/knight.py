@@ -4,14 +4,17 @@ Movements : moves 2 squares in one direction, then one in the other
 """
 from copy import copy
 
-from app.src.back.chess_board.square import Square
-from app.src.back.pieces.piece import Piece
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
 
 
 class Knight(Piece):
     """
     Knight class
     """
+
+    piece_type = PieceType.KNIGHT
 
     def available_squares(self, square_list, piece_list) -> [Square]:
         """

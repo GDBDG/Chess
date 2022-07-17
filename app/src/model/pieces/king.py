@@ -4,18 +4,23 @@ Check if the king is in check
 Castling :
 """
 from copy import copy
+from typing import Optional
 
-from app.src.back.chess_board.square import Square
-from app.src.back.miscenaleous.castling_errors import CastlingErrors
-from app.src.back.miscenaleous.column import Column
-from app.src.back.pieces.piece import Piece
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
+from app.src.model.chess_board.square import Square
+from app.src.model.miscenaleous.castling_errors import CastlingErrors
+from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.move import Move, ShortCastling, LongCastling
+from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
 
 
 class King(Piece):
     """
     Implementation of king
     """
+
+    piece_type = PieceType.KING
 
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
@@ -90,6 +95,24 @@ class King(Piece):
                 available_squares.remove(square)
 
         return available_squares
+
+    def available_moves(
+        self, square_list, piece_list, _: Optional[Move] = None
+    ) -> [Move]:
+        available_moves = super().available_moves(square_list, piece_list)
+        if self.is_short_castling_valid(square_list, piece_list):
+            available_moves.append(
+                ShortCastling(
+                    square_list[self.column, self.row], square_list[Column.H, self.row]
+                )
+            )
+        if self.is_long_castling_valid(square_list, piece_list):
+            available_moves.append(
+                LongCastling(
+                    square_list[self.column, self.row], square_list[Column.C, self.row]
+                )
+            )
+        return available_moves
 
     def is_short_castling_valid(self, square_list, piece_list):
         """
