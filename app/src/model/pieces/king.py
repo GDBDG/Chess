@@ -30,6 +30,41 @@ class King(Piece):
         :param piece_list: {(Column, row): Piece} dict of the pieces in the game
         :return: list of reachable squares
         """
+        available_squares = self.available_squares_to_capture(square_list, piece_list)
+        # Remove the squares if the king is in check
+        for square in copy(available_squares):
+            if Piece.is_square_in_check(
+                self.color,
+                square,
+                square_list,
+                piece_list,
+            ):
+                available_squares.remove(square)
+
+        return available_squares
+
+    def available_moves(
+        self, square_list, piece_list, _: Optional[Move] = None
+    ) -> [Move]:
+        available_moves = super().available_moves(square_list, piece_list)
+        if (
+            self.is_short_castling_valid(square_list, piece_list)
+            == CastlingErrors.VALID
+        ):
+            available_moves.append(
+                ShortCastling(
+                    square_list[self.column, self.row], square_list[Column.H, self.row]
+                )
+            )
+        if self.is_long_castling_valid(square_list, piece_list) == CastlingErrors.VALID:
+            available_moves.append(
+                LongCastling(
+                    square_list[self.column, self.row], square_list[Column.C, self.row]
+                )
+            )
+        return available_moves
+
+    def available_squares_to_capture(self, square_list, piece_list) -> [Square]:
         available_squares: list[Square] = []
         # Add the squares
         Piece._add_square(
@@ -80,39 +115,14 @@ class King(Piece):
             square_list,
             available_squares,
         )
-        # Remove the squares if the king is in check
         # Remove the squares if there is a piece on the same color
         for square in copy(available_squares):
-            if Piece.is_square_in_check(
-                self.color,
-                square,
-                square_list,
-                piece_list,
-            ) or (
-                (square.column, square.row) in piece_list
-                and piece_list[square.column, square.row].color == self.color
-            ):
+            if (square.column, square.row) in piece_list and piece_list[
+                square.column, square.row
+            ].color == self.color:
                 available_squares.remove(square)
 
         return available_squares
-
-    def available_moves(
-        self, square_list, piece_list, _: Optional[Move] = None
-    ) -> [Move]:
-        available_moves = super().available_moves(square_list, piece_list)
-        if self.is_short_castling_valid(square_list, piece_list):
-            available_moves.append(
-                ShortCastling(
-                    square_list[self.column, self.row], square_list[Column.H, self.row]
-                )
-            )
-        if self.is_long_castling_valid(square_list, piece_list):
-            available_moves.append(
-                LongCastling(
-                    square_list[self.column, self.row], square_list[Column.C, self.row]
-                )
-            )
-        return available_moves
 
     def is_short_castling_valid(self, square_list, piece_list):
         """

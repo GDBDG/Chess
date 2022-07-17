@@ -114,6 +114,34 @@ class TestKing:
         ]
         assert piece.available_squares(self.square_list, piece_list) == expected_squares
 
+    def test_available_squares_2_kings(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | | | | | | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 |W| | | |B| | | |
+           A B C D E F G H
+        Test the infinite loop with 2 kings
+        :return:
+        """
+        piece = King(Column.A, 1)
+        other = King(Column.E, 1, Color.BLACK)
+
+        piece_list = {
+            (Column.A, 1): piece,
+            (Column.E, 1): other,
+        }
+        expected_squares = [
+            self.square_list[Column.A, 2],
+            self.square_list[Column.B, 1],
+            self.square_list[Column.B, 2],
+        ]
+        assert piece.available_squares(self.square_list, piece_list) == expected_squares
+
     def test_is_short_castling_available(self):
         """
         | | | | |K|x|x|R|
