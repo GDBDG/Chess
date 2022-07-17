@@ -1,11 +1,15 @@
 """
 Tests for class Board
 """
+from unittest.mock import patch
+
 from app.src.model.chess_board.board import Board
 from app.src.model.constantes import SQUARE_NUMBER
+from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.move import Move
 from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.piece import Piece
 
 
 class TestBoard:
@@ -133,3 +137,19 @@ class TestBoard:
             ),
         }
         assert set(self.board.available_moves_list()) == expected_moves
+
+    def test_apply_move(self):
+        """
+        Test that a move applied changes the state of the player, and
+        call apply_move for the piece
+        :return:
+        """
+        move = Move(
+            self.board.squares[Column.E, 2],
+            self.board.squares[Column.E, 4],
+            PieceType.PAWN,
+        )
+        with patch.object(Piece, "apply_move") as mock_move:
+            self.board.apply_move(move)
+            mock_move.assert_called_once_with(move, self.board.squares, self.board.piece_list)
+        assert self.board.player == Color.BLACK

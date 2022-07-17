@@ -34,22 +34,22 @@ class King(Piece):
         # Remove the squares if the king is in check
         for square in copy(available_squares):
             if Piece.is_square_in_check(
-                self.color,
-                square,
-                square_list,
-                piece_list,
+                    self.color,
+                    square,
+                    square_list,
+                    piece_list,
             ):
                 available_squares.remove(square)
 
         return available_squares
 
     def available_moves(
-        self, square_list, piece_list, _: Optional[Move] = None
+            self, square_list, piece_list, _: Optional[Move] = None
     ) -> [Move]:
         available_moves = super().available_moves(square_list, piece_list)
         if (
-            self.is_short_castling_valid(square_list, piece_list)
-            == CastlingErrors.VALID
+                self.is_short_castling_valid(square_list, piece_list)
+                == CastlingErrors.VALID
         ):
             available_moves.append(
                 ShortCastling(
@@ -155,10 +155,10 @@ class King(Piece):
             return CastlingErrors.NOT_EMPTY_PATH
         # check if x are not in check
         if Piece.is_square_in_check(
-            self.color,
-            square_list[(Column.F, row)],
-            square_list,
-            piece_list,
+                self.color,
+                square_list[(Column.F, row)],
+                square_list,
+                piece_list,
         ) or Piece.is_square_in_check(
             self.color,
             square_list[(Column.G, row)],
@@ -196,17 +196,17 @@ class King(Piece):
             return CastlingErrors.KING_IN_CHECK
         # check if x are empty
         if (
-            (Column.D, row) in piece_list
-            or (Column.C, row) in piece_list
-            or (Column.B, row) in piece_list
+                (Column.D, row) in piece_list
+                or (Column.C, row) in piece_list
+                or (Column.B, row) in piece_list
         ):
             return CastlingErrors.NOT_EMPTY_PATH
         # check if X are not in check
         if Piece.is_square_in_check(
-            self.color,
-            square_list[(Column.D, row)],
-            square_list,
-            piece_list,
+                self.color,
+                square_list[(Column.D, row)],
+                square_list,
+                piece_list,
         ) or Piece.is_square_in_check(
             self.color,
             square_list[(Column.C, row)],
@@ -281,3 +281,19 @@ class King(Piece):
         rook.column = Column.D
         rook.has_moved = True
         piece_list[Column.F, self.row] = rook
+
+    def apply_move(self, move: Move, square_list, piece_list,_: Optional[Move] = None):
+        """
+        Apply moves like super, but also Castling
+        :param _:
+        :param move: move to apply
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: None
+        """
+        if type(move) == ShortCastling and self.is_short_castling_valid(square_list, piece_list):
+            self.short_castle(square_list, piece_list)
+        elif type(move) == LongCastling and self.is_long_castling_valid(square_list, piece_list):
+            self.long_castle(square_list, piece_list)
+        else:
+            super().apply_move(move, square_list, piece_list)

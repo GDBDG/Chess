@@ -3,6 +3,7 @@ Piece classes
 """
 from typing import Optional
 
+from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
 from app.src.model.chess_board.square import Square
@@ -36,7 +37,7 @@ class Piece:
 
     @staticmethod
     def _add_square(
-        column: int, row: int, square_list, available_squares: [Square]
+            column: int, row: int, square_list, available_squares: [Square]
     ) -> [Square]:
         """
         Add the square with coordinates column and row in available_squares
@@ -58,7 +59,7 @@ class Piece:
 
     @staticmethod
     def is_square_in_check(
-        color: Color, square: Square, square_list, piece_list
+            color: Color, square: Square, square_list, piece_list
     ) -> bool:
         """
         Return a boolean indicating if a piece in a different color can move
@@ -100,11 +101,11 @@ class Piece:
             square
             for square in square_list.values()
             if ((square.column, square.row) not in piece_list.keys())
-            or piece_list[(square.column, square.row)].color != self.color
+               or piece_list[(square.column, square.row)].color != self.color
         ]
 
     def available_moves(
-        self, square_list, piece_list, _: Optional[Move] = None
+            self, square_list, piece_list, _: Optional[Move] = None
     ) -> [Move]:
         """
         Return a list of available moves
@@ -156,12 +157,29 @@ class Piece:
         # Add new piece in piece_list
         piece_list[self.column, self.row] = self
 
+    def apply_move(self, move: Move, square_list, piece_list, _: Optional[Move] = None):
+        """
+        Apply the move if it is valid, else raises an error
+        :param _:
+        :param move: move to apply
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: None
+        """
+        if type(move) != Move:
+            raise InvalidMoveError(move)
+        if move.piece_type != self.piece_type:
+            raise InvalidMoveError(move)
+        if move not in self.available_moves(square_list, piece_list):
+            raise InvalidMoveError(move)
+        self.move_to(move.destination, square_list, piece_list)
+
     def _available_square_on_side_line(
-        self,
-        columns: [Column],
-        rows: [int],
-        square_list,
-        piece_list,
+            self,
+            columns: [Column],
+            rows: [int],
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on only one side.@
@@ -188,9 +206,9 @@ class Piece:
         return available_squares
 
     def _available_squares_on_right(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -206,9 +224,9 @@ class Piece:
         )
 
     def _available_squares_on_left(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -224,9 +242,9 @@ class Piece:
         )
 
     def _available_squares_upper(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -242,9 +260,9 @@ class Piece:
         )
 
     def _available_squares_below(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -260,9 +278,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_right_up(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -278,9 +296,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_right_down(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -296,9 +314,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_left_up(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -314,9 +332,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_left_down(
-        self,
-        square_list,
-        piece_list,
+            self,
+            square_list,
+            piece_list,
     ):
         """
         Returns the available squares on the right on the piece

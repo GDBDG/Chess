@@ -3,6 +3,7 @@ Board class
 """
 from itertools import product
 
+from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -25,10 +26,10 @@ class Board:
         """
         Build a board instance
         """
-        self.piece_list = {}
         self.squares = {}
         for (column, row) in product(Column, range(1, 9)):
             self.squares[(column, row)] = Square(column, row)
+        self.piece_list = {}
         self.set_initial_config()
         self.player = Color.WHITE
         self.historic: [Move] = [EmptyMove()]
@@ -100,3 +101,18 @@ class Board:
                     )
                 )
         return available_moves
+
+    def apply_move(self, move: Move):
+        """
+        Apply a move
+        Changes the player
+        Assert that the move is valid
+        :param move:
+        :return:
+        """
+        if move not in self.available_moves_list():
+            raise InvalidMoveError(move)
+        # Play the move
+        self.piece_list[move.origin.column, move.origin.row].apply_move(move, self.squares, self.piece_list)
+        # Update the player who has to play
+        self.player = Color.BLACK if self.player == Color.WHITE else Color.WHITE

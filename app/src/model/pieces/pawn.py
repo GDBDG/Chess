@@ -38,7 +38,7 @@ class Pawn(Piece):
         :return:
         """
         return self.row + step * (
-            (self.color == Color.WHITE) - (self.color == Color.BLACK)
+                (self.color == Color.WHITE) - (self.color == Color.BLACK)
         )
 
     def available_squares_to_capture(self, square_list, piece_list) -> [Square]:
@@ -52,28 +52,28 @@ class Pawn(Piece):
         available_squares = []
         # capture on right
         if (
-            self.column != Column.H
-            and (
+                self.column != Column.H
+                and (
                 Column(self.column.value + 1),
                 self._next_row(),
-            )
-            in piece_list
-            and piece_list[Column(self.column.value + 1), self._next_row()].color
-            != self.color
+        )
+                in piece_list
+                and piece_list[Column(self.column.value + 1), self._next_row()].color
+                != self.color
         ):
             available_squares.append(
                 square_list[(Column(self.column.value + 1), self._next_row())]
             )
         # capture on left
         if (
-            self.column != Column.A
-            and (
+                self.column != Column.A
+                and (
                 Column(self.column.value - 1),
                 self._next_row(),
-            )
-            in piece_list
-            and piece_list[Column(self.column.value - 1), self._next_row()].color
-            != self.color
+        )
+                in piece_list
+                and piece_list[Column(self.column.value - 1), self._next_row()].color
+                != self.color
         ):
             available_squares.append(
                 square_list[(Column(self.column.value - 1), self._next_row())]
@@ -93,15 +93,15 @@ class Pawn(Piece):
             available_squares.append(square_list[self.column, self._next_row()])
         # first movement
         if (
-            not self.has_moved
-            and (self.column, self._next_row()) not in piece_list
-            and (self.column, self._next_row(2)) not in piece_list
+                not self.has_moved
+                and (self.column, self._next_row()) not in piece_list
+                and (self.column, self._next_row(2)) not in piece_list
         ):
             available_squares.append(square_list[self.column, self._next_row(2)])
         return available_squares
 
     def available_moves(
-        self, square_list, piece_list, last_move: Optional[Move] = None
+            self, square_list, piece_list, last_move: Optional[Move] = None
     ) -> [Move]:
         available_moves = []
         for available_square in self.available_squares(square_list, piece_list):
@@ -132,8 +132,8 @@ class Pawn(Piece):
                 )
             # En Passant
             if (
-                self.en_passant_available_destination(square_list, last_move)
-                is not None
+                    self.en_passant_available_destination(square_list, last_move)
+                    is not None
             ):
                 available_moves.append(
                     EnPassant(
@@ -144,7 +144,7 @@ class Pawn(Piece):
         return available_moves
 
     def en_passant_available_destination(
-        self, square_list, last_move: Move
+            self, square_list, last_move: Move
     ) -> Optional[Square]:
         """
         8 | | | | | | | | |
@@ -161,9 +161,9 @@ class Pawn(Piece):
         :return: Square destination if en passant is available, None else
         """
         if (
-            last_move.allow_en_passant()
-            and self.row == last_move.destination.row
-            and abs(self.column.value - last_move.destination.column.value) == 1
+                last_move.allow_en_passant()
+                and self.row == last_move.destination.row
+                and abs(self.column.value - last_move.destination.column.value) == 1
         ):
             return square_list[last_move.destination.column, self._next_row()]
         return None
@@ -202,3 +202,19 @@ class Pawn(Piece):
             piece_list[self.column, self.row] = piece_type(
                 self.column, self.row, self.color
             )
+
+    def apply_move(self, move: Move, square_list, piece_list, last_move: Optional[Move] = None):
+        """
+        Apply promotions and en passant.
+        :param last_move:
+        :param move: move to apply
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: None
+        """
+        if type(move) == EnPassant:
+            self.en_passant(square_list, piece_list, last_move)
+        elif type(move) == Promotion:
+            self._promotion(square_list, piece_list)
+        else:
+            super().apply_move(move, square_list, piece_list)

@@ -2,6 +2,7 @@
 Test the feature available Moves
 """
 from itertools import product
+from unittest.mock import MagicMock
 
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
@@ -68,3 +69,34 @@ class TestKing:
             ),
         ]
         assert piece.available_moves(self.square_list, piece_list) == expected_moves
+
+    def test_apply_castling(self):
+        """
+        Test that castling are applied
+        :return:
+        """
+        piece = King(Column.E, 1)
+        rook = Rook(Column.H, 1)
+        rook2 = Rook(Column.A, 1)
+        piece.short_castle = MagicMock()
+        piece.long_castle = MagicMock()
+        square_list = {
+            (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.E, 1): piece,
+            (Column.H, 1): rook,
+            (Column.A, 1): rook2,
+        }
+        move = ShortCastling(
+            square_list[Column.E, 1],
+            square_list[Column.H, 1],
+        )
+        piece.apply_move(move, square_list, piece_list)
+        piece.short_castle.assert_called_once_with(square_list, piece_list)
+        move = LongCastling(
+            square_list[Column.E, 1],
+            square_list[Column.A, 1],
+        )
+        piece.apply_move(move, square_list, piece_list)
+        piece.long_castle.assert_called_once_with(square_list, piece_list)

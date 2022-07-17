@@ -3,6 +3,7 @@ Tests for the pawn
 Must test for white and black
 """
 from itertools import product
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -488,3 +489,51 @@ class TestPawn:
             white_pawn.available_moves(self.square_list, piece_list, last_move)
             == expected_moves
         )
+
+    def test_apply_en_passant(self):
+        """
+        Test that EnPassant Move is correctly applied
+        :return:
+        """
+        piece = Pawn(Column.E, 5)
+        other = Pawn(Column.F, 5)
+        piece.en_passant = MagicMock()
+        square_list = {
+            (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.E, 5): piece,
+            (Column.F, 5): other,
+        }
+        move = EnPassant(
+            square_list[Column.E, 5],
+            square_list[Column.F, 6],
+        )
+        last_move = Move(
+            square_list[Column.F, 7],
+            square_list[Column.F, 5],
+            PieceType.PAWN,
+        )
+        piece.apply_move(move, square_list, piece_list, last_move)
+        piece.en_passant.assert_called_once_with(square_list, piece_list, last_move)
+
+    def test_apply_promotion(self):
+        """
+        Test that Promotion Move is correctly applied
+        :return:
+        """
+        piece = Pawn(Column.E, 7)
+        piece._promotion = MagicMock()
+        square_list = {
+            (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.E, 7): piece,
+        }
+        move = Promotion(
+            square_list[Column.E, 7],
+            square_list[Column.E, 8],
+            PieceType.QUEEN
+        )
+        piece.apply_move(move, square_list, piece_list)
+        piece._promotion.assert_called_once_with(square_list, piece_list)
