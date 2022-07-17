@@ -6,7 +6,7 @@ from itertools import product
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.move import Move, EmptyMove
 from app.src.model.miscenaleous.piece_type import PieceType
 from app.src.model.pieces.knight import Knight
 from app.src.model.pieces.piece import Piece
@@ -141,4 +141,9 @@ class TestKnight:
                 PieceType.KNIGHT,
             )
         ]
-        assert piece.available_moves(self.square_list, piece_list) == expected_moves
+        assert (
+            piece._available_moves_no_legal_verification(
+                self.square_list, piece_list, EmptyMove()
+            )
+            == expected_moves
+        )

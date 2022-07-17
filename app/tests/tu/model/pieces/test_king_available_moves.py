@@ -7,7 +7,7 @@ from unittest.mock import MagicMock
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, ShortCastling, LongCastling
+from app.src.model.miscenaleous.move import Move, ShortCastling, LongCastling, EmptyMove
 from app.src.model.miscenaleous.piece_type import PieceType
 from app.src.model.pieces.king import King
 from app.src.model.pieces.rook import Rook
@@ -68,7 +68,12 @@ class TestKing:
                 self.square_list[Column.C, 1],
             ),
         ]
-        assert piece.available_moves(self.square_list, piece_list) == expected_moves
+        assert (
+            piece._available_moves_no_legal_verification(
+                self.square_list, piece_list, EmptyMove()
+            )
+            == expected_moves
+        )
 
     def test_apply_castling(self):
         """
@@ -92,11 +97,15 @@ class TestKing:
             square_list[Column.E, 1],
             square_list[Column.H, 1],
         )
-        piece.apply_move(move, square_list, piece_list)
+        piece._apply_move_no_legal_verification(
+            move, square_list, piece_list, EmptyMove()
+        )
         piece.short_castle.assert_called_once_with(square_list, piece_list)
         move = LongCastling(
             square_list[Column.E, 1],
             square_list[Column.A, 1],
         )
-        piece.apply_move(move, square_list, piece_list)
+        piece._apply_move_no_legal_verification(
+            move, square_list, piece_list, EmptyMove()
+        )
         piece.long_castle.assert_called_once_with(square_list, piece_list)

@@ -61,6 +61,9 @@ class EmptyMove(Move):
     def __init__(self):
         super().__init__(Square(Column.A, 1), Square(Column.A, 1), PieceType.PIECE)
 
+    def __eq__(self, other):
+        return type(other) == EmptyMove
+
     def allow_en_passant(self) -> bool:
         return False
 

@@ -11,7 +11,7 @@ from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, EnPassant, Promotion
+from app.src.model.miscenaleous.move import Move, EnPassant, Promotion, EmptyMove
 from app.src.model.miscenaleous.piece_type import PieceType
 from app.src.model.pieces.knight import Knight
 from app.src.model.pieces.pawn import Pawn
@@ -391,7 +391,9 @@ class TestPawn:
             ),
         ]
         assert (
-            white_pawn.available_moves(self.square_list, piece_list, last_move)
+            white_pawn._available_moves_no_legal_verification(
+                self.square_list, piece_list, last_move
+            )
             == expected_moves
         )
 
@@ -433,7 +435,9 @@ class TestPawn:
             ),
         ]
         assert (
-            other.available_moves(self.square_list, piece_list, last_move)
+            other._available_moves_no_legal_verification(
+                self.square_list, piece_list, last_move
+            )
             == expected_moves
         )
 
@@ -486,7 +490,9 @@ class TestPawn:
             ),
         ]
         assert (
-            white_pawn.available_moves(self.square_list, piece_list, last_move)
+            white_pawn._available_moves_no_legal_verification(
+                self.square_list, piece_list, last_move
+            )
             == expected_moves
         )
 
@@ -514,7 +520,9 @@ class TestPawn:
             square_list[Column.F, 5],
             PieceType.PAWN,
         )
-        piece.apply_move(move, square_list, piece_list, last_move)
+        piece._apply_move_no_legal_verification(
+            move, square_list, piece_list, last_move
+        )
         piece.en_passant.assert_called_once_with(square_list, piece_list, last_move)
 
     def test_apply_promotion(self):
@@ -531,9 +539,9 @@ class TestPawn:
             (Column.E, 7): piece,
         }
         move = Promotion(
-            square_list[Column.E, 7],
-            square_list[Column.E, 8],
-            PieceType.QUEEN
+            square_list[Column.E, 7], square_list[Column.E, 8], PieceType.QUEEN
         )
-        piece.apply_move(move, square_list, piece_list)
+        piece._apply_move_no_legal_verification(
+            move, square_list, piece_list, EmptyMove()
+        )
         piece._promotion.assert_called_once_with(square_list, piece_list)

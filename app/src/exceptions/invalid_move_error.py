@@ -8,12 +8,14 @@ class InvalidMoveError(ValueError):
     """
     Custom Error class
     """
-    def __init__(self, move: Move):
+
+    def __init__(self, move: Move, reason: str = ""):
         """
         Constructor
         :param move: move that is invalid,
         """
-        self.message = f"{move} is invalid:"
+        super().__init__()
+        self.message = f"{move} is invalid:\n{reason}"
 
     def __repr__(self):
         return self.message

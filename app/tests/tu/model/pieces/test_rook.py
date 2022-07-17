@@ -6,7 +6,7 @@ from itertools import product
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move
+from app.src.model.miscenaleous.move import Move, EmptyMove
 from app.src.model.miscenaleous.piece_type import PieceType
 from app.src.model.pieces.piece import Piece
 from app.src.model.pieces.rook import Rook
@@ -81,4 +81,9 @@ def test_available_moves():
     expected_moves = [
         Move(square_list[Column.A, 1], square_list[Column.B, 1], PieceType.ROOK)
     ]
-    assert piece.available_moves(square_list, piece_list) == expected_moves
+    assert (
+        piece._available_moves_no_legal_verification(
+            square_list, piece_list, EmptyMove()
+        )
+        == expected_moves
+    )

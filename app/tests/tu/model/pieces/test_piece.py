@@ -12,8 +12,17 @@ from app.src.exceptions.row_error import RowError
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, EnPassant, EmptyMove, ShortCastling, LongCastling, Promotion
+from app.src.model.miscenaleous.move import (
+    Move,
+    EnPassant,
+    EmptyMove,
+    ShortCastling,
+    LongCastling,
+    Promotion,
+)
 from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.pieces.bishop import Bishop
+from app.src.model.pieces.king import King
 from app.src.model.pieces.piece import Piece
 from app.src.model.pieces.rook import Rook
 
@@ -57,10 +66,10 @@ class TestPiece:
         """
         expected_list = [self.square_list[Column.A, i] for i in range(3, 9)]
         assert (
-                self.piece_list[Column.A, 1].available_squares(
-                    self.square_list, self.piece_list
-                )
-                == expected_list
+            self.piece_list[Column.A, 1].available_squares(
+                self.square_list, self.piece_list
+            )
+            == expected_list
         )
 
     def test_move_to_valid_destination(self):
@@ -241,6 +250,28 @@ class TestPiece:
         }
         assert not piece.is_in_check(square_list, piece_list)
 
+    def test_is_not_in_check2(self):
+        """
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | |B| | |
+        5 | | | | |W| | | |
+        4 | | | |X| | | | |
+        3 | | | | | | | | |
+        2 | | | | | | | | |
+        1 | | | | | | | | |
+           A B C D E F G H
+        :return:
+        """
+        piece = Piece(Column.D, 4)
+        other = Bishop(Column.F, 6, Color.BLACK)
+        white = Piece(Column.E, 5)
+        square_list = {
+            (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {(Column.D, 4): piece, (Column.F, 6): other, (Column.E, 5): white}
+        assert not piece.is_in_check(square_list, piece_list)
+
     def test_apply_valid_move(self):
         """
         Test that a valid move can be played
@@ -259,7 +290,10 @@ class TestPiece:
             square_list[Column.A, 2],
             PieceType.PIECE,
         )
-        piece.apply_move(move, square_list, piece_list)
+        last_move = EmptyMove()
+        piece._apply_move_no_legal_verification(
+            move, square_list, piece_list, last_move
+        )
         piece.move_to.assert_called_once_with(move.destination, square_list, piece_list)
 
     def test_apply_invalid_move(self):
@@ -280,7 +314,9 @@ class TestPiece:
             PieceType.PIECE,
         )
         with pytest.raises(InvalidMoveError):
-            piece.apply_move(move, square_list, piece_list)
+            piece._apply_move_no_legal_verification(
+                move, square_list, piece_list, EmptyMove()
+            )
 
     def test_apply_invalid_move2(self):
         """
@@ -296,29 +332,146 @@ class TestPiece:
         }
         move = EmptyMove()
         with pytest.raises(InvalidMoveError):
-            piece.apply_move(move, square_list, piece_list)
+            piece._apply_move_no_legal_verification(
+                move, square_list, piece_list, EmptyMove()
+            )
         move = ShortCastling(
             square_list[Column.A, 1],
             square_list[Column.A, 2],
         )
         with pytest.raises(InvalidMoveError):
-            piece.apply_move(move, square_list, piece_list)
+            piece._apply_move_no_legal_verification(
+                move, square_list, piece_list, EmptyMove()
+            )
         move = LongCastling(
             square_list[Column.A, 1],
             square_list[Column.A, 2],
         )
         with pytest.raises(InvalidMoveError):
-            piece.apply_move(move, square_list, piece_list)
+            piece._apply_move_no_legal_verification(
+                move, square_list, piece_list, EmptyMove()
+            )
         move = EnPassant(
             square_list[Column.A, 1],
             square_list[Column.A, 2],
         )
         with pytest.raises(InvalidMoveError):
-            piece.apply_move(move, square_list, piece_list)
+            piece._apply_move_no_legal_verification(
+                move, square_list, piece_list, EmptyMove()
+            )
         move = Promotion(
-            square_list[Column.A, 1],
-            square_list[Column.A, 2],
-            PieceType.PIECE
+            square_list[Column.A, 1], square_list[Column.A, 2], PieceType.PIECE
         )
         with pytest.raises(InvalidMoveError):
-            piece.apply_move(move, square_list, piece_list)
+            piece._apply_move_no_legal_verification(
+                move, square_list, piece_list, EmptyMove()
+            )
+
+    def test_is_move_legal(self):
+        """
+        Test that a move is legal
+         8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | | | | | | | | |
+        3 | | | | | | | | |
+        2 | | | | | |W| | |
+        1 | | | | |K| | |B|
+           A B C D E F G H
+        :return:
+        """
+        king = King(Column.E, 1)
+        white_piece = Piece(Column.F, 2)
+        other = Rook(Column.H, 1, Color.BLACK)
+        square_list = {
+            (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.E, 1): king,
+            (Column.F, 2): white_piece,
+            (Column.H, 1): other,
+        }
+        moves_to_test = [
+            Move(
+                square_list[Column.F, 2],
+                square_list[Column.F, 1],
+                PieceType.PIECE,
+            ),
+            Move(
+                square_list[Column.F, 2],
+                square_list[Column.G, 1],
+                PieceType.PIECE,
+            ),
+            Move(
+                square_list[Column.F, 2],
+                square_list[Column.H, 1],
+                PieceType.PIECE,
+            ),
+        ]
+        last_move = EmptyMove()
+        for move in moves_to_test:
+            assert white_piece.is_move_legal(move, last_move, square_list, piece_list)
+
+    def test_only_legal_in_available_moves(self):
+        """
+        Assert that a move is legal
+        8 | | | | | | | | |
+        7 | | | | | | | | |
+        6 | | | | | | | | |
+        5 | | | | | | | | |
+        4 | | | | | | | | |
+        3 | | | | | | | | |
+        2 | | | | | |W| | |
+        1 | | | | |K| | |B|
+           A B C D E F G H
+        :return:
+        """
+        king = King(Column.E, 1)
+        white_piece = Piece(Column.F, 2)
+        other = Rook(Column.H, 1, Color.BLACK)
+        square_list = {
+            (col, row): Square(col, row) for col, row in product(Column, range(1, 9))
+        }
+        piece_list = {
+            (Column.E, 1): king,
+            (Column.F, 2): white_piece,
+            (Column.H, 1): other,
+        }
+        expected_moves = {
+            Move(
+                square_list[Column.F, 2],
+                square_list[Column.F, 1],
+                PieceType.PIECE,
+            ),
+            Move(
+                square_list[Column.F, 2],
+                square_list[Column.G, 1],
+                PieceType.PIECE,
+            ),
+            Move(
+                square_list[Column.F, 2],
+                square_list[Column.H, 1],
+                PieceType.PIECE,
+            ),
+        }
+        assert (
+            set(white_piece.available_moves(square_list, piece_list, EmptyMove()))
+            == expected_moves
+        )
+        expected_moves = {
+            Move(
+                square_list[Column.E, 1],
+                square_list[Column.E, 2],
+                PieceType.KING,
+            ),
+            Move(
+                square_list[Column.E, 1],
+                square_list[Column.D, 2],
+                PieceType.KING,
+            ),
+        }
+        assert (
+            set(king.available_moves(square_list, piece_list, EmptyMove()))
+            == expected_moves
+        )

@@ -1,16 +1,20 @@
 """
 Piece classes
 """
+from copy import deepcopy
 from typing import Optional
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
+from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.exceptions.row_error import RowError
 from app.src.model.chess_board.square import Square
+from app.src.model.constantes import ILLEGAL_MOVE_MESSAGE
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.move import Move
 from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.model.miscenaleous.utils import get_king
 
 
 class Piece:
@@ -37,7 +41,7 @@ class Piece:
 
     @staticmethod
     def _add_square(
-            column: int, row: int, square_list, available_squares: [Square]
+        column: int, row: int, square_list, available_squares: [Square]
     ) -> [Square]:
         """
         Add the square with coordinates column and row in available_squares
@@ -59,7 +63,7 @@ class Piece:
 
     @staticmethod
     def is_square_in_check(
-            color: Color, square: Square, square_list, piece_list
+        color: Color, square: Square, square_list, piece_list
     ) -> bool:
         """
         Return a boolean indicating if a piece in a different color can move
@@ -93,22 +97,21 @@ class Piece:
 
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
-        Return all squares empty or with a piece in the opposite team
-        Update the piece_list (it must be the piece_list of the board, and not a copy
+        Return all squares empty or with a piece in the opposite team,
         :return: list of Square
         """
         return [
             square
             for square in square_list.values()
             if ((square.column, square.row) not in piece_list.keys())
-               or piece_list[(square.column, square.row)].color != self.color
+            or piece_list[(square.column, square.row)].color != self.color
         ]
 
-    def available_moves(
-            self, square_list, piece_list, _: Optional[Move] = None
+    def _available_moves_no_legal_verification(
+        self, square_list, piece_list, _: Move
     ) -> [Move]:
         """
-        Return a list of available moves
+        Return a list of available moves (does NOT check if the move is legal)
         :param _:
         :param square_list: {(column, row): Square} dict of the squares in the game
         :param piece_list: {(Column, row): Piece} dict of the pieces in the game
@@ -124,6 +127,22 @@ class Piece:
                 self.available_squares(square_list, piece_list),
             )
         )
+
+    def available_moves(self, square_list, piece_list, last_move: Move) -> [Move]:
+        """
+        Return a list of available moves (CHECK if the move is legal)
+        :param last_move:
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: A list of the moves
+        """
+        return [
+            move
+            for move in self._available_moves_no_legal_verification(
+                square_list, piece_list, last_move
+            )
+            if self.is_move_legal(move, last_move, square_list, piece_list)
+        ]
 
     def available_squares_to_capture(self, square_list, piece_list) -> [Square]:
         """
@@ -157,9 +176,44 @@ class Piece:
         # Add new piece in piece_list
         piece_list[self.column, self.row] = self
 
-    def apply_move(self, move: Move, square_list, piece_list, _: Optional[Move] = None):
+    def is_move_legal(
+        self, move: Move, last_move: Move, square_list, piece_list
+    ) -> bool:
+        """
+        Return a boolean saying if a move is Legal.
+        (Plays the move, and check the king is not in check)
+        :param last_move:
+        :param move: Move instance,
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: boolean saying if move is legal
+        """
+        # Virtually play the move
+        piece_list_copy = deepcopy(piece_list)
+        piece_copy = deepcopy(self)
+        piece_list_copy[piece_copy.column, piece_copy.row] = piece_copy
+        try:
+            piece_copy._apply_move_no_legal_verification(
+                move, square_list, piece_list_copy, last_move
+            )
+        except InvalidMoveError as error:
+            raise error
+        if piece_copy.piece_type == PieceType.KING:
+            king = piece_copy
+        # Check that the king is not in check
+        else:
+            try:
+                king = get_king(piece_list_copy, self.color)
+            except MissingKingError as error:
+                raise error
+        return not king.is_in_check(square_list, piece_list_copy)
+
+    def _apply_move_no_legal_verification(
+        self, move: Move, square_list, piece_list, last_move: Move
+    ):
         """
         Apply the move if it is valid, else raises an error
+        Does NOT verify that the move is legal
         :param _:
         :param move: move to apply
         :param square_list: {(column, row): Square} dict of the squares in the game
@@ -170,16 +224,33 @@ class Piece:
             raise InvalidMoveError(move)
         if move.piece_type != self.piece_type:
             raise InvalidMoveError(move)
-        if move not in self.available_moves(square_list, piece_list):
+        if move not in self._available_moves_no_legal_verification(
+            square_list, piece_list, last_move
+        ):
             raise InvalidMoveError(move)
         self.move_to(move.destination, square_list, piece_list)
 
+    def apply_move(
+        self, move: Move, square_list, piece_list, last_move: Optional[Move] = None
+    ):
+        """
+        Apply the move if it is valid, else raises an error
+        :param last_move:
+        :param move: move to apply
+        :param square_list: {(column, row): Square} dict of the squares in the game
+        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        :return: None
+        """
+        if not self.is_move_legal(move, last_move, square_list, piece_list):
+            raise InvalidMoveError(move, ILLEGAL_MOVE_MESSAGE)
+        self._apply_move_no_legal_verification(move, square_list, piece_list, last_move)
+
     def _available_square_on_side_line(
-            self,
-            columns: [Column],
-            rows: [int],
-            square_list,
-            piece_list,
+        self,
+        columns: [Column],
+        rows: [int],
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on only one side.@
@@ -206,9 +277,9 @@ class Piece:
         return available_squares
 
     def _available_squares_on_right(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -224,9 +295,9 @@ class Piece:
         )
 
     def _available_squares_on_left(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -242,9 +313,9 @@ class Piece:
         )
 
     def _available_squares_upper(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -260,9 +331,9 @@ class Piece:
         )
 
     def _available_squares_below(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -278,9 +349,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_right_up(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -296,9 +367,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_right_down(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -314,9 +385,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_left_up(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece
@@ -332,9 +403,9 @@ class Piece:
         )
 
     def _available_squares_diagonal_left_down(
-            self,
-            square_list,
-            piece_list,
+        self,
+        square_list,
+        piece_list,
     ):
         """
         Returns the available squares on the right on the piece

@@ -4,10 +4,13 @@ Board class
 from itertools import product
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
+from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.game_state import GameState
 from app.src.model.miscenaleous.move import Move, EmptyMove
+from app.src.model.miscenaleous.utils import get_king
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
@@ -33,6 +36,7 @@ class Board:
         self.set_initial_config()
         self.player = Color.WHITE
         self.historic: [Move] = [EmptyMove()]
+        self.state = GameState.RUNNING
 
     def set_initial_config(self):
         """
@@ -100,6 +104,17 @@ class Board:
                         self.historic[-1],
                     )
                 )
+        if not available_moves:
+            try:
+                king = get_king(self.piece_list, self.player)
+            except MissingKingError as error:
+                raise error
+            if not king.is_in_check(self.squares, self.piece_list):
+                self.state = GameState.DRAW
+            elif self.player == Color.WHITE:
+                self.state = GameState.BLACK_WIN
+            else:
+                self.state = GameState.WHITE_WIN
         return available_moves
 
     def apply_move(self, move: Move):
@@ -107,12 +122,17 @@ class Board:
         Apply a move
         Changes the player
         Assert that the move is valid
+        Assert historic has been updated
         :param move:
         :return:
         """
         if move not in self.available_moves_list():
             raise InvalidMoveError(move)
         # Play the move
-        self.piece_list[move.origin.column, move.origin.row].apply_move(move, self.squares, self.piece_list)
+        self.piece_list[move.origin.column, move.origin.row].apply_move(
+            move, self.squares, self.piece_list, self.historic[-1]
+        )
         # Update the player who has to play
         self.player = Color.BLACK if self.player == Color.WHITE else Color.WHITE
+        # Update the historic
+        self.historic.append(move)
