@@ -166,13 +166,28 @@ class TestBoard:
         Test that an invalid move raises an error
         :return:
         """
+        board = Board()
         move = Move(
-            self.board.squares[Column.E, 2],
-            self.board.squares[Column.E, 5],
+            board.squares[Column.E, 2],
+            board.squares[Column.E, 5],
             PieceType.PAWN,
         )
         with pytest.raises(InvalidMoveError):
-            self.board.apply_move(move)
+            board.apply_move(move)
+
+    def test_apply_invalid_move_wrong_player(self):
+        """
+        Test that only the right player can play a move
+        :return:
+        """
+        board = Board()
+        move = Move(
+            board.squares[Column.E, 7],
+            board.squares[Column.E, 5],
+            PieceType.PAWN,
+        )
+        with pytest.raises(InvalidMoveError):
+            board.apply_move(move)
 
     def test_draw(self):
         """
