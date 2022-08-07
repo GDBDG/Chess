@@ -8,7 +8,7 @@ from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.exceptions.row_error import RowError
-from app.src.model.chess_board.square import Square
+from app.src.model.chess_board.square import Square, logger
 from app.src.model.constantes import ILLEGAL_MOVE_MESSAGE
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -28,9 +28,9 @@ class Piece:
     def __init__(self, column: Column, row: int, color: Color = Color.WHITE):
         """
         Constructor of piece
-        :param row: between 1 and 8, row coordinate
-        :param column: between A and H (Column enum),
-        :param color:
+        @param row: between 1 and 8, row coordinate
+        @param column: between A and H (Column enum),
+        @param color:
         """
         if not 1 <= row <= 8:
             raise RowError(row)
@@ -46,11 +46,11 @@ class Piece:
         """
         Add the square with coordinates column and row in available_squares
         if it is in square_list
-        :param row: row coordinate int value
-        :param column: column coordinate (int value)
-        :param square_list: {(col, row): Square} dict of the squares present in the game
-        :param available_squares: list of square where the square will be added
-        :return: available_squares
+        @param row: row coordinate int value
+        @param column: column coordinate (int value)
+        @param square_list: {(col, row): Square} dict of the squares present in the game
+        @param available_squares: list of square where the square will be added
+        @return: available_squares
         """
         try:
             column = Column(column)
@@ -68,11 +68,11 @@ class Piece:
         """
         Return a boolean indicating if a piece in a different color can move
         to square (indicates if a piece of color *color* is in check)
-        :param color: color of the piece that we check if it can be taken
-        :param square: the square where we check if it can be taken
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: boolean
+        @param color: color of the piece that we check if it can be taken
+        @param square: the square where we check if it can be taken
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: boolean
         """
         return any(
             piece.color != color
@@ -84,9 +84,9 @@ class Piece:
         """
         Return a boolean indicating if a piece in a different color can move
         to square (indicates if a piece of color *color* is in check)
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: boolean
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: boolean
         """
         return any(
             piece.color != self.color
@@ -98,7 +98,7 @@ class Piece:
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
         Return all squares empty or with a piece in the opposite team,
-        :return: list of Square
+        @return: list of Square
         """
         return [
             square
@@ -112,10 +112,10 @@ class Piece:
     ) -> [Move]:
         """
         Return a list of available moves (does NOT check if the move is legal)
-        :param _:
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: A list of the moves
+        @param _:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: A list of the moves
         """
         return list(
             map(
@@ -131,10 +131,10 @@ class Piece:
     def available_moves(self, square_list, piece_list, last_move: Move) -> [Move]:
         """
         Return a list of available moves (CHECK if the move is legal)
-        :param last_move:
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: A list of the moves
+        @param last_move:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: A list of the moves
         """
         return [
             move
@@ -148,9 +148,9 @@ class Piece:
         """
         Return all squares where a piece can capture an opposite piece
         Same as available_squares, except for the pawn
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:  square list
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:  square list
         """
         return self.available_squares(square_list, piece_list)
 
@@ -159,10 +159,10 @@ class Piece:
         Move the piece to a new square
         * Checks if the square is available
         * update piece list
-        :param destination: instance of Square where self is moved
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: None
+        @param destination: instance of Square where self is moved
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: None
         """
         # Raises an exception if the asked destination is not available
         if destination not in self.available_squares(square_list, piece_list):
@@ -182,11 +182,11 @@ class Piece:
         """
         Return a boolean saying if a move is Legal.
         (Plays the move, and check the king is not in check)
-        :param last_move:
-        :param move: Move instance,
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: boolean saying if move is legal
+        @param last_move:
+        @param move: Move instance,
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: boolean saying if move is legal
         """
         # Virtually play the move
         piece_list_copy = deepcopy(piece_list)
@@ -197,6 +197,7 @@ class Piece:
                 move, square_list, piece_list_copy, last_move
             )
         except InvalidMoveError as error:
+            logger.error("Move invalid: %s", error)
             raise error
         if piece_copy.piece_type == PieceType.KING:
             king = piece_copy
@@ -205,6 +206,7 @@ class Piece:
             try:
                 king = get_king(piece_list_copy, self.color)
             except MissingKingError as error:
+                logger.error("MissingKingError, error: %s", error)
                 raise error
         return not king.is_in_check(square_list, piece_list_copy)
 
@@ -214,11 +216,10 @@ class Piece:
         """
         Apply the move if it is valid, else raises an error
         Does NOT verify that the move is legal
-        :param _:
-        :param move: move to apply
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: None
+        @param move: move to apply
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: None
         """
         if type(move) != Move:
             raise InvalidMoveError(move)
@@ -235,11 +236,11 @@ class Piece:
     ):
         """
         Apply the move if it is valid, else raises an error
-        :param last_move:
-        :param move: move to apply
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: None
+        @param last_move:
+        @param move: move to apply
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: None
         """
         if not self.is_move_legal(move, last_move, square_list, piece_list):
             raise InvalidMoveError(move, ILLEGAL_MOVE_MESSAGE)
@@ -258,11 +259,11 @@ class Piece:
         Take a list of rows and a list of columns, and iterate on the squares
         with these coordinates.
         columns and rows must have the same size.
-        :param columns: list of column to iterate on,
-        :param rows: list of rows to iterate on
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: list of pieces (represents the pieces in the game)
-        :return: square_list of available squares designated by th product of columns and rows
+        @param columns: list of column to iterate on,
+        @param rows: list of rows to iterate on
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: list of pieces (represents the pieces in the game)
+        @return: square_list of available squares designated by th product of columns and rows
         """
         available_squares = []
         for column, row in zip(columns, rows):
@@ -283,9 +284,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value + 1, 9)),
@@ -301,9 +302,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value - 1, 0, -1)),
@@ -319,9 +320,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             [self.column] * (8 - self.row),
@@ -337,9 +338,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             [self.column] * (self.row - 1),
@@ -355,9 +356,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value + 1, 9)),
@@ -373,9 +374,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value + 1, 9)),
@@ -391,9 +392,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value - 1, 0, -1)),
@@ -409,9 +410,9 @@ class Piece:
     ):
         """
         Returns the available squares on the right on the piece
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         return self._available_square_on_side_line(
             map(Column, range(self.column.value - 1, 0, -1)),

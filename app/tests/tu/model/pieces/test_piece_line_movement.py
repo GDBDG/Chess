@@ -17,7 +17,7 @@ class TestPiece:
         """
         1 | | |W| | |W| | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.C, 1)
         other = Piece(Column.F, 1)
@@ -36,7 +36,7 @@ class TestPiece:
         """
         1 | | |W| | |B| | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.C, 1)
         other = Piece(Column.F, 1, Color.BLACK)
@@ -56,7 +56,7 @@ class TestPiece:
         """
         1 | | |W| | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.C, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
@@ -79,7 +79,7 @@ class TestPiece:
         """
          1 | | | | | | | |W|
             A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.H, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
@@ -96,7 +96,7 @@ class TestPiece:
         """
         1 | | |W|W| | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.C, 1)
         other = Piece(Column.D, 1)
@@ -112,7 +112,7 @@ class TestPiece:
         """
         1 | | |W| | |W| | |
            A B C D E F G H
-        :return:
+        @return:
         """
         other = Piece(Column.C, 1)
         piece = Piece(Column.F, 1)
@@ -131,7 +131,7 @@ class TestPiece:
         """
         1 | | |W| | |B| | |
            A B C D E F G H
-        :return:
+        @return:
         """
         other = Piece(Column.C, 1)
         piece = Piece(Column.F, 1, Color.BLACK)
@@ -151,7 +151,7 @@ class TestPiece:
         """
         1 | | |W| | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.C, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
@@ -171,7 +171,7 @@ class TestPiece:
         """
          1 |W| | | | | | | |
             A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 1)
         square_list = {(col, 1): Square(col, 1) for col in Column}
@@ -188,7 +188,7 @@ class TestPiece:
         """
         1 | | |W|W| | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         other = Piece(Column.C, 1)
         piece = Piece(Column.D, 1)
@@ -211,7 +211,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 2)
         other = Piece(Column.A, 6)
@@ -237,7 +237,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 2)
         other = Piece(Column.A, 6, Color.BLACK)
@@ -264,7 +264,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 2)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
@@ -294,7 +294,7 @@ class TestPiece:
         2 | |
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 8)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
@@ -317,7 +317,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 2)
         other = Piece(Column.A, 3)
@@ -339,7 +339,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 6)
         other = Piece(Column.A, 2)
@@ -365,7 +365,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 6, Color.BLACK)
         other = Piece(Column.A, 2)
@@ -392,7 +392,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 2)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
@@ -417,7 +417,7 @@ class TestPiece:
         2 | |
         1 |W|
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 1)
         square_list = {(Column.A, row): Square(Column.A, row) for row in range(1, 9)}
@@ -440,7 +440,7 @@ class TestPiece:
         2 |W|
         1 | |
            A
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 3)
         other = Piece(Column.A, 2)

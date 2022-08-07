@@ -40,7 +40,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test that a pawn can move forward if there is no piece in front of it
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.E, 3)
         white_pawn.has_moved = True
@@ -70,7 +70,7 @@ class TestPawn:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.A, 3)
         white_pawn.has_moved = True
@@ -99,7 +99,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test that a pawn can move of 2 squares for its first movement
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.E, 2)
         black_pawn = Pawn(Column.C, 7, Color.BLACK)
@@ -134,7 +134,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test that a pawn can capture a piece
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.E, 3)
         white_pawn.has_moved = True
@@ -181,7 +181,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test that the correct destination is returned if en passant available
-        :return:
+        @return:
         """
         black_pawn = Pawn(Column.B, 4, Color.BLACK)
         white_pawn = Pawn(Column.G, 5)
@@ -220,7 +220,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test that if the last move does not allow en passant, None is returned
-        :return:
+        @return:
         """
         black_pawn = Pawn(Column.B, 4, Color.BLACK)
         white_pawn = Pawn(Column.G, 5)
@@ -261,7 +261,7 @@ class TestPawn:
         Test that the en passant move does every thing correctly :
         Moves the pawn
         Capture the opposite pawn
-        :return:
+        @return:
         """
         black_pawn = Pawn(Column.B, 4, Color.BLACK)
         white_target_pawn = Pawn(Column.C, 4)
@@ -308,7 +308,7 @@ class TestPawn:
         Test that the en passant move does every thing correctly :
         Moves the pawn
         Capture the opposite pawn
-        :return:
+        @return:
         """
         black_pawn = Pawn(Column.B, 4, Color.BLACK)
         white_target_pawn = Pawn(Column.C, 4)
@@ -339,7 +339,7 @@ class TestPawn:
         """
         Test that the promotion applies the changes to
         the piece_list
-        :return:
+        @return:
         """
         black_pawn = Pawn(Column.A, 1, Color.BLACK)
         white_pawn = Pawn(Column.A, 8)
@@ -364,7 +364,7 @@ class TestPawn:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.C, 4)
         white_pawn.has_moved = True
@@ -409,7 +409,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test a correct move is returned if en passant is available
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.C, 4)
         other = Pawn(Column.B, 4, Color.BLACK)
@@ -453,7 +453,7 @@ class TestPawn:
         1 | | | | | | | | |
            A B C D E F G H
         Test that a promotion return 2 Moves
-        :return:
+        @return:
         """
         white_pawn = Pawn(Column.F, 7)
         white_pawn.has_moved = True
@@ -499,7 +499,7 @@ class TestPawn:
     def test_apply_en_passant(self):
         """
         Test that EnPassant Move is correctly applied
-        :return:
+        @return:
         """
         piece = Pawn(Column.E, 5)
         other = Pawn(Column.F, 5)
@@ -528,7 +528,7 @@ class TestPawn:
     def test_apply_promotion(self):
         """
         Test that Promotion Move is correctly applied
-        :return:
+        @return:
         """
         piece = Pawn(Column.E, 7)
         piece._promotion = MagicMock()

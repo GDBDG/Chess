@@ -12,7 +12,7 @@ class InvalidMoveError(ValueError):
     def __init__(self, move: Move, reason: str = ""):
         """
         Constructor
-        :param move: move that is invalid,
+        @param move: move that is invalid,
         """
         super().__init__()
         self.message = f"{move} is invalid:\n{reason}"

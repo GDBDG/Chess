@@ -30,7 +30,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.F, 6)
@@ -58,7 +58,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.F, 6, Color.BLACK)
@@ -86,7 +86,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 5)
         piece_list = {
@@ -113,7 +113,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.H, 7)
         piece_list = {
@@ -136,7 +136,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.E, 5)
@@ -161,7 +161,7 @@ class TestPiece:
         2 | | | | | |W| | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.F, 2)
@@ -188,7 +188,7 @@ class TestPiece:
         2 | | | | | |B| | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.F, 2, Color.BLACK)
@@ -216,7 +216,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         piece_list = {
@@ -243,7 +243,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | |W| | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.F, 1)
         piece_list = {
@@ -266,7 +266,7 @@ class TestPiece:
         2 | | | | |W| | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 3)
         other = Piece(Column.E, 2)
@@ -291,7 +291,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.B, 6)
@@ -318,7 +318,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.B, 6, Color.BLACK)
@@ -346,7 +346,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         piece_list = {
@@ -373,7 +373,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.A, 7)
         piece_list = {
@@ -396,7 +396,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other = Piece(Column.C, 5)
@@ -421,7 +421,7 @@ class TestPiece:
         2 | |W| | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.B, 2)
@@ -448,7 +448,7 @@ class TestPiece:
         2 | |B| | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.B, 2, Color.BLACK)
@@ -476,7 +476,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         piece_list = {
@@ -503,7 +503,7 @@ class TestPiece:
         2 |W| | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.A, 2)
         piece_list = {
@@ -526,7 +526,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Rook(Column.D, 4)
         other1 = Piece(Column.C, 3)

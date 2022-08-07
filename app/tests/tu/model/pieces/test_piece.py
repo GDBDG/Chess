@@ -42,7 +42,7 @@ class TestPiece:
     def test_valid_init(self):
         """
         Test all valid instantiation
-        :return: None
+        @return: None
         """
         for row, column, color in product(range(1, 9), Column, Color):
             piece = Piece(column, row, color)
@@ -54,7 +54,7 @@ class TestPiece:
         """
         Test if an incorrect row is given
         assert RowError is raised
-        :return: None
+        @return: None
         """
         with pytest.raises(RowError):
             Piece(Column.B, 9)
@@ -62,7 +62,7 @@ class TestPiece:
     def test_available_squares(self):
         """
         test that available squares return correct square_list
-        :return: None
+        @return: None
         """
         expected_list = [self.square_list[Column.A, i] for i in range(3, 9)]
         assert (
@@ -75,7 +75,7 @@ class TestPiece:
     def test_move_to_valid_destination(self):
         """
         Test move_to_destination, when a correct destination is provided
-        :return: None
+        @return: None
         """
         piece = self.piece_list[Column.A, 1]
         piece_list = {
@@ -91,7 +91,7 @@ class TestPiece:
         """
         test move_to_destination with incorrect destination (square not in square list,
         or friendly piece in destination)
-        :return: None
+        @return: None
         """
         piece = self.piece_list[Column.A, 1]
         with pytest.raises(InvalidMovementError):
@@ -102,7 +102,7 @@ class TestPiece:
     def test_add_square_valid_coordinates(self):
         """
         test _add_square with valid coordinates
-        :return: None
+        @return: None
         """
         available_squares = []
         Piece._add_square(1, 7, self.square_list, available_squares)
@@ -111,7 +111,7 @@ class TestPiece:
     def test_add_square_invalid_column(self):
         """
         test _add_square with invalid column
-        :return: None
+        @return: None
         """
         available_squares = []
         Piece._add_square(9, 7, self.square_list, available_squares)
@@ -120,7 +120,7 @@ class TestPiece:
     def test_add_square_invalid_row(self):
         """
         test _add_square with invalid column
-        :return: None
+        @return: None
         """
         available_squares = []
         Piece._add_square(1, 9, self.square_list, available_squares)
@@ -137,7 +137,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         other = Piece(Column.F, 6, Color.BLACK)
         other2 = Piece(Column.C, 6)
@@ -163,7 +163,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         other = Rook(Column.F, 6, Color.BLACK)
         square_list = {
@@ -187,7 +187,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         other = Rook(Column.D, 4, Color.BLACK)
         square_list = {
@@ -211,7 +211,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.D, 4)
         other = Piece(Column.F, 6, Color.BLACK)
@@ -237,7 +237,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.D, 4)
         other = Rook(Column.F, 6, Color.BLACK)
@@ -261,7 +261,7 @@ class TestPiece:
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return:
+        @return:
         """
         piece = Piece(Column.D, 4)
         other = Bishop(Column.F, 6, Color.BLACK)
@@ -275,7 +275,7 @@ class TestPiece:
     def test_apply_valid_move(self):
         """
         Test that a valid move can be played
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 1)
         piece.move_to = MagicMock()
@@ -299,7 +299,7 @@ class TestPiece:
     def test_apply_invalid_move(self):
         """
         Test that an invalid_move raises an error
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 1)
         square_list = {
@@ -321,7 +321,7 @@ class TestPiece:
     def test_apply_invalid_move2(self):
         """
         Test that a specific move (EnPassant, Castling, ...) raises an error
-        :return:
+        @return:
         """
         piece = Piece(Column.A, 1)
         square_list = {
@@ -379,7 +379,7 @@ class TestPiece:
         2 | | | | | |W| | |
         1 | | | | |K| | |B|
            A B C D E F G H
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         white_piece = Piece(Column.F, 2)
@@ -425,7 +425,7 @@ class TestPiece:
         2 | | | | | |W| | |
         1 | | | | |K| | |B|
            A B C D E F G H
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         white_piece = Piece(Column.F, 2)

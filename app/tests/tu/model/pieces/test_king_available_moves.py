@@ -35,7 +35,7 @@ class TestKing:
            A B C D E F G H
         No need to do extensive tests, since they are done in the Piece tests
         Test that a king can't go on a square if it is checked
-        :return:
+        @return:
         """
         piece = King(Column.E, 1)
         rook1 = Rook(Column.A, 1)
@@ -78,7 +78,7 @@ class TestKing:
     def test_apply_castling(self):
         """
         Test that castling are applied
-        :return:
+        @return:
         """
         piece = King(Column.E, 1)
         rook = Rook(Column.H, 1)

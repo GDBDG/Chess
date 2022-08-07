@@ -10,9 +10,9 @@ def get_king(piece_list, color: Color):
     """
     Return the King with the color <color> in the piece_list
     Raises an error if there is no King
-    :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-    :param color: color of the king
-    :return: the instance of the king
+    @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+    @param color: color of the king
+    @return: the instance of the king
     """
     king = next(
         (

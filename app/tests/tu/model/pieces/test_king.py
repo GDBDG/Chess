@@ -38,7 +38,7 @@ class TestKing:
         No need to do extensive tests, since they are done in the Piece tests
         (The rook moves uses _available_square_on_side_line, already completely
         tested)
-        :return:
+        @return:
         """
         piece = King(Column.D, 4)
         other = Piece(Column.E, 4)
@@ -72,7 +72,7 @@ class TestKing:
         No need to do extensive tests, since they are done in the Piece tests
         (The rook moves uses _available_square_on_side_line, already completely
         tested)
-        :return:
+        @return:
         """
         piece = King(Column.D, 4)
         other = Piece(Column.E, 4, Color.BLACK)
@@ -99,7 +99,7 @@ class TestKing:
            A B C D E F G H
         No need to do extensive tests, since they are done in the Piece tests
         Test that a king can't go on a square if it is checked
-        :return:
+        @return:
         """
         piece = King(Column.A, 1)
         other = Rook(Column.E, 1, Color.BLACK)
@@ -126,7 +126,7 @@ class TestKing:
         1 |W| | | |B| | | |
            A B C D E F G H
         Test the infinite loop with 2 kings
-        :return:
+        @return:
         """
         piece = King(Column.A, 1)
         other = King(Column.E, 1, Color.BLACK)
@@ -147,7 +147,7 @@ class TestKing:
         | | | | |K|x|x|R|
          A B C D E F G H
         Check that a valid set up return the square
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.H, 1)
@@ -167,7 +167,7 @@ class TestKing:
          A B C D E F G H
         Check that if the rook has moved, castling unavailable
         Check that if there is no rook, castling is unavailable
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.H, 2)
@@ -194,7 +194,7 @@ class TestKing:
     def test_is_short_castling_not_available12(self):
         """
         Check that if the king has moved, castling unavailable
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.H, 1)
@@ -220,7 +220,7 @@ class TestKing:
         1 |B| | | |K| | |R|
            A B C D E F G H
         Check that if the king is in check, castling unavailable
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.H, 1)
@@ -248,7 +248,7 @@ class TestKing:
            A B C D E F G H
         Check that if the F column is not empty, castling unavailable
         Check that if the G column is not empty, castling unavailable
-        :return:
+        @return:
         """
         # F not empty
         king = King(Column.E, 1)
@@ -288,7 +288,7 @@ class TestKing:
            A B C D E F G H
         Check that if the F column is in check, castling unavailable
         Check that if the G column is in check, castling unavailable
-        :return:
+        @return:
         """
         # Column F in check
         king = King(Column.E, 1)
@@ -320,7 +320,7 @@ class TestKing:
         |R| | | |K| | | |
          A B C D E F G H
         Check that a valid set-up return the square
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.A, 1)
@@ -340,7 +340,7 @@ class TestKing:
          A B C D E F G H
         Check that if the rook has moved, castling unavailable
         Check that if there is no rook, castling is unavailable
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.A, 2)
@@ -367,7 +367,7 @@ class TestKing:
     def test_is_long_castling_not_available12(self):
         """
         Check that if the king has moved, castling unavailable
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.A, 1)
@@ -393,7 +393,7 @@ class TestKing:
         1 |R| | | |K| | |B|
            A B C D E F G H
         Check that if the king is in check, castling unavailable
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.A, 1)
@@ -422,7 +422,7 @@ class TestKing:
         Check that if the B column is not empty, castling unavailable
         Check that if the C column is not empty, castling unavailable
         Check that if the D column is not empty, castling unavailable
-        :return:
+        @return:
         """
         # B not empty
         king = King(Column.E, 1)
@@ -473,7 +473,7 @@ class TestKing:
            A B C D E F G H
         Check that if the C column is in check, castling unavailable
         Check that if the D column is in check, castling unavailable
-        :return:
+        @return:
         """
         # Column C in check
         king = King(Column.E, 1)
@@ -507,7 +507,7 @@ class TestKing:
         1 | | | | | |R|K| |
            A B C D E F G H
         Test that a valid castle does all the modifications
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.H, 1)
@@ -528,7 +528,7 @@ class TestKing:
     def test_invalid_short_castle(self):
         """
         Test that an invalid castle raises a InvalidMovementError
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         piece_list = {
@@ -544,7 +544,7 @@ class TestKing:
         1 | | |K|R| | | | |
            A B C D E F G H
         Test that a valid castle does all the modifications
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         rook = Rook(Column.A, 1)
@@ -565,7 +565,7 @@ class TestKing:
     def test_invalid_long_castle(self):
         """
         Test that an invalid castle raises a InvalidMovementError
-        :return:
+        @return:
         """
         king = King(Column.E, 1)
         piece_list = {
