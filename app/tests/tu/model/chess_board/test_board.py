@@ -32,8 +32,8 @@ class TestBoard:
 
     def test_available_moves_list(self):
         """
-        Test that an initial config return all the 20 moves
-        No need to do more tests, they are done in the pieces test
+        Test that an initial config returns all the 20 moves
+        No need to do more tests, They are done in the piece test
         with the get_available_moves
         @return:
         """
@@ -188,30 +188,6 @@ class TestBoard:
         )
         with pytest.raises(InvalidMoveError):
             board.apply_move(move)
-
-    def test_draw(self):
-        """
-        8 | | | | | | | | |
-        7 | | | | | | | | |
-        6 | | | | | | | | |
-        5 | | | | | | | | |
-        4 | | | | | | | | |
-        3 | | | | | | |R| |
-        2 | | | | | | |R| |
-        1 | | | | | | | |K|
-           A B C D E F G H
-        Test that a draw config changes the game status
-        @return:
-        """
-        board = Board()
-        board.piece_list = {
-            (Column.H, 1): King(Column.H, 1),
-            (Column.G, 2): Rook(Column.G, 2, Color.BLACK),
-            (Column.G, 3): Rook(Column.G, 3, Color.BLACK),
-        }
-        board.color = Color.WHITE
-        assert not board.available_moves_list()
-        assert board.state == GameState.DRAW
 
     def test_black_win(self):
         """

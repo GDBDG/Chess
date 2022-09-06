@@ -96,7 +96,8 @@ class Board:
 
     def available_moves_list(self) -> [Move]:
         """
-        Return the list of the available moves for the player that plays
+        Return the list of the available moves for the player that plays.
+        Set the game state (win or draw)
         @return: List of Moves
         """
         logger.info("Call of available_moves")
@@ -118,7 +119,7 @@ class Board:
                 logger.error("The king is missing")
                 raise error
             if not king.is_in_check(self.squares, self.piece_list):
-                logger.info("Draw")
+                logger.info("Stalemate")
                 self.state = GameState.DRAW
             elif self.player == Color.WHITE:
                 logger.info("Black win")
