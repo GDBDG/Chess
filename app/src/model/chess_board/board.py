@@ -5,6 +5,7 @@ from itertools import product
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.exceptions.missing_king_error import MissingKingError
+from app.src.logger import LOGGER
 from app.src.model.chess_board.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -18,6 +19,8 @@ from app.src.model.pieces.pawn import Pawn
 from app.src.model.pieces.queen import Queen
 from app.src.model.pieces.rook import Rook
 
+logger = LOGGER
+
 
 class Board:
     """
@@ -29,6 +32,7 @@ class Board:
         """
         Build a board instance
         """
+        logger.info("Building board")
         self.squares = {}
         for (column, row) in product(Column, range(1, 9)):
             self.squares[(column, row)] = Square(column, row)
@@ -50,8 +54,9 @@ class Board:
         2 |p|p|p|p|p|p|p|p|
         1 |R|k|B|Q|K|B|k|R|
            A B C D E F G H
-        :return:
+        @return:
         """
+        logger.info("Initial game config creation")
         self.piece_list = {
             # White pieces
             (Column.A, 1): Rook(Column.A, 1),
@@ -91,9 +96,11 @@ class Board:
 
     def available_moves_list(self) -> [Move]:
         """
-        Return the list of the available moves for the player that plays
-        :return: List of Moves
+        Return the list of the available moves for the player that plays.
+        Set the game state (win or draw)
+        @return: List of Moves
         """
+        logger.info("Call of available_moves")
         available_moves = []
         for piece in self.piece_list.values():
             if piece.color == self.player:
@@ -105,15 +112,20 @@ class Board:
                     )
                 )
         if not available_moves:
+            logger.info("No available moves, end of the game")
             try:
                 king = get_king(self.piece_list, self.player)
             except MissingKingError as error:
+                logger.error("The king is missing")
                 raise error
             if not king.is_in_check(self.squares, self.piece_list):
+                logger.info("Stalemate")
                 self.state = GameState.DRAW
             elif self.player == Color.WHITE:
+                logger.info("Black win")
                 self.state = GameState.BLACK_WIN
             else:
+                logger.info("White win")
                 self.state = GameState.WHITE_WIN
         return available_moves
 
@@ -123,10 +135,12 @@ class Board:
         Changes the player
         Assert that the move is valid
         Assert historic has been updated
-        :param move:
-        :return:
+        @param move:
+        @return:
         """
+        logger.info("Call of apply_move")
         if move not in self.available_moves_list():
+            logger.error("Invalid move")
             raise InvalidMoveError(move)
         # Play the move
         self.piece_list[move.origin.column, move.origin.row].apply_move(

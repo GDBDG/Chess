@@ -26,16 +26,16 @@ class TestBoard:
     def test_number_squares(self):
         """
         Assert tha there is the right number of squares in the board
-        :return: None
+        @return: None
         """
         assert len(self.board.squares.items()) == SQUARE_NUMBER
 
     def test_available_moves_list(self):
         """
-        Test that an initial config return all the 20 moves
-        No need to do more tests, they are done in the pieces test
+        Test that an initial config returns all the 20 moves
+        No need to do more tests, They are done in the piece test
         with the get_available_moves
-        :return:
+        @return:
         """
         square_list = self.board.squares
         expected_moves = {
@@ -146,7 +146,7 @@ class TestBoard:
         """
         Test that a move applied changes the state of the player, and
         call apply_move for the piece
-        :return:
+        @return:
         """
         move = Move(
             self.board.squares[Column.E, 2],
@@ -164,7 +164,7 @@ class TestBoard:
     def test_apply_invalid_move(self):
         """
         Test that an invalid move raises an error
-        :return:
+        @return:
         """
         board = Board()
         move = Move(
@@ -178,7 +178,7 @@ class TestBoard:
     def test_apply_invalid_move_wrong_player(self):
         """
         Test that only the right player can play a move
-        :return:
+        @return:
         """
         board = Board()
         move = Move(
@@ -188,30 +188,6 @@ class TestBoard:
         )
         with pytest.raises(InvalidMoveError):
             board.apply_move(move)
-
-    def test_draw(self):
-        """
-        8 | | | | | | | | |
-        7 | | | | | | | | |
-        6 | | | | | | | | |
-        5 | | | | | | | | |
-        4 | | | | | | | | |
-        3 | | | | | | |R| |
-        2 | | | | | | |R| |
-        1 | | | | | | | |K|
-           A B C D E F G H
-        Test that a draw config changes the game status
-        :return:
-        """
-        board = Board()
-        board.piece_list = {
-            (Column.H, 1): King(Column.H, 1),
-            (Column.G, 2): Rook(Column.G, 2, Color.BLACK),
-            (Column.G, 3): Rook(Column.G, 3, Color.BLACK),
-        }
-        board.color = Color.WHITE
-        assert not board.available_moves_list()
-        assert board.state == GameState.DRAW
 
     def test_black_win(self):
         """
@@ -225,7 +201,7 @@ class TestBoard:
         1 | | | | | | | |K|
            A B C D E F G H
         Test that a draw config changes the game status
-        :return:
+        @return:
         """
         board = Board()
         board.piece_list = {
@@ -249,7 +225,7 @@ class TestBoard:
         1 | | | | | | | |K|
            A B C D E F G H
         Test that a draw config changes the game status
-        :return:
+        @return:
         """
         board = Board()
         board.piece_list = {

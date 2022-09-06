@@ -1,4 +1,4 @@
 #!/bin/bash
-for f in ./dev-scripts/*.sh; do
+for f in ./scripts/*.sh; do
   bash "$f"
 done

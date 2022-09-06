@@ -26,7 +26,7 @@ def test_available_squares():
     No need to do extensive tests, since they are done in the Piece tests
     (The rook moves uses _available_square_on_side_line, already completely
     tested)
-    :return:
+    @return:
     """
     piece = Rook(Column.D, 4)
     other1 = Piece(Column.D, 6)
@@ -65,7 +65,7 @@ def test_available_moves():
     2 |W| | | | | | | |
     1 |R| |W| | | | | |
        A B C D E F G H
-    :return:
+    @return:
     """
     piece = Rook(Column.A, 1)
     other1 = Piece(Column.A, 2)

@@ -32,7 +32,7 @@ class TestKnight:
         2 | | |x| |x| | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return: None
+        @return: None
         """
         piece = Knight(Column.D, 4)
         piece_list = {
@@ -61,7 +61,7 @@ class TestKnight:
         2 | |W| | | | | | |
         1 | | | |x| | | | |
            A B C D E F G H
-        :return: None
+        @return: None
         """
         piece = Knight(Column.B, 2)
         piece_list = {
@@ -86,7 +86,7 @@ class TestKnight:
         2 | | |x| |B| | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :return: None
+        @return: None
         """
         piece = Knight(Column.D, 4)
         other1 = Piece(Column.E, 6)
@@ -121,7 +121,7 @@ class TestKnight:
         2 | |W| | | | | | |
         1 | | | |x| | | | |
            A B C D E F G H
-        :return: None
+        @return: None
         """
         piece = Knight(Column.B, 2)
         other1 = Piece(Column.A, 4)

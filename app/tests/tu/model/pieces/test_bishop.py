@@ -26,7 +26,7 @@ def test_move_to():
     No need to do extensive tests, since they are done in the Piece tests
     (The bishop moves uses _available_square_on_side_line, already completely
     tested)
-    :return:
+    @return:
     """
     piece = Bishop(Column.D, 4)
     other1 = Piece(Column.F, 6)
@@ -66,7 +66,7 @@ def test_available_moves():
        A B C D E F G H
     No need to do extensive tests, this feature uses the available_squares feature,
     already tested
-    :return:
+    @return:
     """
     piece = Bishop(Column.A, 1)
     other1 = Piece(Column.B, 2, Color.BLACK)

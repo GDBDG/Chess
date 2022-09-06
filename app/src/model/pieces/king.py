@@ -26,9 +26,9 @@ class King(Piece):
         """
         A king can move like a queen, but only of one square
         Can't be in check (makes the verification)
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: list of reachable squares
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: list of reachable squares
         """
         available_squares = self.available_squares_to_capture(square_list, piece_list)
         # Remove the squares if the king is in check
@@ -138,9 +138,9 @@ class King(Piece):
 
         Check if the king can make a short castling,
         and return the square destination
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: bool
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: bool
         """
         row = self.row
         # check the rook is still here, and hasn't moved
@@ -182,9 +182,9 @@ class King(Piece):
 
         Check if the king can make a short castling,
         and return the square destination
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: square destination if available, else None
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: square destination if available, else None
         """
         row = self.row
         # check the rook is still here, and hasn't moved
@@ -224,9 +224,9 @@ class King(Piece):
         * Move the king
         * Move the rook (the piece_list must contain the real pieces, and not a copy)
         Raises an error if the short castling is unavailable
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         message = self.is_short_castling_valid(square_list, piece_list)
         # If castling invalid
@@ -257,9 +257,9 @@ class King(Piece):
         * Move the king
         * Move the rook (the piece_list must contain the real pieces, and not a copy)
         Raises an error if the short castling is unavailable
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         message = self.is_long_castling_valid(square_list, piece_list)
         # If castling invalid
@@ -289,11 +289,10 @@ class King(Piece):
     ):
         """
         Apply moves like super, but also Castling
-        :param _:
-        :param move: move to apply
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: None
+        @param move: move to apply
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: None
         """
         if type(move) == ShortCastling and self.is_short_castling_valid(
             square_list, piece_list

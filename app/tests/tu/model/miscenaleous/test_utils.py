@@ -15,7 +15,7 @@ def test_get_king():
     """
     test the method is test_is_king_in_check in check
     when the king is in check
-    :return:
+    @return:
     """
     board = Board()
     white_king = board.piece_list[Column.E, 1]
@@ -27,7 +27,7 @@ def test_get_king():
 def test_get_king_no_king():
     """
     Test that get_get_king raises an error when there is no king
-    :return:
+    @return:
     """
     piece_list = {
         (Column.E, 1): King(Column.E, 1),

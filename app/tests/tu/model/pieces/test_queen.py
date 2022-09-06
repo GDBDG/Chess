@@ -26,7 +26,7 @@ def test_available_squares():
     No need to do extensive tests, since they are done in the Piece tests
     (The queen moves uses _available_square_on_side_line, already completely
     tested)
-    :return:
+    @return:
     """
     piece = Queen(Column.D, 4)
     other1 = Piece(Column.D, 6)
@@ -77,7 +77,7 @@ def test_available_moves():
     2 |W| | | | | | | |
     1 |W| |W| | | | | |
        A B C D E F G H
-    :return:
+    @return:
     """
     piece = Queen(Column.A, 1)
     other1 = Piece(Column.A, 2)

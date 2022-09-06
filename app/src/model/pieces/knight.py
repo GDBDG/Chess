@@ -1,6 +1,6 @@
 """
 Knight
-Movements : moves 2 squares in one direction, then one in the other
+Movements: moves 2 squares in one direction, then one in the other
 """
 from copy import copy
 
@@ -19,9 +19,9 @@ class Knight(Piece):
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
         Return the available squares
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: list of reachable squares
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: list of reachable squares
         """
         available_squares = []
         # up squares

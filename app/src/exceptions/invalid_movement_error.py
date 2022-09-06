@@ -14,10 +14,10 @@ class InvalidMovementError(Exception):
     """
 
     def __init__(
-        self, square: Optional[Square], detailedError: str = "Reason not specified"
+        self, square: Optional[Square], detailed_error: str = "Reason not specified"
     ):
         self.square = square
-        self.message = f"Square ({self.square}) unavailable.\n{detailedError}"
+        self.message = f"Square ({self.square}) unavailable.\n{detailed_error}"
         super().__init__(self.message)
 
     def __str__(self):

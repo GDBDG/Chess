@@ -34,8 +34,8 @@ class Pawn(Piece):
         """
         Return the net row, depending on the color of the piece, and the step
         row +1/+2 if color = White, row -1/-2 if color = black
-        :param step: number of rows the pawn moves
-        :return:
+        @param step: number of rows the pawn moves
+        @return:
         """
         return self.row + step * (
             (self.color == Color.WHITE) - (self.color == Color.BLACK)
@@ -45,9 +45,9 @@ class Pawn(Piece):
         """
         Return all squares where a piece can capture an opposite piece
         Same as available_squares, except for the pawn
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:  square list
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:  square list
         """
         available_squares = []
         # capture on right
@@ -83,9 +83,9 @@ class Pawn(Piece):
     def available_squares(self, square_list, piece_list) -> [Square]:
         """
         Return the available squares for a pawn (not the en passant)
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
         """
         available_squares = self.available_squares_to_capture(square_list, piece_list)
         # forward (vacant)
@@ -153,9 +153,9 @@ class Pawn(Piece):
         2 | | | | | | | | |
         1 | | | | | | | | |
            A B C D E F G H
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param last_move: Move, last_move played move in the game
-        :return: Square destination if en passant is available, None else
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param last_move: Move, last_move played move in the game
+        @return: Square destination if en passant is available, None else
         """
         if (
             last_move.allow_en_passant()
@@ -169,11 +169,11 @@ class Pawn(Piece):
         """
         Execute en passant capture
         raises an error if the destination is invalid
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return:
-        :param last_move:
-        :return:
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return:
+        @param last_move:
+        @return:
         """
         destination = self.en_passant_available_destination(square_list, last_move)
         if destination is None:
@@ -191,9 +191,9 @@ class Pawn(Piece):
     def _promotion(self, piece_list, piece_type: Piece.__class__):
         """
         Apply the promotion for a pawn if is access the last row
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :param piece_type: child Class of Piece
-        :return: None
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @param piece_type: child Class of Piece
+        @return: None
         """
         if self.row in [1, 8]:
             piece_list[self.column, self.row] = piece_type(
@@ -205,11 +205,11 @@ class Pawn(Piece):
     ):
         """
         Apply promotions and en passant.
-        :param last_move:
-        :param move: move to apply
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: None
+        @param last_move:
+        @param move: move to apply
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: None
         """
         if type(move) == EnPassant:
             self.en_passant(square_list, piece_list, last_move)

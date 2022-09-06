@@ -1,5 +1,4 @@
-"""
-Queen
+"""@summary Queen
 Move in line and diagonal
 """
 from app.src.model.chess_board.square import Square
@@ -18,9 +17,9 @@ class Queen(Piece):
         """
         A queen move in line and diagonal, and can't go threw another piece,
         but can take a piece with a different color.
-        :param square_list: {(column, row): Square} dict of the squares in the game
-        :param piece_list: {(Column, row): Piece} dict of the pieces in the game
-        :return: list of reachable squares
+        @param square_list: {(column, row): Square} dict of the squares in the game
+        @param piece_list: {(Column, row): Piece} dict of the pieces in the game
+        @return: list of reachable squares
         """
         available_squares: list[Square] = []
         # right squares
