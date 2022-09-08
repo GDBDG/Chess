@@ -12,6 +12,6 @@ def test_hash():
     """
     square1 = Square(Column.A, 1)
     square2 = Square(Column.A, 1)
-    toto = {square1: 1}
+    uselesse_dict = {square1: 1}
     assert hash(square1) == hash(square2)
-    assert toto[square1] == toto[square2]
+    assert uselesse_dict[square1] == uselesse_dict[square2]

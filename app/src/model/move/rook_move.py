@@ -19,7 +19,8 @@ class RookMove(Move):
     ):
         LOGGER.info("Get available moves called for rook")
         return [
-            RookMove(origin, destination) for destination in RookMove._available_squares(origin, piece_dict)
+            RookMove(origin, destination)
+            for destination in RookMove._available_squares(origin, piece_dict)
         ]
 
     @staticmethod

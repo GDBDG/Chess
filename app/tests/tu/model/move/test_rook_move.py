@@ -39,4 +39,6 @@ def test_available_moves():
         RookMove(Square(Column.D, 4), Square(Column.D, 2)),
         RookMove(Square(Column.D, 4), Square(Column.D, 1)),
     ]
-    assert RookMove.get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
+    assert (
+        RookMove.get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
+    )

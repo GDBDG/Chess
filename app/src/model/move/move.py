@@ -44,13 +44,15 @@ class Move(ABC):
         """
 
     def __eq__(self, other):
-        return (self.origin == other.origin
-                and self.destination == other.destination
-                and type(other) == type(self)
-                )
+        return (
+            self.origin == other.origin
+            and self.destination == other.destination
+            and type(other) == type(self)
+        )
 
     def __repr__(self):
-        return f"{self.origin.column.name}{self.origin.row}{self.destination.column.name}{self.destination.row}"
+        return f"{self.origin.column.name}{self.origin.row}" \
+               f"{self.destination.column.name}{self.destination.row}"
 
     @staticmethod
     @abstractmethod

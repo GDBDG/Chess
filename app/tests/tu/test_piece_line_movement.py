@@ -216,7 +216,8 @@ class TestPiece:
             Square(Column.A, 5),
         ]
         assert (
-            Move._available_squares_upper(Square(Column.A, 2), piece_dict) == expected_squares
+            Move._available_squares_upper(Square(Column.A, 2), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_upper_case2(self):
@@ -243,7 +244,8 @@ class TestPiece:
             Square(Column.A, 6),
         ]
         assert (
-            Move._available_squares_upper(Square(Column.A, 2), piece_dict) == expected_squares
+            Move._available_squares_upper(Square(Column.A, 2), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_upper_case3(self):
@@ -271,7 +273,8 @@ class TestPiece:
             Square(Column.A, 8),
         ]
         assert (
-            Move._available_squares_upper(Square(Column.A, 2), piece_dict) == expected_squares
+            Move._available_squares_upper(Square(Column.A, 2), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_upper_case4(self):
@@ -292,7 +295,8 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_upper(Square(Column.A, 8), piece_dict) == expected_squares
+            Move._available_squares_upper(Square(Column.A, 8), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_upper_case5(self):
@@ -314,7 +318,8 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_upper(Square(Column.A, 2), piece_dict) == expected_squares
+            Move._available_squares_upper(Square(Column.A, 2), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_below_case1(self):
@@ -340,7 +345,8 @@ class TestPiece:
             Square(Column.A, 3),
         ]
         assert (
-            Move._available_squares_below(Square(Column.A, 6), piece_dict) == expected_squares
+            Move._available_squares_below(Square(Column.A, 6), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_below_case2(self):
@@ -367,7 +373,8 @@ class TestPiece:
             Square(Column.A, 2),
         ]
         assert (
-            Move._available_squares_below(Square(Column.A, 6), piece_dict) == expected_squares
+            Move._available_squares_below(Square(Column.A, 6), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_below_case3(self):
@@ -390,7 +397,8 @@ class TestPiece:
             Square(Column.A, 1),
         ]
         assert (
-            Move._available_squares_below(Square(Column.A, 2), piece_dict) == expected_squares
+            Move._available_squares_below(Square(Column.A, 2), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_below_case4(self):
@@ -411,7 +419,8 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_below(Square(Column.A, 1), piece_dict) == expected_squares
+            Move._available_squares_below(Square(Column.A, 1), piece_dict)
+            == expected_squares
         )
 
     def test_available_square_below_case5(self):
@@ -433,5 +442,6 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_below(Square(Column.A, 3), piece_dict) == expected_squares
+            Move._available_squares_below(Square(Column.A, 3), piece_dict)
+            == expected_squares
         )
