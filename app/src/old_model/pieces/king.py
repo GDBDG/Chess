@@ -7,12 +7,12 @@ from copy import copy
 from typing import Optional
 
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.castling_errors import CastlingErrors
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, ShortCastling, LongCastling
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.piece import Piece
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.castling_errors import CastlingErrors
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.move import Move, ShortCastling, LongCastling
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.piece import Piece
 
 
 class King(Piece):

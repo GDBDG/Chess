@@ -4,16 +4,16 @@ Tests for class Board
 import pytest
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
-from app.src.model.chess_board.board import Board
-from app.src.model.constantes import SQUARE_NUMBER
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.game_state import GameState
-from app.src.model.miscenaleous.move import Move, EmptyMove
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.king import King
-from app.src.model.pieces.queen import Queen
-from app.src.model.pieces.rook import Rook
+from app.src.old_model.chess_board.board import Board
+from app.src.old_model.constantes import SQUARE_NUMBER
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.game_state import GameState
+from app.src.old_model.miscenaleous.move import Move, EmptyMove
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.king import King
+from app.src.old_model.pieces.queen import Queen
+from app.src.old_model.pieces.rook import Rook
 
 
 class TestBoard:

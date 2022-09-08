@@ -3,13 +3,13 @@ Tests for the bishop
 """
 from itertools import product
 
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, EmptyMove
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.bishop import Bishop
-from app.src.model.pieces.piece import Piece
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.move import Move, EmptyMove
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.bishop import Bishop
+from app.src.old_model.pieces.piece import Piece
 
 
 def test_move_to():

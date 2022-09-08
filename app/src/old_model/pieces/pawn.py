@@ -15,12 +15,12 @@ from app.src.exceptions.invalid_movement_error import (
     InvalidMovementError,
     EN_PASSANT_UNAVAILABLE_MESSAGE,
 )
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, Promotion, EnPassant
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.piece import Piece
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.move import Move, Promotion, EnPassant
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.piece import Piece
 
 
 class Pawn(Piece):

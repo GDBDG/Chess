@@ -4,11 +4,11 @@ Tests for the functions in utils.py
 import pytest
 
 from app.src.exceptions.missing_king_error import MissingKingError
-from app.src.model.chess_board.board import Board
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.utils import get_king
-from app.src.model.pieces.king import King
+from app.src.old_model.chess_board.board import Board
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.utils import get_king
+from app.src.old_model.pieces.king import King
 
 
 def test_get_king():

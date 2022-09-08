@@ -6,8 +6,8 @@ from itertools import product
 import pytest
 
 from app.src.exceptions.row_error import RowError
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.column import Column
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.column import Column
 
 
 class TestSquare:

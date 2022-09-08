@@ -6,18 +6,18 @@ from itertools import product
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.logger import LOGGER
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.game_state import GameState
-from app.src.model.miscenaleous.move import Move, EmptyMove
-from app.src.model.miscenaleous.utils import get_king
-from app.src.model.pieces.bishop import Bishop
-from app.src.model.pieces.king import King
-from app.src.model.pieces.knight import Knight
-from app.src.model.pieces.pawn import Pawn
-from app.src.model.pieces.queen import Queen
-from app.src.model.pieces.rook import Rook
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.game_state import GameState
+from app.src.old_model.miscenaleous.move import Move, EmptyMove
+from app.src.old_model.miscenaleous.utils import get_king
+from app.src.old_model.pieces.bishop import Bishop
+from app.src.old_model.pieces.king import King
+from app.src.old_model.pieces.knight import Knight
+from app.src.old_model.pieces.pawn import Pawn
+from app.src.old_model.pieces.queen import Queen
+from app.src.old_model.pieces.rook import Rook
 
 logger = LOGGER
 

@@ -2,8 +2,8 @@
 Some useful functions
 """
 from app.src.exceptions.missing_king_error import MissingKingError
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.piece_type import PieceType
 
 
 def get_king(piece_list, color: Color):

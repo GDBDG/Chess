@@ -6,13 +6,13 @@ from itertools import product
 import pytest
 
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.castling_errors import CastlingErrors
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.pieces.king import King
-from app.src.model.pieces.piece import Piece
-from app.src.model.pieces.rook import Rook
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.castling_errors import CastlingErrors
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.pieces.king import King
+from app.src.old_model.pieces.piece import Piece
+from app.src.old_model.pieces.rook import Rook
 
 
 class TestKing:

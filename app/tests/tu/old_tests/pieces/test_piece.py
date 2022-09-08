@@ -9,10 +9,10 @@ import pytest
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
 from app.src.exceptions.row_error import RowError
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import (
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.move import (
     Move,
     EnPassant,
     EmptyMove,
@@ -20,11 +20,11 @@ from app.src.model.miscenaleous.move import (
     LongCastling,
     Promotion,
 )
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.bishop import Bishop
-from app.src.model.pieces.king import King
-from app.src.model.pieces.piece import Piece
-from app.src.model.pieces.rook import Rook
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.bishop import Bishop
+from app.src.old_model.pieces.king import King
+from app.src.old_model.pieces.piece import Piece
+from app.src.old_model.pieces.rook import Rook
 
 
 class TestPiece:

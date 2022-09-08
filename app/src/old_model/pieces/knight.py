@@ -4,9 +4,9 @@ Movements: moves 2 squares in one direction, then one in the other
 """
 from copy import copy
 
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.piece import Piece
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.piece import Piece
 
 
 class Knight(Piece):

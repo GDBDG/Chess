@@ -3,7 +3,7 @@ Custom error, for invalid square
 """
 from typing import Optional
 
-from app.src.model.chess_board.square import Square
+from app.src.old_model.chess_board.square import Square
 
 EN_PASSANT_UNAVAILABLE_MESSAGE = "En passant capture unavailable"
 

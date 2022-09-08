@@ -3,9 +3,9 @@ Movement (for historic)
 Store square destination, piece, and origin square
 Method to know if a movement allows an en passant capture
 """
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.piece_type import PieceType
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.piece_type import PieceType
 
 
 class Move:

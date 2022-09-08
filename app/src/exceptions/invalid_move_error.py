@@ -1,7 +1,7 @@
 """
 Custom error : invalid move
 """
-from app.src.model.miscenaleous.move import Move
+from app.src.old_model.miscenaleous.move import Move
 
 
 class InvalidMoveError(ValueError):

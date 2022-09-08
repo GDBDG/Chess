@@ -8,15 +8,15 @@ from unittest.mock import MagicMock
 import pytest
 
 from app.src.exceptions.invalid_movement_error import InvalidMovementError
-from app.src.model.chess_board.square import Square
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.move import Move, EnPassant, Promotion, EmptyMove
-from app.src.model.miscenaleous.piece_type import PieceType
-from app.src.model.pieces.knight import Knight
-from app.src.model.pieces.pawn import Pawn
-from app.src.model.pieces.piece import Piece
-from app.src.model.pieces.queen import Queen
+from app.src.old_model.chess_board.square import Square
+from app.src.old_model.miscenaleous.color import Color
+from app.src.old_model.miscenaleous.column import Column
+from app.src.old_model.miscenaleous.move import Move, EnPassant, Promotion, EmptyMove
+from app.src.old_model.miscenaleous.piece_type import PieceType
+from app.src.old_model.pieces.knight import Knight
+from app.src.old_model.pieces.pawn import Pawn
+from app.src.old_model.pieces.piece import Piece
+from app.src.old_model.pieces.queen import Queen
 
 
 class TestPawn:
