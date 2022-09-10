@@ -41,4 +41,7 @@ def test_bishop_move():
         BishopMove(Square(Column.D, 4), Square(Column.C, 3)),
         BishopMove(Square(Column.D, 4), Square(Column.B, 2)),
     ]
-    assert BishopMove.get_available_moves(Square(Column.D, 4), piece_dict) == expected_squares
+    assert (
+        BishopMove.get_available_moves(Square(Column.D, 4), piece_dict)
+        == expected_squares
+    )

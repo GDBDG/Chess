@@ -16,7 +16,8 @@ class QueenMove(Move):
     def get_available_moves(origin: Square, piece_dict: dict[Square, Piece]):
         LOGGER.info("Getting available moves called for queen")
         return [
-            QueenMove(origin, destination) for destination in QueenMove._available_squares(origin, piece_dict)
+            QueenMove(origin, destination)
+            for destination in QueenMove._available_squares(origin, piece_dict)
         ]
 
     @staticmethod

@@ -13,10 +13,14 @@ class BishopMove(Move):
     """
 
     @staticmethod
-    def get_available_moves(origin: Square, piece_dict: dict[Square, Piece], ):
+    def get_available_moves(
+        origin: Square,
+        piece_dict: dict[Square, Piece],
+    ):
         LOGGER.info("Get available moves called for bishop")
         return [
-            BishopMove(origin, destination) for destination in BishopMove._available_squares(origin, piece_dict)
+            BishopMove(origin, destination)
+            for destination in BishopMove._available_squares(origin, piece_dict)
         ]
 
     @staticmethod

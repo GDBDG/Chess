@@ -52,4 +52,7 @@ def test_queen_move():
         QueenMove(Square(Column.D, 4), Square(Column.B, 6)),
         QueenMove(Square(Column.D, 4), Square(Column.A, 7)),
     ]
-    assert QueenMove.get_available_moves(Square(Column.D, 4), piece_dict) == expected_squares
+    assert (
+        QueenMove.get_available_moves(Square(Column.D, 4), piece_dict)
+        == expected_squares
+    )

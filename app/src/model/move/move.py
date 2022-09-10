@@ -51,8 +51,10 @@ class Move(ABC):
         )
 
     def __repr__(self):
-        return f"{self.origin.column.name}{self.origin.row}" \
-               f"{self.destination.column.name}{self.destination.row}"
+        return (
+            f"{self.origin.column.name}{self.origin.row}"
+            f"{self.destination.column.name}{self.destination.row}"
+        )
 
     @staticmethod
     @abstractmethod

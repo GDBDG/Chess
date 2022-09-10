@@ -59,7 +59,6 @@ class TestPiece:
         expected_squares = [
             Square(Column.E, 5),
             Square(Column.F, 6),
-
         ]
         assert (
             Move._available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)

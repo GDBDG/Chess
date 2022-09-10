@@ -170,15 +170,33 @@ class TestDraw:
         }
         board.piece_list[Column.H, 1].has_moved = True
         move_list = [
-            Move(board.squares[Column.A, 8], board.squares[Column.H, 8], PieceType.ROOK),
-            Move(board.squares[Column.A, 7], board.squares[Column.G, 7], PieceType.ROOK),
-            Move(board.squares[Column.H, 8], board.squares[Column.D, 8], PieceType.ROOK),
-            Move(board.squares[Column.G, 7], board.squares[Column.A, 7], PieceType.ROOK),
-            Move(board.squares[Column.D, 8], board.squares[Column.A, 8], PieceType.ROOK),  # 2
-            Move(board.squares[Column.G, 3], board.squares[Column.G, 4], PieceType.KING),
-            Move(board.squares[Column.H, 1], board.squares[Column.G, 1], PieceType.KING),
-            Move(board.squares[Column.G, 4], board.squares[Column.G, 3], PieceType.KING),
-            Move(board.squares[Column.G, 1], board.squares[Column.H, 1], PieceType.KING),  # 3
+            Move(
+                board.squares[Column.A, 8], board.squares[Column.H, 8], PieceType.ROOK
+            ),
+            Move(
+                board.squares[Column.A, 7], board.squares[Column.G, 7], PieceType.ROOK
+            ),
+            Move(
+                board.squares[Column.H, 8], board.squares[Column.D, 8], PieceType.ROOK
+            ),
+            Move(
+                board.squares[Column.G, 7], board.squares[Column.A, 7], PieceType.ROOK
+            ),
+            Move(
+                board.squares[Column.D, 8], board.squares[Column.A, 8], PieceType.ROOK
+            ),  # 2
+            Move(
+                board.squares[Column.G, 3], board.squares[Column.G, 4], PieceType.KING
+            ),
+            Move(
+                board.squares[Column.H, 1], board.squares[Column.G, 1], PieceType.KING
+            ),
+            Move(
+                board.squares[Column.G, 4], board.squares[Column.G, 3], PieceType.KING
+            ),
+            Move(
+                board.squares[Column.G, 1], board.squares[Column.H, 1], PieceType.KING
+            ),  # 3
         ]
         list(map(board.apply_move, move_list))
         assert board.state == GameState.DRAW
