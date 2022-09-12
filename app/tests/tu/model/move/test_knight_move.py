@@ -41,10 +41,7 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
             KnightMove(Square(Column.D, 4), Square(Column.B, 5)),
         ]
-        assert (
-            get_available_moves(Square(Column.D, 4), piece_dict)
-            == expected_moves
-        )
+        assert get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
 
     def test_available_moves2(self):
         """
@@ -68,10 +65,7 @@ class TestKnight:
             KnightMove(Square(Column.B, 2), Square(Column.D, 1)),
             KnightMove(Square(Column.B, 2), Square(Column.D, 3)),
         ]
-        assert (
-            get_available_moves(Square(Column.B, 2), piece_dict)
-            == expected_moves
-        )
+        assert get_available_moves(Square(Column.B, 2), piece_dict) == expected_moves
 
     def test_available_moves3(self):
         """
@@ -101,7 +95,4 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.F, 5)),
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
         ]
-        assert (
-            get_available_moves(Square(Column.D, 4), piece_dict)
-            == expected_moves
-        )
+        assert get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves

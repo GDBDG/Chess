@@ -35,14 +35,8 @@ def test_available_move_square_forward():
     }
     expected_white_move = [PawnMove(Square(Column.E, 3), Square(Column.E, 4))]
     expected_black_move = [PawnMove(Square(Column.C, 6), Square(Column.C, 5))]
-    assert (
-        get_available_moves(Square(Column.E, 3), piece_dict)
-        == expected_white_move
-    )
-    assert (
-        get_available_moves(Square(Column.C, 6), piece_dict)
-        == expected_black_move
-    )
+    assert get_available_moves(Square(Column.E, 3), piece_dict) == expected_white_move
+    assert get_available_moves(Square(Column.C, 6), piece_dict) == expected_black_move
 
 
 def test_available_move_promotion():
@@ -71,11 +65,5 @@ def test_available_move_promotion():
         QueenPromotion(Square(Column.C, 2), Square(Column.C, 1)),
         KnightPromotion(Square(Column.C, 2), Square(Column.C, 1)),
     ]
-    assert (
-        get_available_moves(Square(Column.E, 7), piece_dict)
-        == expected_white_move
-    )
-    assert (
-        get_available_moves(Square(Column.C, 2), piece_dict)
-        == expected_black_move
-    )
+    assert get_available_moves(Square(Column.E, 7), piece_dict) == expected_white_move
+    assert get_available_moves(Square(Column.C, 2), piece_dict) == expected_black_move

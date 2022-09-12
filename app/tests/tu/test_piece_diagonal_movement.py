@@ -1,8 +1,12 @@
 """
 Tests for piece (diagonal movements)
 """
-from app.src.model.available_move_getter._available_squares_getter import _available_squares_diagonal_right_up, \
-    _available_squares_diagonal_right_down, _available_squares_diagonal_left_up, _available_squares_diagonal_left_down
+from app.src.model.available_move_getter._available_squares_getter import (
+    _available_squares_diagonal_right_up,
+    _available_squares_diagonal_right_down,
+    _available_squares_diagonal_left_up,
+    _available_squares_diagonal_left_down,
+)
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
