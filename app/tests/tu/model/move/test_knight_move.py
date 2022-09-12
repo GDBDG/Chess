@@ -1,7 +1,7 @@
 """
 test knight
 """
-
+from app.src.model.available_move_getter.available_moves import get_available_moves
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -42,7 +42,7 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 5)),
         ]
         assert (
-            KnightMove.get_available_moves(Square(Column.D, 4), piece_dict)
+            get_available_moves(Square(Column.D, 4), piece_dict)
             == expected_moves
         )
 
@@ -69,7 +69,7 @@ class TestKnight:
             KnightMove(Square(Column.B, 2), Square(Column.D, 3)),
         ]
         assert (
-            KnightMove.get_available_moves(Square(Column.B, 2), piece_dict)
+            get_available_moves(Square(Column.B, 2), piece_dict)
             == expected_moves
         )
 
@@ -102,6 +102,6 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
         ]
         assert (
-            KnightMove.get_available_moves(Square(Column.D, 4), piece_dict)
+            get_available_moves(Square(Column.D, 4), piece_dict)
             == expected_moves
         )

@@ -1,6 +1,7 @@
 """
 Tests for the queen moves
 """
+from app.src.model.available_move_getter.available_moves import get_available_moves
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -32,7 +33,7 @@ def test_queen_move():
         Square(Column.F, 6): Piece(Color.BLACK),
         Square(Column.C, 3): Piece(Color.WHITE),
     }
-    expected_squares = [
+    expected_moves = [
         QueenMove(Square(Column.D, 4), Square(Column.E, 4)),
         QueenMove(Square(Column.D, 4), Square(Column.F, 4)),
         QueenMove(Square(Column.D, 4), Square(Column.G, 4)),
@@ -53,6 +54,6 @@ def test_queen_move():
         QueenMove(Square(Column.D, 4), Square(Column.A, 7)),
     ]
     assert (
-        QueenMove.get_available_moves(Square(Column.D, 4), piece_dict)
-        == expected_squares
+        get_available_moves(Square(Column.D, 4), piece_dict)
+        == expected_moves
     )

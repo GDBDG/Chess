@@ -1,11 +1,11 @@
 """
 Tests for piece (diagonal movements)
 """
-
+from app.src.model.available_move_getter._available_squares_getter import _available_squares_diagonal_right_up, \
+    _available_squares_diagonal_right_down, _available_squares_diagonal_left_up, _available_squares_diagonal_left_down
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.move.move import Move
 from app.src.model.pieces.piece import Piece
 
 
@@ -35,7 +35,7 @@ class TestPiece:
             Square(Column.E, 5),
         ]
         assert (
-            Move._available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -61,7 +61,7 @@ class TestPiece:
             Square(Column.F, 6),
         ]
         assert (
-            Move._available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -87,7 +87,7 @@ class TestPiece:
             Square(Column.G, 8),
         ]
         assert (
-            Move._available_squares_diagonal_right_up(Square(Column.D, 5), piece_dict)
+            _available_squares_diagonal_right_up(Square(Column.D, 5), piece_dict)
             == expected_squares
         )
 
@@ -109,7 +109,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_right_up(Square(Column.H, 7), piece_dict)
+            _available_squares_diagonal_right_up(Square(Column.H, 7), piece_dict)
             == expected_squares
         )
 
@@ -132,7 +132,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_right_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -157,7 +157,7 @@ class TestPiece:
             Square(Column.E, 3),
         ]
         assert (
-            Move._available_squares_diagonal_right_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_right_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -183,7 +183,7 @@ class TestPiece:
             Square(Column.F, 2),
         ]
         assert (
-            Move._available_squares_diagonal_right_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_right_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -209,7 +209,7 @@ class TestPiece:
             Square(Column.G, 1),
         ]
         assert (
-            Move._available_squares_diagonal_right_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_right_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -231,7 +231,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_right_down(Square(Column.F, 1), piece_dict)
+            _available_squares_diagonal_right_down(Square(Column.F, 1), piece_dict)
             == expected_squares
         )
 
@@ -254,7 +254,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_right_down(Square(Column.D, 3), piece_dict)
+            _available_squares_diagonal_right_down(Square(Column.D, 3), piece_dict)
             == expected_squares
         )
 
@@ -279,7 +279,7 @@ class TestPiece:
             Square(Column.C, 5),
         ]
         assert (
-            Move._available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -305,7 +305,7 @@ class TestPiece:
             Square(Column.B, 6),
         ]
         assert (
-            Move._available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -331,7 +331,7 @@ class TestPiece:
             Square(Column.A, 7),
         ]
         assert (
-            Move._available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -353,7 +353,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_left_up(Square(Column.A, 7), piece_dict)
+            _available_squares_diagonal_left_up(Square(Column.A, 7), piece_dict)
             == expected_squares
         )
 
@@ -376,7 +376,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_up(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -401,7 +401,7 @@ class TestPiece:
             Square(Column.C, 3),
         ]
         assert (
-            Move._available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -427,7 +427,7 @@ class TestPiece:
             Square(Column.B, 2),
         ]
         assert (
-            Move._available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -453,7 +453,7 @@ class TestPiece:
             Square(Column.A, 1),
         ]
         assert (
-            Move._available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )
 
@@ -475,7 +475,7 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_left_down(Square(Column.A, 2), piece_dict)
+            _available_squares_diagonal_left_down(Square(Column.A, 2), piece_dict)
             == expected_squares
         )
 
@@ -498,6 +498,6 @@ class TestPiece:
         }
         expected_squares = []
         assert (
-            Move._available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
+            _available_squares_diagonal_left_down(Square(Column.D, 4), piece_dict)
             == expected_squares
         )

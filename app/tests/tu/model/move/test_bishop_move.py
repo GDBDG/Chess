@@ -1,6 +1,7 @@
 """
 Tests for the bishop moves
 """
+from app.src.model.available_move_getter.available_moves import get_available_moves
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -30,7 +31,7 @@ def test_bishop_move():
         Square(Column.F, 6): Piece(Color.WHITE),
         Square(Column.B, 2): Piece(Color.BLACK),
     }
-    expected_squares = [
+    expected_moves = [
         BishopMove(Square(Column.D, 4), Square(Column.E, 5)),
         BishopMove(Square(Column.D, 4), Square(Column.E, 3)),
         BishopMove(Square(Column.D, 4), Square(Column.F, 2)),
@@ -41,7 +42,4 @@ def test_bishop_move():
         BishopMove(Square(Column.D, 4), Square(Column.C, 3)),
         BishopMove(Square(Column.D, 4), Square(Column.B, 2)),
     ]
-    assert (
-        BishopMove.get_available_moves(Square(Column.D, 4), piece_dict)
-        == expected_squares
-    )
+    assert get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
