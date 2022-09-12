@@ -9,7 +9,7 @@ from app.src.model.pieces.piece import Piece
 
 class QueenMove(Move):
     """
-    Queeen moves
+    Queen moves
     """
 
     @staticmethod

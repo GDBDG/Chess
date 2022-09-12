@@ -1,6 +1,5 @@
 """
-Tests for piece class
-(Tests for movement checks in line
+Tests for available_square in move class
 """
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
@@ -9,7 +8,7 @@ from app.src.model.move.move import Move
 from app.src.model.pieces.piece import Piece
 
 
-class TestPiece:
+class TestMoveAvailableSquare:
     """
     test class
     """

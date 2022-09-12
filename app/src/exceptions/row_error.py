@@ -10,8 +10,8 @@ class RowError(Exception):
 
     def __init__(self, row: int):
         """
-        Builder of the error
-        Create the error message
+        Constructor
+        Creates the error message
         @param row: problematic row (used for the error message)
         """
         self.row = row
