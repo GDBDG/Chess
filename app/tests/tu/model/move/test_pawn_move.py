@@ -134,3 +134,33 @@ def test_available_promotion():
         KnightPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
     ]
     assert get_available_moves(Square(Column.F, 7), piece_dict) == expected_moves
+
+
+def test_initial_move():
+    """
+    8 | | | | | | | | |
+    7 | | |B| | | | | |
+    6 | | | | | | | | |
+    5 | | | | | | | | |
+    4 | | | | | | | | |
+    3 | | | | | | | | |
+    2 | | | | |W| | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    Test that a pawn can move of 2 squares for its first movement
+    @return:
+    """
+    piece_dict = {
+        Square(Column.E, 2): Pawn(Color.WHITE),
+        Square(Column.C, 7): Pawn(Color.BLACK),
+    }
+    expected_white = [
+        PawnMove(Square(Column.E, 2), Square(Column.E, 3)),
+        PawnMove(Square(Column.E, 2), Square(Column.E, 4)),
+    ]
+    expected_black = [
+        PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
+        PawnMove(Square(Column.C, 7), Square(Column.C, 5)),
+    ]
+    assert get_available_moves(Square(Column.E, 2), piece_dict) == expected_white
+    assert get_available_moves(Square(Column.C, 7), piece_dict) == expected_black

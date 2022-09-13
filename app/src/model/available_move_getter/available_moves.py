@@ -11,6 +11,7 @@ from app.src.model.available_move_getter._available_squares_getter import (
     _get_current_color,
 )
 from app.src.model.game.square import Square
+from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.move.bishop_move import BishopMove
 from app.src.model.move.knight_move import KnightMove
@@ -41,8 +42,10 @@ def get_available_moves(
     @param piece_dict: dict with the pieces in the game
     @return: a list with the available moves from origin
     """
+    # pylint: disable=R0916
     LOGGER.info("Get available moves called for bishop")
     origin_piece = piece_dict[origin]
+    color = _get_current_color(origin, piece_dict)
     if type(origin_piece) == Bishop:
         return [
             BishopMove(origin, destination)
@@ -102,15 +105,36 @@ def get_available_moves(
                         ),
                     )
                 )
-        # Capture move
-        # Capture on right
+        # First movement
+        if (
+            (
+                (color == Color.WHITE and origin.row == 2)
+                or (color == Color.BLACK and origin.row == 7)
+            )
+            and Square(origin.column, origin.row + _step_next_move(origin, piece_dict))
+            not in piece_dict
+            and Square(
+            origin.column, origin.row + 2 * _step_next_move(origin, piece_dict)
+        )
+            not in piece_dict
+        ):
+            available_moves.append(
+                PawnMove(
+                    origin,
+                    Square(
+                        origin.column,
+                        origin.row + 2 * _step_next_move(origin, piece_dict),
+                    ),
+                )
+            )
+        # Capture on the right
         if origin.column != Column.H:
             destination = Square(
                 Column(origin.column.value + 1),
                 origin.row + _step_next_move(origin, piece_dict),
             )
             add_capture_move(origin, destination, piece_dict, available_moves)
-        # capture on left
+        # capture on the left
         if origin.column != Column.A:
             destination = Square(
                 Column(origin.column.value - 1),
