@@ -18,5 +18,8 @@ class Piece(ABC):
         """
         self.color = color
 
+    def __eq__(self, other):
+        return type(self) == type(other) and self.color == other.color
+
     def __repr__(self):
         return "PI" if self.color == Color.WHITE else "pi"

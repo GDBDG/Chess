@@ -6,6 +6,7 @@ from copy import copy
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import _get_current_color
 from app.src.model.pieces.piece import Piece
 
 
@@ -249,17 +250,6 @@ def _available_square_on_side_line(
         # if there is no piece on the square
         available_squares.append(square)
     return available_squares
-
-
-def _get_current_color(
-    origin: Square,
-    piece_dict: dict[Square, Piece],
-) -> Color:
-    """
-    Get the color of the current player, with the piece list and the coordinates
-    @return:
-    """
-    return piece_dict[origin].color
 
 
 def _available_squares_knight(

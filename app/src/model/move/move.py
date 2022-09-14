@@ -31,15 +31,23 @@ class Move(ABC):
     ) -> bool:
         """
         Return a boolean value indicating whether the move is legal or not.
+        Applies the move in a copy, and check if the king is in the destination of opposite moves
         @return:
         """
+        # piece_dict_copy = copy.deepcopy(piece_dict)
+        # king_square =
 
-    def apply_move(self):
+    def apply_move(self, piece_dict: dict[Square, Piece]) -> bool:
         """
         Apply a move
         Moves the piece.
-        @return:
+        (Does no legal verification
+        @return: True if the move is a capture
         """
+        capture = self.destination in piece_dict
+        piece_dict[self.destination] = piece_dict[self.origin]
+        piece_dict.pop(self.origin)
+        return capture
 
     def __eq__(self, other):
         return (
