@@ -1,9 +1,11 @@
 """
 Abstract class for movements
 """
+import copy
 from abc import ABC
 
 from app.src.model.game.square import Square
+from app.src.model.miscenaleous.utils import get_king
 from app.src.model.pieces.piece import Piece
 
 
@@ -34,8 +36,9 @@ class Move(ABC):
         Applies the move in a copy, and check if the king is in the destination of opposite moves
         @return:
         """
-        # piece_dict_copy = copy.deepcopy(piece_dict)
-        # king_square =
+        piece_dict_copy = copy.deepcopy(piece_dict)
+        current_color = piece_dict_copy[self.origin].color
+        king_square = get_king(piece_dict_copy, current_color)
 
     def apply_move(self, piece_dict: dict[Square, Piece]) -> bool:
         """

@@ -155,12 +155,12 @@ def test_initial_move():
         Square(Column.C, 7): Pawn(Color.BLACK),
     }
     expected_white = [
-        PawnMove(Square(Column.E, 2), Square(Column.E, 3)),
         PawnMove(Square(Column.E, 2), Square(Column.E, 4)),
+        PawnMove(Square(Column.E, 2), Square(Column.E, 3)),
     ]
     expected_black = [
-        PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
         PawnMove(Square(Column.C, 7), Square(Column.C, 5)),
+        PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
     ]
     assert get_available_moves(Square(Column.E, 2), piece_dict) == expected_white
     assert get_available_moves(Square(Column.C, 7), piece_dict) == expected_black

@@ -336,6 +336,36 @@ def _step_next_move(origin: Square, piece_dict: dict[Square, Piece]) -> int:
     return int(color == Color.WHITE) - int(color == Color.BLACK)
 
 
+def _available_squares_king(
+    origin: Square, piece_dict: dict[Square, Piece]
+) -> [Square]:
+    """
+    The king moves exactly one square horizontally, vertically, or diagonally
+    (Does not return the castling squares
+    @param origin:
+    @param piece_dict:
+    @return:
+    """
+    available_squares = []
+    color = piece_dict[origin].color
+    _add_square(
+        origin.column.value - 1,
+        origin.row - 1,
+        available_squares,
+    )
+    _add_square(origin.column.value - 1, origin.row, available_squares)
+    _add_square(origin.column.value - 1, origin.row + 1, available_squares)
+    _add_square(origin.column.value, origin.row - 1, available_squares)
+    _add_square(origin.column.value, origin.row + 1, available_squares)
+    _add_square(origin.column.value + 1, origin.row - 1, available_squares)
+    _add_square(origin.column.value + 1, origin.row, available_squares)
+    _add_square(origin.column.value + 1, origin.row + 1, available_squares)
+    for square in copy(available_squares):
+        if square in piece_dict and piece_dict[square].color == color:
+            available_squares.remove(square)
+    return available_squares
+
+
 def _available_squares_queen(
     origin: Square, piece_dict: dict[Square, Piece]
 ) -> [Square]:
