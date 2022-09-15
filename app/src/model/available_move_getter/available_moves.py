@@ -39,9 +39,11 @@ from app.src.model.pieces.rook import Rook
 def get_available_moves(
     origin: Square,
     piece_dict: dict[Square, Piece],
+    legal_verification=False,
 ) -> [Move]:
     """
     Return a list with all the available moves from origin
+    @param legal_verification: if a legal verification on the moves must be done
     @param origin: Square origin for the move
     @param piece_dict: dict with the pieces in the game
     @return: a list with the available moves from origin
@@ -98,8 +100,10 @@ def get_available_moves(
     else:
         raise ValueError("Unknown pieces in origin")
     # Remove moves if they are illegal
-
-    return available_moves
+    if legal_verification:
+        return [move for move in available_moves if move.is_legal(piece_dict)]
+    else:
+        return available_moves
 
 
 def _get_pawn_forward_moves(
@@ -220,7 +224,7 @@ def _add_capture_move(
     available_moves: [Move],
 ) -> None:
     """
-    Add the available captures for the pawn at a given destination
+    Add the available captures to available_moves for the pawn at a given destination
     Modify available_moves to add the available moves
     (Makes no verification on destination)
     @param piece_dict:

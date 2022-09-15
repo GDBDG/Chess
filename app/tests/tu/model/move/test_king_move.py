@@ -17,7 +17,7 @@ def test_available_king_moves():
     7 | | | | | | | | |
     6 | | | | | | | | |
     5 | | | | | | | | |
-    4 | | | |W|W| | | |
+    4 | | |b|W|W| | | |
     3 | | | | | | | | |
     2 | | | | | | | | |
     1 | | | | | | | | |
@@ -30,6 +30,7 @@ def test_available_king_moves():
     piece_dict = {
         Square(Column.D, 4): King(Color.WHITE),
         Square(Column.E, 4): Piece(Color.WHITE),
+        Square(Column.C, 4): Piece(Color.BLACK)
     }
     expected_moves = [
         KingMove(Square(Column.D, 4), Square(Column.C, 3)),
@@ -41,29 +42,3 @@ def test_available_king_moves():
         KingMove(Square(Column.D, 4), Square(Column.E, 5)),
     ]
     assert get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
-
-
-def test_available_king_moves_2_kings():
-    """
-    8 | | | | | | | | |
-    7 | | | | | | | | |
-    6 | | | | | | | | |
-    5 | | | | | | | | |
-    4 | | | | | | | | |
-    3 | | | | | | | | |
-    2 | | | | | | | | |
-    1 |W| | | |B| | | |
-       A B C D E F G H
-    Test the infinite loop with 2 kings
-    @return:
-    """
-    piece_dict = {
-        Square(Column.A, 1): King(Color.WHITE),
-        Square(Column.E, 1): King(Color.BLACK),
-    }
-    expected_moves = [
-        KingMove(Square(Column.A, 1), Square(Column.A, 2)),
-        KingMove(Square(Column.A, 1), Square(Column.B, 1)),
-        KingMove(Square(Column.A, 1), Square(Column.B, 2)),
-    ]
-    assert get_available_moves(Square(Column.A, 1), piece_dict) == expected_moves
