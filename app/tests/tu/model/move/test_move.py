@@ -1,7 +1,10 @@
 """
 Tests for Move class
 """
-from app.src.model.available_move_getter.available_moves import get_available_moves
+from app.src.model.available_move_getter.available_moves import (
+    get_available_moves,
+    is_move_legal,
+)
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -31,7 +34,7 @@ def test_is_legal():
         Square(Column.E, 4): Piece(Color.WHITE),
     }
     move = Move(Square(Column.D, 4), Square(Column.C, 3))
-    assert move.is_legal(piece_dict)
+    assert is_move_legal(move, piece_dict)
 
 
 def test_is_not_legal1():
@@ -52,7 +55,7 @@ def test_is_not_legal1():
         Square(Column.E, 1): Rook(Color.BLACK),
     }
     move = Move(Square(Column.A, 1), Square(Column.A, 2))
-    assert not move.is_legal(piece_dict)
+    assert not is_move_legal(move, piece_dict)
 
 
 def test_is_not_legal2():
@@ -74,7 +77,7 @@ def test_is_not_legal2():
         Square(Column.C, 1): Piece(Color.WHITE),
     }
     move = Move(Square(Column.C, 1), Square(Column.C, 2))
-    assert not move.is_legal(piece_dict)
+    assert not is_move_legal(move, piece_dict)
 
 
 def test_get_move_with_legal_verification():
@@ -101,6 +104,8 @@ def test_get_move_with_legal_verification():
         RookMove(Square(Column.C, 1), Square(Column.D, 1)),
         RookMove(Square(Column.C, 1), Square(Column.E, 1)),
         RookMove(Square(Column.C, 1), Square(Column.B, 1)),
-
     ]
-    assert get_available_moves(Square(Column.C, 1), piece_dict, legal_verification=True) == expected_moves
+    assert (
+        get_available_moves(Square(Column.C, 1), piece_dict, legal_verification=True)
+        == expected_moves
+    )

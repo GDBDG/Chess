@@ -30,7 +30,7 @@ def test_available_king_moves():
     piece_dict = {
         Square(Column.D, 4): King(Color.WHITE),
         Square(Column.E, 4): Piece(Color.WHITE),
-        Square(Column.C, 4): Piece(Color.BLACK)
+        Square(Column.C, 4): Piece(Color.BLACK),
     }
     expected_moves = [
         KingMove(Square(Column.D, 4), Square(Column.C, 3)),

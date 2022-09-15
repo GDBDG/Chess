@@ -1,6 +1,7 @@
 """
 Getter for the moves from origin
 """
+import copy
 
 from app.src.logger import LOGGER
 from app.src.model.available_move_getter._available_squares_getter import (
@@ -14,7 +15,7 @@ from app.src.model.available_move_getter._available_squares_getter import (
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.utils import _get_current_color
+from app.src.model.miscenaleous.utils import _get_current_color, get_king
 from app.src.model.move.bishop_move import BishopMove
 from app.src.model.move.king_move import KingMove
 from app.src.model.move.knight_move import KnightMove
@@ -101,9 +102,8 @@ def get_available_moves(
         raise ValueError("Unknown pieces in origin")
     # Remove moves if they are illegal
     if legal_verification:
-        return [move for move in available_moves if move.is_legal(piece_dict)]
-    else:
-        return available_moves
+        return [move for move in available_moves if is_move_legal(move, piece_dict)]
+    return available_moves
 
 
 def _get_pawn_forward_moves(
@@ -165,6 +165,7 @@ def _get_pawn_first_movement(
     @param piece_dict:
     @return:
     """
+    # pylint: disable=R0916
     available_moves = []
     color = _get_current_color(origin, piece_dict)
     if (
@@ -271,3 +272,19 @@ def is_square_in_check(
         in list(map(lambda x: x.destination, get_available_moves(origin, piece_dict)))
         for origin, piece in piece_dict.items()
     )
+
+
+def is_move_legal(
+    move: Move,
+    piece_dict: dict[Square, Piece],
+) -> bool:
+    """
+    Return a boolean value indicating whether the move is legal or not.
+    Applies the move in a copy, and check if the king is in the destination of opposite moves
+    @return:
+    """
+    piece_dict_copy = copy.deepcopy(piece_dict)
+    current_color = piece_dict_copy[move.origin].color
+    king_square = get_king(piece_dict_copy, current_color)
+    move.apply_move(piece_dict_copy)
+    return not is_square_in_check(current_color, king_square, piece_dict_copy)
