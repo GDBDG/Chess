@@ -4,7 +4,7 @@ Tests for the functions in utils.py
 import pytest
 
 from app.src.exceptions.missing_king_error import MissingKingError
-from app.src.model.available_move_getter.is_square_in_check import is_square_in_check
+from app.src.model.available_move_getter.available_moves import is_square_in_check
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column

@@ -49,34 +49,45 @@ def get_available_moves(
     # pylint: disable=R0916
     LOGGER.info("Get available moves called for bishop")
     origin_piece = piece_dict[origin]
+    available_moves = []
     if type(origin_piece) == Bishop:
-        return [
-            BishopMove(origin, destination)
-            for destination in _available_squares_bishop(origin, piece_dict)
-        ]
-    if type(origin_piece) == Knight:
-        return [
-            KnightMove(origin, destination)
-            for destination in _available_squares_knight(origin, piece_dict)
-        ]
-    if type(origin_piece) == Queen:
-        return [
-            QueenMove(origin, destination)
-            for destination in _available_squares_queen(origin, piece_dict)
-        ]
-    if type(origin_piece) == Rook:
-        return [
-            RookMove(origin, destination)
-            for destination in _available_squares_rook(origin, piece_dict)
-        ]
+        available_moves.extend(
+            [
+                BishopMove(origin, destination)
+                for destination in _available_squares_bishop(origin, piece_dict)
+            ]
+        )
+    elif type(origin_piece) == Knight:
+        available_moves.extend(
+            [
+                KnightMove(origin, destination)
+                for destination in _available_squares_knight(origin, piece_dict)
+            ]
+        )
+    elif type(origin_piece) == Queen:
+        available_moves.extend(
+            [
+                QueenMove(origin, destination)
+                for destination in _available_squares_queen(origin, piece_dict)
+            ]
+        )
+    elif type(origin_piece) == Rook:
+        available_moves.extend(
+            [
+                RookMove(origin, destination)
+                for destination in _available_squares_rook(origin, piece_dict)
+            ]
+        )
     # king
-    if type(origin_piece) == King:
-        return [
-            KingMove(origin, destination)
-            for destination in _available_squares_king(origin, piece_dict)
-        ]
+    elif type(origin_piece) == King:
+        available_moves.extend(
+            [
+                KingMove(origin, destination)
+                for destination in _available_squares_king(origin, piece_dict)
+            ]
+        )
     # pawn
-    if type(origin_piece) == Pawn:
+    elif type(origin_piece) == Pawn:
         # First movement
         available_moves = _get_pawn_first_movement(origin, piece_dict)
         # Forward move
@@ -84,7 +95,11 @@ def get_available_moves(
         # Capture on the right
         available_moves.extend(_get_pawn_capture_moves(origin, piece_dict))
         return available_moves
-    raise ValueError("Unknown pieces in origin")
+    else:
+        raise ValueError("Unknown pieces in origin")
+    # Remove moves if they are illegal
+
+    return available_moves
 
 
 def _get_pawn_forward_moves(
@@ -233,3 +248,22 @@ def _add_capture_move(
         and destination.row not in [1, 8]
     ):
         available_moves.append(CaptureMove(origin, destination))
+
+
+def is_square_in_check(
+    color: Color, square: Square, piece_dict: dict[Square, Piece]
+) -> bool:
+    """
+    Return a boolean indicating if a piece in a different color can move
+    to square (indicates if a piece of color *color* is in check)
+    @param color: color of the piece that we check if it can be taken
+    @param square: the square where we check if it can be taken
+    @param piece_dict:  dict of the pieces in the game
+    @return: boolean
+    """
+    return any(
+        piece.color != color
+        and square
+        in list(map(lambda x: x.destination, get_available_moves(origin, piece_dict)))
+        for origin, piece in piece_dict.items()
+    )

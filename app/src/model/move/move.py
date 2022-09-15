@@ -36,9 +36,12 @@ class Move(ABC):
         Applies the move in a copy, and check if the king is in the destination of opposite moves
         @return:
         """
+        from app.src.model.available_move_getter.available_moves import is_square_in_check
         piece_dict_copy = copy.deepcopy(piece_dict)
         current_color = piece_dict_copy[self.origin].color
         king_square = get_king(piece_dict_copy, current_color)
+        self.apply_move(piece_dict_copy)
+        return not is_square_in_check(current_color, king_square, piece_dict_copy)
 
     def apply_move(self, piece_dict: dict[Square, Piece]) -> bool:
         """
