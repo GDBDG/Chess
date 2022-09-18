@@ -1,7 +1,7 @@
 """
 Tests for the pawn moves
 """
-from app.src.model.available_move_getter.available_moves import get_available_moves
+from app.src.model.game.game import Game
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -37,10 +37,12 @@ def test_available_move_square_forward():
             Color.BLACK,
         ),
     }
+    game = Game()
+    game.piece_dict = piece_dict
     expected_white_move = [PawnMove(Square(Column.E, 3), Square(Column.E, 4))]
     expected_black_move = [PawnMove(Square(Column.C, 6), Square(Column.C, 5))]
-    assert get_available_moves(Square(Column.E, 3), piece_dict) == expected_white_move
-    assert get_available_moves(Square(Column.C, 6), piece_dict) == expected_black_move
+    assert game.square_available_moves(Square(Column.E, 3)) == expected_white_move
+    assert game.square_available_moves(Square(Column.C, 6)) == expected_black_move
 
 
 def test_available_move_promotion():
@@ -61,6 +63,8 @@ def test_available_move_promotion():
         Square(Column.E, 7): Pawn(Color.WHITE),
         Square(Column.C, 2): Pawn(Color.BLACK),
     }
+    game = Game()
+    game.piece_dict = piece_dict
     expected_white_move = [
         QueenPromotion(Square(Column.E, 7), Square(Column.E, 8)),
         KnightPromotion(Square(Column.E, 7), Square(Column.E, 8)),
@@ -69,8 +73,8 @@ def test_available_move_promotion():
         QueenPromotion(Square(Column.C, 2), Square(Column.C, 1)),
         KnightPromotion(Square(Column.C, 2), Square(Column.C, 1)),
     ]
-    assert get_available_moves(Square(Column.E, 7), piece_dict) == expected_white_move
-    assert get_available_moves(Square(Column.C, 2), piece_dict) == expected_black_move
+    assert game.square_available_moves(Square(Column.E, 7)) == expected_white_move
+    assert game.square_available_moves(Square(Column.C, 2)) == expected_black_move
 
 
 def test_available_capture():
@@ -97,6 +101,8 @@ def test_available_capture():
         Square(Column.C, 5): Piece(Color.BLACK),
         Square(Column.D, 5): Piece(Color.WHITE),
     }
+    game = Game()
+    game.piece_dict = piece_dict
     expected_white = [
         CaptureMove(Square(Column.E, 3), Square(Column.F, 4)),
         CaptureMove(Square(Column.E, 3), Square(Column.D, 4)),
@@ -105,8 +111,8 @@ def test_available_capture():
         CaptureMove(Square(Column.C, 6), Square(Column.D, 5)),
         CaptureMove(Square(Column.C, 6), Square(Column.B, 5)),
     ]
-    assert get_available_moves(Square(Column.E, 3), piece_dict) == expected_white
-    assert get_available_moves(Square(Column.C, 6), piece_dict) == expected_black
+    assert game.square_available_moves(Square(Column.E, 3)) == expected_white
+    assert game.square_available_moves(Square(Column.C, 6)) == expected_black
 
 
 def test_available_promotion():
@@ -127,13 +133,15 @@ def test_available_promotion():
         Square(Column.F, 7): Pawn(Color.WHITE),
         Square(Column.E, 8): Piece(Color.BLACK),
     }
+    game = Game()
+    game.piece_dict = piece_dict
     expected_moves = [
         QueenPromotion(Square(Column.F, 7), Square(Column.F, 8)),
         KnightPromotion(Square(Column.F, 7), Square(Column.F, 8)),
         QueenPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
         KnightPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
     ]
-    assert get_available_moves(Square(Column.F, 7), piece_dict) == expected_moves
+    assert game.square_available_moves(Square(Column.F, 7)) == expected_moves
 
 
 def test_initial_move():
@@ -154,6 +162,8 @@ def test_initial_move():
         Square(Column.E, 2): Pawn(Color.WHITE),
         Square(Column.C, 7): Pawn(Color.BLACK),
     }
+    game = Game()
+    game.piece_dict = piece_dict
     expected_white = [
         PawnMove(Square(Column.E, 2), Square(Column.E, 4)),
         PawnMove(Square(Column.E, 2), Square(Column.E, 3)),
@@ -162,5 +172,5 @@ def test_initial_move():
         PawnMove(Square(Column.C, 7), Square(Column.C, 5)),
         PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
     ]
-    assert get_available_moves(Square(Column.E, 2), piece_dict) == expected_white
-    assert get_available_moves(Square(Column.C, 7), piece_dict) == expected_black
+    assert game.square_available_moves(Square(Column.E, 2)) == expected_white
+    assert game.square_available_moves(Square(Column.C, 7)) == expected_black

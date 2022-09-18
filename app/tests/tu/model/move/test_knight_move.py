@@ -1,7 +1,7 @@
 """
 test knight
 """
-from app.src.model.available_move_getter.available_moves import get_available_moves
+from app.src.model.game.game import Game
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -31,6 +31,8 @@ class TestKnight:
         piece_dict = {
             Square(Column.D, 4): Knight(Color.WHITE),
         }
+        game = Game()
+        game.piece_dict = piece_dict
         expected_moves = [
             KnightMove(Square(Column.D, 4), Square(Column.C, 6)),
             KnightMove(Square(Column.D, 4), Square(Column.E, 6)),
@@ -41,7 +43,7 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
             KnightMove(Square(Column.D, 4), Square(Column.B, 5)),
         ]
-        assert get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
+        assert game.square_available_moves(Square(Column.D, 4)) == expected_moves
 
     def test_available_moves2(self):
         """
@@ -59,13 +61,16 @@ class TestKnight:
         piece_dict = {
             Square(Column.B, 2): Knight(Color.WHITE),
         }
+        game = Game()
+        game.piece_dict = piece_dict
         expected_moves = [
             KnightMove(Square(Column.B, 2), Square(Column.A, 4)),
             KnightMove(Square(Column.B, 2), Square(Column.C, 4)),
             KnightMove(Square(Column.B, 2), Square(Column.D, 1)),
             KnightMove(Square(Column.B, 2), Square(Column.D, 3)),
         ]
-        assert get_available_moves(Square(Column.B, 2), piece_dict) == expected_moves
+
+        assert game.square_available_moves(Square(Column.B, 2)) == expected_moves
 
     def test_available_moves3(self):
         """
@@ -87,6 +92,8 @@ class TestKnight:
             Square(Column.E, 2): Piece(Color.BLACK),
             Square(Column.B, 5): Piece(Color.WHITE),
         }
+        game = Game()
+        game.piece_dict = piece_dict
         expected_moves = [
             KnightMove(Square(Column.D, 4), Square(Column.C, 6)),
             KnightMove(Square(Column.D, 4), Square(Column.C, 2)),
@@ -95,4 +102,4 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.F, 5)),
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
         ]
-        assert get_available_moves(Square(Column.D, 4), piece_dict) == expected_moves
+        assert game.square_available_moves(Square(Column.D, 4)) == expected_moves

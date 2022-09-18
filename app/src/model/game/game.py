@@ -2,18 +2,34 @@
 Game implementation.
 Manage the game and store the current state
 """
+import copy
 from itertools import product
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.logger import LOGGER
+from app.src.model.available_move_getter._available_squares_getter import (
+    _available_squares_bishop,
+    _available_squares_knight,
+    _available_squares_queen,
+    _available_squares_rook,
+    _available_squares_king,
+)
 from app.src.model.available_move_getter.available_moves import (
-    get_available_moves,
+    _get_pawn_first_movement,
+    _get_pawn_forward_moves,
+    _get_pawn_capture_moves,
 )
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.game_state import GameState
+from app.src.model.miscenaleous.utils import get_king
+from app.src.model.move.bishop_move import BishopMove
+from app.src.model.move.king_move import KingMove
+from app.src.model.move.knight_move import KnightMove
 from app.src.model.move.move import Move
+from app.src.model.move.queen_move import QueenMove
+from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
@@ -103,9 +119,8 @@ class Game:
         for square, piece in self.piece_dict.items():
             if piece.color == self.player:
                 available_moves.extend(
-                    get_available_moves(
+                    self.square_available_moves(
                         square,
-                        self.piece_dict,
                         legal_verification=True,
                     )
                 )
@@ -158,7 +173,9 @@ class Game:
             if Square(column, row) not in self.piece_dict:
                 config_value = config_value << 4
             else:
-                config_value = (config_value << 4) + self.piece_dict[Square(column, row)].bit_value()
+                config_value = (config_value << 4) + self.piece_dict[
+                    Square(column, row)
+                ].bit_value()
         # Update the history
         if config_value in self.config_history:
             self.config_history[config_value] += 1
@@ -167,3 +184,104 @@ class Game:
                 LOGGER.info("Draw with threefold rule")
         else:
             self.config_history[config_value] = 1
+
+    def square_available_moves(
+        self,
+        origin: Square,
+        legal_verification=False,
+    ) -> [Move]:
+        """
+        Return a list with all the available moves from origin
+        @param legal_verification: if a legal verification on the moves must be done
+        @param origin: Square origin for the move
+        @return: a list with the available moves from origin
+        """
+        # pylint: disable=R0916
+        LOGGER.info("Get available moves called for bishop")
+        origin_piece = self.piece_dict[origin]
+        available_moves = []
+        if type(origin_piece) == Bishop:
+            available_moves.extend(
+                [
+                    BishopMove(origin, destination)
+                    for destination in _available_squares_bishop(
+                    origin, self.piece_dict
+                )
+                ]
+            )
+        elif type(origin_piece) == Knight:
+            available_moves.extend(
+                [
+                    KnightMove(origin, destination)
+                    for destination in _available_squares_knight(
+                    origin, self.piece_dict
+                )
+                ]
+            )
+        elif type(origin_piece) == Queen:
+            available_moves.extend(
+                [
+                    QueenMove(origin, destination)
+                    for destination in _available_squares_queen(origin, self.piece_dict)
+                ]
+            )
+        elif type(origin_piece) == Rook:
+            available_moves.extend(
+                [
+                    RookMove(origin, destination)
+                    for destination in _available_squares_rook(origin, self.piece_dict)
+                ]
+            )
+        # king
+        elif type(origin_piece) == King:
+            available_moves.extend(
+                [
+                    KingMove(origin, destination)
+                    for destination in _available_squares_king(origin, self.piece_dict)
+                ]
+            )
+        # pawn
+        elif type(origin_piece) == Pawn:
+            # First movement
+            available_moves = _get_pawn_first_movement(origin, self.piece_dict)
+            # Forward move
+            available_moves.extend(_get_pawn_forward_moves(origin, self.piece_dict))
+            # Capture on the right
+            available_moves.extend(_get_pawn_capture_moves(origin, self.piece_dict))
+            return available_moves
+        else:
+            raise ValueError("Unknown pieces in origin")
+        # Remove moves if they are illegal
+        if legal_verification:
+            return [move for move in available_moves if self.is_move_legal(move)]
+        return available_moves
+
+    def is_square_in_check(self, color: Color, square: Square) -> bool:
+        """
+        Return a boolean indicating if a piece in a different color can move
+        to square (indicates if a piece of color *color* is in check)
+        @param color: color of the piece that we check if it can be taken
+        @param square: the square where we check if it can be taken
+        @return: boolean
+        """
+        return any(
+            piece.color != color
+            and square
+            in list(map(lambda x: x.destination, self.square_available_moves(origin)))
+            for origin, piece in self.piece_dict.items()
+        )
+
+    def is_move_legal(
+        self,
+        move: Move,
+    ) -> bool:
+        """
+        Return a boolean value indicating whether the move is legal or not.
+        Applies the move in a copy, and check if the king is in the destination of opposite moves
+        @return:
+        """
+        game_copy = copy.deepcopy(self)
+        current_color = game_copy.piece_dict[move.origin].color
+        king_square = get_king(game_copy.piece_dict, current_color)
+        move.apply_move(game_copy.piece_dict)
+        return not game_copy.is_square_in_check(current_color, king_square)

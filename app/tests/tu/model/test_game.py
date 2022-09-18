@@ -128,10 +128,73 @@ def test_update_config_history():
         Square(Column.F, 5): King(Color.BLACK),
         Square(Column.E, 2): Bishop(Color.BLACK),
         Square(Column.B, 5): Pawn(Color.WHITE),
-        Square(Column.B, 2): Queen(Color.WHITE)
+        Square(Column.B, 2): Queen(Color.WHITE),
     }
     game = Game()
     game.piece_dict = piece_dict
     game.update_config_history()
-    expected_bit_value = 0xd00c00000000000000b000001000e0000002000 << 64
+    expected_bit_value = 0xD00C00000000000000B000001000E0000002000 << 64
     assert game.config_history[expected_bit_value] == 1
+
+
+def test_is_square_in_check():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | |B| | |
+    5 | | | | | | | | |
+    4 | | | |X| | | | |
+    3 | | | | | | | | |
+    2 | | | | | | | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    @return:
+    """
+    game = Game()
+    piece_dict = {
+        Square(Column.F, 6): Bishop(Color.BLACK),
+    }
+    game.piece_dict = piece_dict
+    assert game.is_square_in_check(Color.WHITE, Square(Column.D, 4))
+
+
+def test_is_square_not_in_check():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | |B| | |
+    5 | | | | | | | | |
+    4 | | | |X| | | | |
+    3 | | | | | | | | |
+    2 | | | | | | | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    @return:
+    """
+    game = Game()
+    piece_dict = {
+        Square(Column.F, 6): Rook(Color.BLACK),
+    }
+    game.piece_dict = piece_dict
+    assert not game.is_square_in_check(Color.WHITE, Square(Column.D, 4))
+
+
+def test_is_square_not_in_check2():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | | | | |
+    5 | | | | | | | | |
+    4 | | | |B| | | | |
+    3 | | | | | | | | |
+    2 | | | | | | | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    @return:
+    """
+    game = Game()
+    piece_dict = {
+        Square(Column.D, 4): Rook(Color.WHITE),
+    }
+    game.piece_dict = piece_dict
+    assert not game.is_square_in_check(Color.WHITE, Square(Column.D, 4))
