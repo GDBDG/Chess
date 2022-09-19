@@ -5,8 +5,10 @@ from app.src.model.game.game import Game
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.move.en_passant import EnPassant
 from app.src.model.move.knight_promotion import KnightPromotion
 from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
+from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
 from app.src.model.move.pawn_capture import CaptureMove
 from app.src.model.move.pawn_move import PawnMove
 from app.src.model.move.queen_promotion import QueenPromotion
@@ -165,12 +167,106 @@ def test_initial_move():
     game = Game()
     game.piece_dict = piece_dict
     expected_white = [
-        PawnMove(Square(Column.E, 2), Square(Column.E, 4)),
+        Pawn2SquareMove(Square(Column.E, 2), Square(Column.E, 4)),
         PawnMove(Square(Column.E, 2), Square(Column.E, 3)),
     ]
     expected_black = [
-        PawnMove(Square(Column.C, 7), Square(Column.C, 5)),
+        Pawn2SquareMove(Square(Column.C, 7), Square(Column.C, 5)),
         PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
     ]
     assert game.square_available_moves(Square(Column.E, 2)) == expected_white
     assert game.square_available_moves(Square(Column.C, 7)) == expected_black
+
+
+def test_en_passant_available_destination():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | |x| | |
+    5 | | | | | |B|W|B|
+    4 |W|B|W| | | | | |
+    3 | | |x| | | | | |
+    2 | | | | | | | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    Test that the correct destination is returned if en passant available
+    @return:
+    """
+    piece_dict = {
+        Square(Column.A, 4): Pawn(Color.WHITE),
+        Square(Column.B, 4): Pawn(Color.BLACK),
+        Square(Column.C, 4): Pawn(Color.WHITE),
+        Square(Column.F, 5): Pawn(Color.BLACK),
+        Square(Column.G, 5): Pawn(Color.WHITE),
+        Square(Column.H, 5): Pawn(Color.BLACK),
+    }
+    game = Game()
+    game.piece_dict = piece_dict
+
+    last_move_white = Pawn2SquareMove(
+        Square(Column.C, 2),
+        Square(Column.C, 4),
+    )
+    game.move_historic.append(last_move_white)
+    expected_moves = [
+        PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
+        EnPassant(Square(Column.B, 4), Square(Column.C, 3)),
+    ]
+    assert game.square_available_moves(Square(Column.B, 4)) == expected_moves
+
+    last_move_black = Pawn2SquareMove(
+        Square(Column.F, 7),
+        Square(Column.F, 5),
+    )
+    game.move_historic.append(last_move_black)
+    expected_moves = [
+        PawnMove(Square(Column.G, 5), Square(Column.G, 6)),
+        EnPassant(Square(Column.G, 5), Square(Column.F, 6)),
+    ]
+    assert game.square_available_moves(Square(Column.G, 5)) == expected_moves
+
+
+def test_en_passant_available_destination_none():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | |x| | |
+    5 | | | | | |B|W|B|
+    4 |W|B|W| | | | | |
+    3 | | |x| | | | | |
+    2 | | | | | | | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    Test that if the last move does not allow en passant, None is returned
+    @return:
+    """
+    piece_dict = {
+        Square(Column.A, 4): Pawn(Color.WHITE),
+        Square(Column.B, 4): Pawn(Color.BLACK),
+        Square(Column.C, 4): Pawn(Color.WHITE),
+        Square(Column.F, 5): Pawn(Color.BLACK),
+        Square(Column.G, 5): Pawn(Color.WHITE),
+        Square(Column.H, 5): Pawn(Color.BLACK),
+    }
+    game = Game()
+    game.piece_dict = piece_dict
+
+    last_move_white = PawnMove(
+        Square(Column.C, 3),
+        Square(Column.C, 4),
+    )
+    game.move_historic.append(last_move_white)
+    expected_moves = [
+        PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
+    ]
+    assert game.square_available_moves(Square(Column.B, 4)) == expected_moves
+
+    last_move_black = PawnMove(
+        Square(Column.F, 6),
+        Square(Column.F, 5),
+    )
+    expected_moves = [
+        PawnMove(Square(Column.G, 5), Square(Column.G, 6)),
+    ]
+    game.move_historic.append(last_move_black)
+    assert game.square_available_moves(Square(Column.G, 5)) == expected_moves

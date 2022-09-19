@@ -13,6 +13,7 @@ from app.src.model.available_move_getter._available_squares_getter import (
     _available_squares_queen,
     _available_squares_rook,
     _available_squares_king,
+    _step_next_move,
 )
 from app.src.model.available_move_getter.available_moves import (
     _get_pawn_first_movement,
@@ -25,9 +26,12 @@ from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.game_state import GameState
 from app.src.model.miscenaleous.utils import get_king
 from app.src.model.move.bishop_move import BishopMove
+from app.src.model.move.empty_move import EmptyMove
+from app.src.model.move.en_passant import EnPassant
 from app.src.model.move.king_move import KingMove
 from app.src.model.move.knight_move import KnightMove
 from app.src.model.move.move import Move
+from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
 from app.src.model.move.queen_move import QueenMove
 from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.bishop import Bishop
@@ -53,7 +57,7 @@ class Game:
         self.piece_dict: dict[Square, Piece] = {}
         self.set_initial_config()
         self.player = Color.WHITE
-        self.move_historic: [Move] = []
+        self.move_historic: [Move] = [EmptyMove()]
         self.config_history = {}
         self.state = GameState.RUNNING
 
@@ -248,6 +252,8 @@ class Game:
             available_moves.extend(_get_pawn_forward_moves(origin, self.piece_dict))
             # Capture on the right
             available_moves.extend(_get_pawn_capture_moves(origin, self.piece_dict))
+            # En passant
+            available_moves.extend(self._get_pawn_enpassant_moves(origin))
             return available_moves
         else:
             raise ValueError("Unknown pieces in origin")
@@ -285,3 +291,27 @@ class Game:
         king_square = get_king(game_copy.piece_dict, current_color)
         move.apply_move(game_copy.piece_dict)
         return not game_copy.is_square_in_check(current_color, king_square)
+
+    def _get_pawn_enpassant_moves(self, origin) -> [Move]:
+        """
+        Get the en passant move if available
+        @param origin:
+        @return:
+        """
+        available_moves = []
+        last_move = self.move_historic[-1]
+        if (
+            type(self.move_historic[-1]) == Pawn2SquareMove
+            and last_move.destination.row == origin.row
+            and abs(origin.column.value - last_move.destination.column.value) == 1
+        ):
+            available_moves.append(
+                EnPassant(
+                    origin,
+                    Square(
+                        last_move.destination.column,
+                        origin.row + _step_next_move(origin, self.piece_dict),
+                    ),
+                )
+            )
+        return available_moves

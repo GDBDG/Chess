@@ -4,6 +4,7 @@ Tests move application
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.move.en_passant import EnPassant
 from app.src.model.move.knight_promotion import KnightPromotion
 from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
 from app.src.model.move.move import Move
@@ -190,3 +191,34 @@ def test_apply_queen_promotion_capture():
     assert piece_dict[Square(Column.F, 1)] == Queen(Color.BLACK)
     assert Square(Column.E, 2) not in piece_dict
     assert capture
+
+
+def test_apply_en_passant():
+    """
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | | | | | |
+    5 | | | |p|P|p| | |
+    4 | | | | | | | | |
+    3 | | | | | | | | |
+    2 | | | | | | | | |
+    1 | | | | | | | | |
+       A B C D E F G H
+    Test that EnPassant Move is correctly applied
+    @return:
+    """
+    piece_dict = {
+        Square(Column.E, 5): Pawn(Color.WHITE),
+        Square(Column.F, 5): Pawn(Color.BLACK),
+        Square(Column.D, 5): Pawn(Color.BLACK),
+    }
+    move = EnPassant(
+        Square(Column.E, 5),
+        Square(Column.F, 6),
+    )
+    capture = move.apply_move(piece_dict)
+    assert capture
+    assert piece_dict[Square(Column.D, 5)] == Pawn(Color.BLACK)
+    assert piece_dict[Square(Column.F, 6)] == Pawn(Color.WHITE)
+    assert Square(Column.E, 5) not in piece_dict
+    assert Square(Column.F, 5) not in piece_dict

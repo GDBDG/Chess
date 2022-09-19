@@ -12,6 +12,7 @@ from app.src.model.miscenaleous.utils import _get_current_color
 from app.src.model.move.knight_promotion import KnightPromotion
 from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
 from app.src.model.move.move import Move
+from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
 from app.src.model.move.pawn_capture import CaptureMove
 from app.src.model.move.pawn_move import PawnMove
 from app.src.model.move.queen_promotion import QueenPromotion
@@ -92,7 +93,7 @@ def _get_pawn_first_movement(
         not in piece_dict
     ):
         available_moves.append(
-            PawnMove(
+            Pawn2SquareMove(
                 origin,
                 Square(
                     origin.column,

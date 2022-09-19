@@ -6,6 +6,7 @@ from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.move.knight_move import KnightMove
+from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
 from app.src.model.move.pawn_move import PawnMove
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
@@ -40,7 +41,7 @@ def test_available_moves_list():
             Square(Column.G, 1),
             Square(Column.H, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.A, 2),
             Square(Column.A, 4),
         ),
@@ -48,7 +49,7 @@ def test_available_moves_list():
             Square(Column.A, 2),
             Square(Column.A, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.B, 2),
             Square(Column.B, 4),
         ),
@@ -56,7 +57,7 @@ def test_available_moves_list():
             Square(Column.B, 2),
             Square(Column.B, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.C, 2),
             Square(Column.C, 4),
         ),
@@ -64,7 +65,7 @@ def test_available_moves_list():
             Square(Column.C, 2),
             Square(Column.C, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.D, 2),
             Square(Column.D, 4),
         ),
@@ -72,7 +73,7 @@ def test_available_moves_list():
             Square(Column.D, 2),
             Square(Column.D, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.E, 2),
             Square(Column.E, 4),
         ),
@@ -80,7 +81,7 @@ def test_available_moves_list():
             Square(Column.E, 2),
             Square(Column.E, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.F, 2),
             Square(Column.F, 4),
         ),
@@ -88,7 +89,7 @@ def test_available_moves_list():
             Square(Column.F, 2),
             Square(Column.F, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.G, 2),
             Square(Column.G, 4),
         ),
@@ -96,7 +97,7 @@ def test_available_moves_list():
             Square(Column.G, 2),
             Square(Column.G, 3),
         ),
-        PawnMove(
+        Pawn2SquareMove(
             Square(Column.H, 2),
             Square(Column.H, 4),
         ),
