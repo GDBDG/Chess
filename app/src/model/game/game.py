@@ -30,10 +30,13 @@ from app.src.model.move.empty_move import EmptyMove
 from app.src.model.move.en_passant import EnPassant
 from app.src.model.move.king_move import KingMove
 from app.src.model.move.knight_move import KnightMove
+from app.src.model.move.long_castling import LongCastling
 from app.src.model.move.move import Move
 from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
+from app.src.model.move.pawn_move import PawnMove
 from app.src.model.move.queen_move import QueenMove
 from app.src.model.move.rook_move import RookMove
+from app.src.model.move.short_castling import ShortCastling
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
@@ -60,6 +63,15 @@ class Game:
         self.move_historic: [Move] = [EmptyMove()]
         self.config_history = {}
         self.state = GameState.RUNNING
+        self.fifty_counter = 0
+        # Change to False when the king or the H rook has moved
+        self.white_short_castle_available = True
+        # Change to False when the king or the A rook has moved
+        self.white_long_castle_available = True
+        # Change to False when the king or the H rook has moved
+        self.black_short_castle_available = True
+        # Change to False when the king or the A rook has moved
+        self.black_long_castle_available = True
 
     def set_initial_config(self):
         """
@@ -145,14 +157,63 @@ class Game:
             LOGGER.error("Invalid move")
             raise InvalidMoveError(move)
         # Play the move
-        move.apply_move(self.piece_dict)
-        # Update the player who has to play
-        self.player = Color.BLACK if self.player == Color.WHITE else Color.WHITE
+        capture = move.apply_move(self.piece_dict)
         # Update the historic
         self.move_historic.append(move)
         self.update_config_history()
         # Update the game state
+        self.update_castling_state()
+        self.update_draw_state(capture)
+        # Update the player who has to play
+        self.player = Color.BLACK if self.player == Color.WHITE else Color.WHITE
+
+    def update_draw_state(self, capture: bool):
+        """
+        Update the counter for the 50 move rule
+        @param capture:boolean value if the last move was a capture
+        @return:
+        """
+        if capture or isinstance(self.move_historic[-1], PawnMove):
+            self.fifty_counter = 0
+        else:
+            self.fifty_counter += 1
+            if self.fifty_counter == 100:
+                self.state = GameState.DRAW
+        # Dead position
         # TODO
+
+    def update_castling_state(self):
+        """
+        After a move is played, update the game state (the castling variables, and detect a Draw)
+        Use the last move in history.
+        @return: None.
+        """
+        last_move = self.move_historic[-1]
+        # Castling state update
+        if self.player == Color.WHITE:
+            if isinstance(last_move, KingMove):
+                self.white_long_castle_available = False
+                self.white_short_castle_available = False
+            if isinstance(last_move, RookMove) and last_move.origin == Square(
+                Column.A, 1
+            ):
+                self.white_long_castle_available = False
+            if isinstance(last_move, RookMove) and last_move.origin == Square(
+                Column.H, 1
+            ):
+                self.white_short_castle_available = False
+        else:
+            if isinstance(last_move, KingMove):
+                self.black_long_castle_available = False
+                self.black_short_castle_available = False
+            if isinstance(last_move, RookMove) and last_move.origin == Square(
+                Column.A, 8
+            ):
+                self.black_long_castle_available = False
+            if isinstance(last_move, RookMove) and last_move.origin == Square(
+                Column.H, 8
+            ):
+                self.black_short_castle_available = False
 
     def update_config_history(self):
         """
@@ -189,13 +250,14 @@ class Game:
         else:
             self.config_history[config_value] = 1
 
-    def square_available_moves(
+    def square_available_moves_no_castling(
         self,
         origin: Square,
         legal_verification=False,
     ) -> [Move]:
         """
         Return a list with all the available moves from origin
+        The castling are in a separate function, to avoid recursion error
         @param legal_verification: if a legal verification on the moves must be done
         @param origin: Square origin for the move
         @return: a list with the available moves from origin
@@ -262,6 +324,20 @@ class Game:
             return [move for move in available_moves if self.is_move_legal(move)]
         return available_moves
 
+    def square_available_moves(self, origin, legal_verification=False) -> [Move]:
+        """
+        Return a list with all the available moves from origin
+        @param legal_verification:
+        @param origin:
+        @return:
+        """
+        available_moves = self.square_available_moves_no_castling(
+            origin, legal_verification
+        )
+        if type(self.piece_dict[origin]) == King:
+            available_moves.extend(self._available_castling(origin))
+        return available_moves
+
     def is_square_in_check(self, color: Color, square: Square) -> bool:
         """
         Return a boolean indicating if a piece in a different color can move
@@ -273,7 +349,12 @@ class Game:
         return any(
             piece.color != color
             and square
-            in list(map(lambda x: x.destination, self.square_available_moves(origin)))
+            in list(
+                map(
+                    lambda x: x.destination,
+                    self.square_available_moves_no_castling(origin),
+                )
+            )
             for origin, piece in self.piece_dict.items()
         )
 
@@ -314,4 +395,71 @@ class Game:
                     ),
                 )
             )
+        return available_moves
+
+    def _available_castling(self, origin: Square) -> [Move]:
+        """
+        |R|x|X|X|K| | | |
+         A B C D E F G H
+        neither the king nor the rook has moved
+        the king is not in check
+        x and X must be empty,
+        X must not be in check
+        (no need to check the position, since the king has not moved)
+
+        Check if the king can make a short castling,
+        and return the square destination
+        Return the castling available
+        @return:
+        """
+        long_castling_available = True
+        short_castling_available = True
+        available_moves = []
+        # check if the king is not in check
+        if self.is_square_in_check(self.player, origin):
+            long_castling_available = False
+            short_castling_available = False
+        # Long castling
+        # check if x are empty
+        if (
+            Square(Column.D, origin.row) in self.piece_dict
+            or Square(Column.C, origin.row) in self.piece_dict
+            or Square(Column.B, origin.row) in self.piece_dict
+        ):
+            long_castling_available = False
+        # check if X are not in check
+        if self.is_square_in_check(
+            self.player,
+            Square(Column.D, origin.row),
+        ) or self.is_square_in_check(
+            self.player,
+            Square(Column.C, origin.row),
+        ):
+            long_castling_available = False
+        # Short castling
+        # check if x are empty
+        if (
+            Square(Column.F, origin.row) in self.piece_dict
+            or Square(Column.G, origin.row) in self.piece_dict
+        ):
+            short_castling_available = False
+        # check if x are not in check
+        if self.is_square_in_check(
+            self.player,
+            Square(Column.F, origin.row),
+        ) or self.is_square_in_check(
+            self.player,
+            Square(Column.G, origin.row),
+        ):
+            short_castling_available = False
+        if (
+            (self.player == Color.WHITE and self.white_long_castle_available)
+            or (self.player == Color.BLACK and self.black_long_castle_available)
+        ) and long_castling_available:
+            available_moves.append(LongCastling(origin))
+        if (
+            (self.player == Color.WHITE and self.white_short_castle_available)
+            or (self.player == Color.BLACK and self.black_short_castle_available)
+        ) and short_castling_available:
+            available_moves.append(ShortCastling(origin))
         return available_moves

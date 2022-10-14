@@ -43,8 +43,14 @@ def test_available_move_square_forward():
     game.piece_dict = piece_dict
     expected_white_move = [PawnMove(Square(Column.E, 3), Square(Column.E, 4))]
     expected_black_move = [PawnMove(Square(Column.C, 6), Square(Column.C, 5))]
-    assert game.square_available_moves(Square(Column.E, 3)) == expected_white_move
-    assert game.square_available_moves(Square(Column.C, 6)) == expected_black_move
+    assert (
+        game.square_available_moves_no_castling(Square(Column.E, 3))
+        == expected_white_move
+    )
+    assert (
+        game.square_available_moves_no_castling(Square(Column.C, 6))
+        == expected_black_move
+    )
 
 
 def test_available_move_promotion():
@@ -75,8 +81,14 @@ def test_available_move_promotion():
         QueenPromotion(Square(Column.C, 2), Square(Column.C, 1)),
         KnightPromotion(Square(Column.C, 2), Square(Column.C, 1)),
     ]
-    assert game.square_available_moves(Square(Column.E, 7)) == expected_white_move
-    assert game.square_available_moves(Square(Column.C, 2)) == expected_black_move
+    assert (
+        game.square_available_moves_no_castling(Square(Column.E, 7))
+        == expected_white_move
+    )
+    assert (
+        game.square_available_moves_no_castling(Square(Column.C, 2))
+        == expected_black_move
+    )
 
 
 def test_available_capture():
@@ -113,8 +125,12 @@ def test_available_capture():
         CaptureMove(Square(Column.C, 6), Square(Column.D, 5)),
         CaptureMove(Square(Column.C, 6), Square(Column.B, 5)),
     ]
-    assert game.square_available_moves(Square(Column.E, 3)) == expected_white
-    assert game.square_available_moves(Square(Column.C, 6)) == expected_black
+    assert (
+        game.square_available_moves_no_castling(Square(Column.E, 3)) == expected_white
+    )
+    assert (
+        game.square_available_moves_no_castling(Square(Column.C, 6)) == expected_black
+    )
 
 
 def test_available_promotion():
@@ -143,7 +159,9 @@ def test_available_promotion():
         QueenPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
         KnightPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
     ]
-    assert game.square_available_moves(Square(Column.F, 7)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.F, 7)) == expected_moves
+    )
 
 
 def test_initial_move():
@@ -174,8 +192,12 @@ def test_initial_move():
         Pawn2SquareMove(Square(Column.C, 7), Square(Column.C, 5)),
         PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
     ]
-    assert game.square_available_moves(Square(Column.E, 2)) == expected_white
-    assert game.square_available_moves(Square(Column.C, 7)) == expected_black
+    assert (
+        game.square_available_moves_no_castling(Square(Column.E, 2)) == expected_white
+    )
+    assert (
+        game.square_available_moves_no_castling(Square(Column.C, 7)) == expected_black
+    )
 
 
 def test_en_passant_available_destination():
@@ -212,7 +234,9 @@ def test_en_passant_available_destination():
         PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
         EnPassant(Square(Column.B, 4), Square(Column.C, 3)),
     ]
-    assert game.square_available_moves(Square(Column.B, 4)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.B, 4)) == expected_moves
+    )
 
     last_move_black = Pawn2SquareMove(
         Square(Column.F, 7),
@@ -223,7 +247,9 @@ def test_en_passant_available_destination():
         PawnMove(Square(Column.G, 5), Square(Column.G, 6)),
         EnPassant(Square(Column.G, 5), Square(Column.F, 6)),
     ]
-    assert game.square_available_moves(Square(Column.G, 5)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.G, 5)) == expected_moves
+    )
 
 
 def test_en_passant_available_destination_none():
@@ -259,7 +285,9 @@ def test_en_passant_available_destination_none():
     expected_moves = [
         PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
     ]
-    assert game.square_available_moves(Square(Column.B, 4)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.B, 4)) == expected_moves
+    )
 
     last_move_black = PawnMove(
         Square(Column.F, 6),
@@ -269,4 +297,6 @@ def test_en_passant_available_destination_none():
         PawnMove(Square(Column.G, 5), Square(Column.G, 6)),
     ]
     game.move_historic.append(last_move_black)
-    assert game.square_available_moves(Square(Column.G, 5)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.G, 5)) == expected_moves
+    )

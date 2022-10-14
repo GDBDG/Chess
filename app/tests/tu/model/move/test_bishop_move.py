@@ -1,5 +1,5 @@
 """
-Tests for the bishop moves
+Test that it is possible to get the bishop moves
 """
 from app.src.model.game.game import Game
 from app.src.model.game.square import Square
@@ -44,4 +44,6 @@ def test_bishop_move():
         BishopMove(Square(Column.D, 4), Square(Column.C, 3)),
         BishopMove(Square(Column.D, 4), Square(Column.B, 2)),
     ]
-    assert game.square_available_moves(Square(Column.D, 4)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+    )

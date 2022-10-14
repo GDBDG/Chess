@@ -68,7 +68,7 @@ def test_is_not_legal2():
     4 | | | | | | | | |
     3 | | | | | | | | |
     2 | | | | | | | | |
-    1 |K| |Pi||r| | | |
+    1 |K| |O| |r| | | |
        A B C D E F G H
     @return:
     """
@@ -111,6 +111,8 @@ def test_get_move_with_legal_verification():
         RookMove(Square(Column.C, 1), Square(Column.B, 1)),
     ]
     assert (
-        game.square_available_moves(Square(Column.C, 1), legal_verification=True)
+        game.square_available_moves_no_castling(
+            Square(Column.C, 1), legal_verification=True
+        )
         == expected_moves
     )

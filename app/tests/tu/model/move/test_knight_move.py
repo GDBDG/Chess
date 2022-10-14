@@ -43,7 +43,10 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
             KnightMove(Square(Column.D, 4), Square(Column.B, 5)),
         ]
-        assert game.square_available_moves(Square(Column.D, 4)) == expected_moves
+        assert (
+            game.square_available_moves_no_castling(Square(Column.D, 4))
+            == expected_moves
+        )
 
     def test_available_moves2(self):
         """
@@ -70,7 +73,10 @@ class TestKnight:
             KnightMove(Square(Column.B, 2), Square(Column.D, 3)),
         ]
 
-        assert game.square_available_moves(Square(Column.B, 2)) == expected_moves
+        assert (
+            game.square_available_moves_no_castling(Square(Column.B, 2))
+            == expected_moves
+        )
 
     def test_available_moves3(self):
         """
@@ -102,4 +108,7 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.F, 5)),
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
         ]
-        assert game.square_available_moves(Square(Column.D, 4)) == expected_moves
+        assert (
+            game.square_available_moves_no_castling(Square(Column.D, 4))
+            == expected_moves
+        )

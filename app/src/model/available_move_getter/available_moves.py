@@ -120,7 +120,7 @@ def _get_pawn_capture_moves(
             Column(origin.column.value + 1),
             origin.row + _step_next_move(origin, piece_dict),
         )
-        _add_capture_move(origin, destination, piece_dict, available_moves)
+        _add_pawn_capture_move(origin, destination, piece_dict, available_moves)
     # capture on the left
     if origin.column != Column.A:
         destination = Square(
@@ -128,11 +128,11 @@ def _get_pawn_capture_moves(
             origin.row + _step_next_move(origin, piece_dict),
         )
         # Promotion
-        _add_capture_move(origin, destination, piece_dict, available_moves)
+        _add_pawn_capture_move(origin, destination, piece_dict, available_moves)
     return available_moves
 
 
-def _add_capture_move(
+def _add_pawn_capture_move(
     origin: Square,
     destination: Square,
     piece_dict: dict[Square, Piece],

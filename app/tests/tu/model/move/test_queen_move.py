@@ -55,4 +55,6 @@ def test_queen_move():
         QueenMove(Square(Column.D, 4), Square(Column.B, 6)),
         QueenMove(Square(Column.D, 4), Square(Column.A, 7)),
     ]
-    assert game.square_available_moves(Square(Column.D, 4)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+    )

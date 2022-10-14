@@ -7,13 +7,17 @@ from app.src.model.miscenaleous.column import Column
 from app.src.model.move.en_passant import EnPassant
 from app.src.model.move.knight_promotion import KnightPromotion
 from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
+from app.src.model.move.long_castling import LongCastling
 from app.src.model.move.move import Move
 from app.src.model.move.queen_promotion import QueenPromotion
 from app.src.model.move.queen_promotion_capture import QueenPromotionCapture
+from app.src.model.move.short_castling import ShortCastling
+from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
 from app.src.model.pieces.pawn import Pawn
 from app.src.model.pieces.piece import Piece
 from app.src.model.pieces.queen import Queen
+from app.src.model.pieces.rook import Rook
 
 
 def test_apply_move_no_capture():
@@ -222,3 +226,43 @@ def test_apply_en_passant():
     assert piece_dict[Square(Column.F, 6)] == Pawn(Color.WHITE)
     assert Square(Column.E, 5) not in piece_dict
     assert Square(Column.F, 5) not in piece_dict
+
+
+def test_apply_long_castling():
+    """
+    Test that a valid long castling is applied correctly
+    1 |R| | | |K| | | |
+       A B C D E F G H
+    1 | | |K|R| | | | |
+       A B C D E F G H
+    @return:
+    """
+    piece_dict = {
+        Square(Column.E, 1): King(Color.WHITE),
+        Square(Column.A, 1): Rook(Color.WHITE),
+    }
+    LongCastling(Square(Column.E, 1)).apply_move(piece_dict)
+    assert Square(Column.A, 1) not in piece_dict
+    assert Square(Column.E, 1) not in piece_dict
+    assert piece_dict[Square(Column.C, 1)] == King(Color.WHITE)
+    assert piece_dict[Square(Column.D, 1)] == Rook(Color.WHITE)
+
+
+def test_apply_short_castling():
+    """
+    Test that a valid long castling is applied correctly
+    1 | | | | |K| | |R|
+       A B C D E F G H
+    1 | | | | | |R|K| |
+       A B C D E F G H
+    @return:
+    """
+    piece_dict = {
+        Square(Column.E, 1): King(Color.WHITE),
+        Square(Column.H, 1): Rook(Color.WHITE),
+    }
+    ShortCastling(Square(Column.E, 1)).apply_move(piece_dict)
+    assert Square(Column.H, 1) not in piece_dict
+    assert Square(Column.E, 1) not in piece_dict
+    assert piece_dict[Square(Column.G, 1)] == King(Color.WHITE)
+    assert piece_dict[Square(Column.F, 1)] == Rook(Color.WHITE)

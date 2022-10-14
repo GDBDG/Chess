@@ -1,10 +1,10 @@
 """
 Capture move (for the pawn
 """
-from app.src.model.move.move import Move
+from app.src.model.move.pawn_move import PawnMove
 
 
-class CaptureMove(Move):
+class CaptureMove(PawnMove):
     """
     Capture
     """

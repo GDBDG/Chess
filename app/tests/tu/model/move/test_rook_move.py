@@ -42,4 +42,6 @@ def test_available_moves():
         RookMove(Square(Column.D, 4), Square(Column.D, 2)),
         RookMove(Square(Column.D, 4), Square(Column.D, 1)),
     ]
-    assert game.square_available_moves(Square(Column.D, 4)) == expected_moves
+    assert (
+        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+    )
