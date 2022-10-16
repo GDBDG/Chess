@@ -112,14 +112,14 @@ def test_available_moves_list():
 def test_update_config_history():
     """
     Test the method update_config_history
-    8 | | | |  | | | | |
-    7 | | | |  | | | | |
-    6 | | | |  |R| | | |
-    5 | |P| |  | |k| | |
-    4 | | | |KN| | | | |
-    3 | | | |  | | | | |
-    2 | |Q| |  |b| | | |
-    1 | | | |  | | | | |
+    8 | | | | | | | | |
+    7 | | | | | | | | |
+    6 | | | | |R| | | |
+    5 | |P| | | |k| | |
+    4 | | | |N| | | | |
+    3 | | | | | | | | |
+    2 | |Q| | |b| | | |
+    1 | | | | | | | | |
        A B C D  E F G H
     @return: None
     """
