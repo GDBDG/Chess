@@ -5,12 +5,15 @@ Tests for the draw rules:
 """
 import pytest
 
+from app.src.model.game.board import Board
 from app.src.model.game.game import Game
+from app.src.model.game.game_state import GameState
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.miscenaleous.game_state import GameState
 from app.src.model.move.king_move import KingMove
+from app.src.model.move.knight_move import KnightMove
+from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
 from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
@@ -33,14 +36,16 @@ def test_stalemate():
     @return:
     """
     game = Game()
-    game.piece_dict = {
+    piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 2): Rook(Color.BLACK),
         Square(Column.G, 3): Rook(Color.BLACK),
     }
-    game.color = Color.WHITE
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert not game.available_moves_list()
-    assert game.state == GameState.DRAW
+    assert game.game_state.state == GameState.DRAW
 
 
 @pytest.mark.skip(reason="not yet implemented")
@@ -60,11 +65,14 @@ def test_dead_position1():
     @return:
     """
     game = Game()
-    game.piece_dict = {
+    piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
     }
-    assert game.state == GameState.DRAW
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
+    assert game.game_state.state == GameState.DRAW
 
 
 @pytest.mark.skip(reason="not yet implemented")
@@ -84,12 +92,15 @@ def test_dead_position2():
     @return:
     """
     game = Game()
-    game.piece_dict = {
+    piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
         Square(Column.D, 3): Bishop(Color.WHITE),
     }
-    assert game.state == GameState.DRAW
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
+    assert game.game_state.state == GameState.DRAW
 
 
 @pytest.mark.skip(reason="not yet implemented")
@@ -109,12 +120,15 @@ def test_dead_position3():
     @return:
     """
     game = Game()
-    game.piece_dict = {
+    piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
         Square(Column.D, 3): Knight(Color.WHITE),
     }
-    assert game.state == GameState.DRAW
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
+    assert game.game_state.state == GameState.DRAW
 
 
 @pytest.mark.skip(reason="not yet implemented")
@@ -134,13 +148,16 @@ def test_dead_position4():
     @return:
     """
     game = Game()
-    game.piece_dict = {
+    piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
         Square(Column.D, 3): Knight(Color.WHITE),
         Square(Column.D, 5): Knight(Color.BLACK),
     }
-    assert game.state == GameState.DRAW
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
+    assert game.game_state.state == GameState.DRAW
 
 
 def test_threefold_repetition_rule():
@@ -158,13 +175,16 @@ def test_threefold_repetition_rule():
     @return:
     """
     game = Game()
-    game.piece_dict = {
+    piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
         Square(Column.A, 8): Rook(Color.WHITE),
         Square(Column.B, 7): Rook(Color.BLACK),
     }
-    game.player = Color.BLACK
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
+    game.game_state.player = Color.BLACK
     move_list = [
         RookMove(Square(Column.B, 7), Square(Column.A, 7)),  # 1
         RookMove(
@@ -196,12 +216,38 @@ def test_threefold_repetition_rule():
         ),  # 3
     ]
     list(map(game.apply_move, move_list))
-    assert game.state == GameState.DRAW
+    assert game.game_state.state == GameState.DRAW
 
 
-@pytest.mark.skip(reason="not yet implemented")
 def test_fifty_move():
     """
     Test the fifty move rule.
     @return:
     """
+    game = Game()
+    game.game_state.fifty_counter = 98
+    game.apply_move(KnightMove(Square(Column.G, 1), Square(Column.F, 3)))
+    assert game.game_state.fifty_counter == 99
+    assert game.game_state.state == GameState.RUNNING
+    game.apply_move(KnightMove(Square(Column.B, 8), Square(Column.C, 6)))
+    assert game.game_state.fifty_counter == 100
+    assert game.game_state.state == GameState.DRAW
+    # Assert that a capture reset the counter
+    game = Game()
+    game.fifty_counter = 98
+    piece_dict = {
+        Square(Column.A, 1): King(Color.WHITE),
+        Square(Column.H, 1): Rook(Color.WHITE),
+        Square(Column.H, 2): Rook(Color.BLACK),
+    }
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
+
+    game.apply_move(RookMove(Square(Column.H, 1), Square(Column.H, 2)))
+    assert game.fifty_counter == 0
+    # Assert that a pawn move reset the counter
+    game = Game()
+    game.game_state.fifty_counter = 98
+    game.apply_move(Pawn2SquareMove(Square(Column.E, 2), Square(Column.E, 4)))
+    assert game.fifty_counter == 0

@@ -1,10 +1,11 @@
 """
 test knight
 """
-from app.src.model.game.game import Game
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.knight_move import KnightMove
 from app.src.model.pieces.knight import Knight
 from app.src.model.pieces.piece import Piece
@@ -31,8 +32,8 @@ class TestKnight:
         piece_dict = {
             Square(Column.D, 4): Knight(Color.WHITE),
         }
-        game = Game()
-        game.piece_dict = piece_dict
+        board = Board()
+        board.piece_dict = piece_dict
         expected_moves = [
             KnightMove(Square(Column.D, 4), Square(Column.C, 6)),
             KnightMove(Square(Column.D, 4), Square(Column.E, 6)),
@@ -44,7 +45,7 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 5)),
         ]
         assert (
-            game.square_available_moves_no_castling(Square(Column.D, 4))
+            square_available_moves_no_castling(Square(Column.D, 4), board)
             == expected_moves
         )
 
@@ -64,8 +65,8 @@ class TestKnight:
         piece_dict = {
             Square(Column.B, 2): Knight(Color.WHITE),
         }
-        game = Game()
-        game.piece_dict = piece_dict
+        board = Board()
+        board.piece_dict = piece_dict
         expected_moves = [
             KnightMove(Square(Column.B, 2), Square(Column.A, 4)),
             KnightMove(Square(Column.B, 2), Square(Column.C, 4)),
@@ -74,7 +75,7 @@ class TestKnight:
         ]
 
         assert (
-            game.square_available_moves_no_castling(Square(Column.B, 2))
+            square_available_moves_no_castling(Square(Column.B, 2), board)
             == expected_moves
         )
 
@@ -98,8 +99,8 @@ class TestKnight:
             Square(Column.E, 2): Piece(Color.BLACK),
             Square(Column.B, 5): Piece(Color.WHITE),
         }
-        game = Game()
-        game.piece_dict = piece_dict
+        board = Board()
+        board.piece_dict = piece_dict
         expected_moves = [
             KnightMove(Square(Column.D, 4), Square(Column.C, 6)),
             KnightMove(Square(Column.D, 4), Square(Column.C, 2)),
@@ -109,6 +110,6 @@ class TestKnight:
             KnightMove(Square(Column.D, 4), Square(Column.B, 3)),
         ]
         assert (
-            game.square_available_moves_no_castling(Square(Column.D, 4))
+            square_available_moves_no_castling(Square(Column.D, 4), board)
             == expected_moves
         )

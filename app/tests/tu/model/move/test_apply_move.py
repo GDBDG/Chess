@@ -1,6 +1,7 @@
 """
 Tests move application
 """
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -37,8 +38,10 @@ def test_apply_move_no_capture():
     piece_dict = {
         Square(Column.E, 2): Piece(Color.WHITE),
     }
+    board = Board()
+    board.piece_dict = piece_dict
     move = Move(Square(Column.E, 2), Square(Column.E, 4))
-    capture = move.apply_move(piece_dict)
+    capture = move.apply_move(board)
     assert piece_dict[Square(Column.E, 4)] == Piece(Color.WHITE)
     assert Square(Column.E, 2) not in piece_dict
     assert not capture
@@ -58,12 +61,14 @@ def test_apply_move_capture():
        A B C D E F G H
     @return:
     """
+    board = Board()
     piece_dict = {
         Square(Column.E, 2): Piece(Color.WHITE),
         Square(Column.E, 4): Piece(Color.BLACK),
     }
+    board.piece_dict = piece_dict
     move = Move(Square(Column.E, 2), Square(Column.E, 4))
-    capture = move.apply_move(piece_dict)
+    capture = move.apply_move(board)
     assert piece_dict[Square(Column.E, 4)] == Piece(Color.WHITE)
     assert Square(Column.E, 2) not in piece_dict
     assert capture

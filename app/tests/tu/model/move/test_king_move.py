@@ -1,10 +1,12 @@
 """
 Test tht it is possible to get the king moves
 """
+from app.src.model.game.board import Board
 from app.src.model.game.game import Game
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.king_move import KingMove
 from app.src.model.move.long_castling import LongCastling
 from app.src.model.move.rook_move import RookMove
@@ -39,10 +41,8 @@ def test_available_king_moves():
         Square(Column.E, 4): Pawn(Color.WHITE),
         Square(Column.C, 4): Pawn(Color.BLACK),
     }
-    game = Game()
-    game.white_long_castle_available = False
-    game.white_short_castle_available = False
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_moves = [
         KingMove(Square(Column.D, 4), Square(Column.C, 3)),
         KingMove(Square(Column.D, 4), Square(Column.C, 4)),
@@ -53,7 +53,7 @@ def test_available_king_moves():
         KingMove(Square(Column.D, 4), Square(Column.E, 5)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+        square_available_moves_no_castling(Square(Column.D, 4), board) == expected_moves
     )
 
 
@@ -69,7 +69,9 @@ def test_is_short_castling_available():
         Square(Column.H, 1): Rook(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert short_castle in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -88,10 +90,12 @@ def test_is_short_castling_not_available1():
         Square(Column.H, 1): Rook(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     game.apply_move(RookMove(Square(Column.H, 1), Square(Column.H, 2)))
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
-    game.player = Color.WHITE
+    game.game_state.player = Color.WHITE
     # rook has moved
     game.apply_move(RookMove(Square(Column.H, 2), Square(Column.H, 1)))
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
@@ -107,7 +111,9 @@ def test_is_short_castling_not_available12():
         Square(Column.H, 1): Rook(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     game.apply_move(KingMove(Square(Column.E, 1), Square(Column.E, 2)))
     assert short_castle not in game.square_available_moves(Square(Column.E, 2))
 
@@ -132,7 +138,9 @@ def test_is_short_castling_not_available13():
         Square(Column.A, 1): Rook(Color.BLACK),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -158,7 +166,9 @@ def test_is_short_castling_not_available14():
         Square(Column.F, 1): Piece(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
     # G not empty
     piece_dict = {
@@ -166,7 +176,9 @@ def test_is_short_castling_not_available14():
         Square(Column.H, 1): Rook(Color.WHITE),
         Square(Column.G, 1): Piece(Color.WHITE),
     }
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -192,7 +204,9 @@ def test_is_short_castling_not_available15():
         Square(Column.F, 2): Rook(Color.BLACK),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
     # Column G in check
     piece_dict = {
@@ -200,7 +214,9 @@ def test_is_short_castling_not_available15():
         Square(Column.H, 1): Rook(Color.WHITE),
         Square(Column.G, 2): Rook(Color.BLACK),
     }
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert short_castle not in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -217,7 +233,9 @@ def test_is_long_castling_available():
         Square(Column.B, 2): Rook(Color.BLACK),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -235,10 +253,12 @@ def test_is_long_castling_not_available1():
         Square(Column.A, 1): Rook(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     game.apply_move(RookMove(Square(Column.A, 1), Square(Column.A, 2)))
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
-    game.player = Color.WHITE
+    game.game_state.player = Color.WHITE
     # rook has moved
     game.apply_move(RookMove(Square(Column.A, 2), Square(Column.A, 1)))
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
@@ -254,7 +274,9 @@ def test_is_long_castling_not_available12():
         Square(Column.A, 1): Rook(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     game.apply_move(KingMove(Square(Column.E, 1), Square(Column.E, 2)))
     assert long_castle not in game.square_available_moves(Square(Column.E, 2))
 
@@ -279,7 +301,9 @@ def test_is_long_castling_not_available13():
         Square(Column.H, 1): Rook(Color.BLACK),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -306,7 +330,9 @@ def test_is_long_castling_not_available14():
         Square(Column.B, 1): Piece(Color.WHITE),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
 
     # C not empty
@@ -315,7 +341,9 @@ def test_is_long_castling_not_available14():
         Square(Column.A, 1): Rook(Color.WHITE),
         Square(Column.C, 1): Piece(Color.WHITE),
     }
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
 
     # D not empty
@@ -324,7 +352,9 @@ def test_is_long_castling_not_available14():
         Square(Column.A, 1): Rook(Color.WHITE),
         Square(Column.D, 1): Piece(Color.WHITE),
     }
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
 
 
@@ -350,7 +380,9 @@ def test_is_long_castling_not_available15():
         Square(Column.C, 2): Rook(Color.BLACK),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))
 
     # Column D in check
@@ -360,5 +392,7 @@ def test_is_long_castling_not_available15():
         Square(Column.D, 2): Rook(Color.BLACK),
     }
     game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
+    game.board = board
     assert long_castle not in game.square_available_moves(Square(Column.E, 1))

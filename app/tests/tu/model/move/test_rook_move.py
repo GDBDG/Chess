@@ -1,10 +1,11 @@
 """
 Unit tests for the rook move
 """
-from app.src.model.game.game import Game
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.piece import Piece
 from app.src.model.pieces.rook import Rook
@@ -28,8 +29,8 @@ def test_available_moves():
         Square(Column.D, 6): Piece(Color.WHITE),
         Square(Column.G, 4): Piece(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_moves = [
         RookMove(Square(Column.D, 4), Square(Column.E, 4)),
         RookMove(Square(Column.D, 4), Square(Column.F, 4)),
@@ -43,5 +44,5 @@ def test_available_moves():
         RookMove(Square(Column.D, 4), Square(Column.D, 1)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+        square_available_moves_no_castling(Square(Column.D, 4), board) == expected_moves
     )

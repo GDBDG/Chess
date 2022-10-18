@@ -25,6 +25,18 @@ class Square:
         self.column: Column = column
         self.row = row
 
+    @staticmethod
+    def add_square(column: int, row: int, available_squares):
+        """
+        Add the square with coordinate column and row in available_squares
+        if it is in square_list
+        @param row: row coordinate int value
+        @param column: column coordinate (int value)
+        @param available_squares: a list of square where the square will be added
+        """
+        if 1 <= column <= 8 and 1 <= row <= 8:
+            available_squares.append(Square(Column(column), row))
+
     def __repr__(self):
         return f"({self.column.name},{self.row})"
 

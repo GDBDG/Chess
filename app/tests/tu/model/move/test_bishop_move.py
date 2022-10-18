@@ -1,10 +1,11 @@
 """
 Test that it is possible to get the bishop moves
 """
-from app.src.model.game.game import Game
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.bishop_move import BishopMove
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.piece import Piece
@@ -31,8 +32,8 @@ def test_bishop_move():
         Square(Column.F, 6): Piece(Color.WHITE),
         Square(Column.B, 2): Piece(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_moves = [
         BishopMove(Square(Column.D, 4), Square(Column.E, 5)),
         BishopMove(Square(Column.D, 4), Square(Column.E, 3)),
@@ -45,5 +46,5 @@ def test_bishop_move():
         BishopMove(Square(Column.D, 4), Square(Column.B, 2)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+        square_available_moves_no_castling(Square(Column.D, 4), board) == expected_moves
     )

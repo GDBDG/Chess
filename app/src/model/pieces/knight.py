@@ -1,7 +1,12 @@
 """
 Knight
 """
+from copy import copy
+
+from app.src.model.game.board import Board
+from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
+from app.src.model.move.knight_move import KnightMove
 from app.src.model.pieces.piece import Piece
 
 
@@ -9,6 +14,60 @@ class Knight(Piece):
     """
     Knight class
     """
+    move = KnightMove
+
+    def available_squares(self, origin: Square, board: Board):
+        available_squares: list[Square] = []
+        color = board.get_current_color(origin)
+        # up squares
+        Square.add_square(
+            origin.column.value - 1,
+            origin.row + 2,
+            available_squares,
+        )
+        Square.add_square(
+            origin.column.value + 1,
+            origin.row + 2,
+            available_squares,
+        )
+        # down squares
+        Square.add_square(
+            origin.column.value - 1,
+            origin.row - 2,
+            available_squares,
+        )
+        Square.add_square(
+            origin.column.value + 1,
+            origin.row - 2,
+            available_squares,
+        )
+        # right squares
+        Square.add_square(
+            origin.column.value + 2,
+            origin.row - 1,
+            available_squares,
+        )
+        Square.add_square(
+            origin.column.value + 2,
+            origin.row + 1,
+            available_squares,
+        )
+        # left squares
+        Square.add_square(
+            origin.column.value - 2,
+            origin.row - 1,
+            available_squares,
+        )
+        Square.add_square(
+            origin.column.value - 2,
+            origin.row + 1,
+            available_squares,
+        )
+        # Remove squares in available_squares if there is a piece with the same color
+        for square in copy(available_squares):
+            if square in board.piece_dict and board.piece_dict[square].color == color:
+                available_squares.remove(square)
+        return available_squares
 
     def bit_value(self):
         """

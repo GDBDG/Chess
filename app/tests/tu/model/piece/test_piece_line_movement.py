@@ -1,12 +1,13 @@
 """
 Tests for available_square in move class
 """
-from app.src.model.available_move_getter._available_squares_getter import (
+from app.src.model.available_move_getter.available_squares_getter import (
     _available_squares_on_right,
     _available_squares_on_left,
     _available_squares_upper,
     _available_squares_below,
 )
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
@@ -28,12 +29,14 @@ class TestMoveAvailableSquare:
             Square(Column.C, 1): Piece(Color.WHITE),
             Square(Column.F, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.D, 1),
             Square(Column.E, 1),
         ]
         assert (
-            _available_squares_on_right(Square(Column.C, 1), piece_dict)
+            _available_squares_on_right(Square(Column.C, 1), board)
             == expected_squares
         )
 
@@ -47,13 +50,15 @@ class TestMoveAvailableSquare:
             Square(Column.C, 1): Piece(Color.WHITE),
             Square(Column.F, 1): Piece(Color.BLACK),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.D, 1),
             Square(Column.E, 1),
             Square(Column.F, 1),
         ]
         assert (
-            _available_squares_on_right(Square(Column.C, 1), piece_dict)
+            _available_squares_on_right(Square(Column.C, 1), board)
             == expected_squares
         )
 
@@ -66,6 +71,8 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.C, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.D, 1),
             Square(Column.E, 1),
@@ -74,7 +81,7 @@ class TestMoveAvailableSquare:
             Square(Column.H, 1),
         ]
         assert (
-            _available_squares_on_right(Square(Column.C, 1), piece_dict)
+            _available_squares_on_right(Square(Column.C, 1), board)
             == expected_squares
         )
 
@@ -87,9 +94,11 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.H, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_on_right(Square(Column.H, 1), piece_dict)
+            _available_squares_on_right(Square(Column.H, 1), board)
             == expected_squares
         )
 
@@ -103,9 +112,11 @@ class TestMoveAvailableSquare:
             Square(Column.C, 1): Piece(Color.WHITE),
             Square(Column.D, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_on_right(Square(Column.C, 1), piece_dict)
+            _available_squares_on_right(Square(Column.C, 1), board)
             == expected_squares
         )
 
@@ -119,12 +130,14 @@ class TestMoveAvailableSquare:
             Square(Column.C, 1): Piece(Color.WHITE),
             Square(Column.F, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.E, 1),
             Square(Column.D, 1),
         ]
         assert (
-            _available_squares_on_left(Square(Column.F, 1), piece_dict)
+            _available_squares_on_left(Square(Column.F, 1), board)
             == expected_squares
         )
 
@@ -138,13 +151,15 @@ class TestMoveAvailableSquare:
             Square(Column.C, 1): Piece(Color.WHITE),
             Square(Column.F, 1): Piece(Color.BLACK),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.E, 1),
             Square(Column.D, 1),
             Square(Column.C, 1),
         ]
         assert (
-            _available_squares_on_left(Square(Column.F, 1), piece_dict)
+            _available_squares_on_left(Square(Column.F, 1), board)
             == expected_squares
         )
 
@@ -157,12 +172,14 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.C, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.B, 1),
             Square(Column.A, 1),
         ]
         assert (
-            _available_squares_on_left(Square(Column.C, 1), piece_dict)
+            _available_squares_on_left(Square(Column.C, 1), board)
             == expected_squares
         )
 
@@ -175,9 +192,11 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.A, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_on_left(Square(Column.A, 1), piece_dict)
+            _available_squares_on_left(Square(Column.A, 1), board)
             == expected_squares
         )
 
@@ -191,9 +210,11 @@ class TestMoveAvailableSquare:
             Square(Column.C, 1): Piece(Color.WHITE),
             Square(Column.D, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_on_left(Square(Column.D, 1), piece_dict)
+            _available_squares_on_left(Square(Column.D, 1), board)
             == expected_squares
         )
 
@@ -214,13 +235,15 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2): Piece(Color.WHITE),
             Square(Column.A, 6): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.A, 3),
             Square(Column.A, 4),
             Square(Column.A, 5),
         ]
         assert (
-            _available_squares_upper(Square(Column.A, 2), piece_dict)
+            _available_squares_upper(Square(Column.A, 2), board)
             == expected_squares
         )
 
@@ -241,6 +264,8 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2): Piece(Color.WHITE),
             Square(Column.A, 6): Piece(Color.BLACK),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.A, 3),
             Square(Column.A, 4),
@@ -248,7 +273,7 @@ class TestMoveAvailableSquare:
             Square(Column.A, 6),
         ]
         assert (
-            _available_squares_upper(Square(Column.A, 2), piece_dict)
+            _available_squares_upper(Square(Column.A, 2), board)
             == expected_squares
         )
 
@@ -268,6 +293,8 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.A, 2): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.A, 3),
             Square(Column.A, 4),
@@ -277,7 +304,7 @@ class TestMoveAvailableSquare:
             Square(Column.A, 8),
         ]
         assert (
-            _available_squares_upper(Square(Column.A, 2), piece_dict)
+            _available_squares_upper(Square(Column.A, 2), board)
             == expected_squares
         )
 
@@ -297,9 +324,11 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.A, 8): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_upper(Square(Column.A, 8), piece_dict)
+            _available_squares_upper(Square(Column.A, 8), board)
             == expected_squares
         )
 
@@ -320,9 +349,11 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2): Piece(Color.WHITE),
             Square(Column.A, 3): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_upper(Square(Column.A, 2), piece_dict)
+            _available_squares_upper(Square(Column.A, 2), board)
             == expected_squares
         )
 
@@ -343,13 +374,15 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2): Piece(Color.WHITE),
             Square(Column.A, 6): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.A, 5),
             Square(Column.A, 4),
             Square(Column.A, 3),
         ]
         assert (
-            _available_squares_below(Square(Column.A, 6), piece_dict)
+            _available_squares_below(Square(Column.A, 6), board)
             == expected_squares
         )
 
@@ -370,6 +403,8 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2): Piece(Color.WHITE),
             Square(Column.A, 6): Piece(Color.BLACK),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.A, 5),
             Square(Column.A, 4),
@@ -377,7 +412,7 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2),
         ]
         assert (
-            _available_squares_below(Square(Column.A, 6), piece_dict)
+            _available_squares_below(Square(Column.A, 6), board)
             == expected_squares
         )
 
@@ -397,11 +432,13 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.A, 2): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = [
             Square(Column.A, 1),
         ]
         assert (
-            _available_squares_below(Square(Column.A, 2), piece_dict)
+            _available_squares_below(Square(Column.A, 2), board)
             == expected_squares
         )
 
@@ -421,9 +458,11 @@ class TestMoveAvailableSquare:
         piece_dict = {
             Square(Column.A, 1): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_below(Square(Column.A, 1), piece_dict)
+            _available_squares_below(Square(Column.A, 1), board)
             == expected_squares
         )
 
@@ -444,8 +483,10 @@ class TestMoveAvailableSquare:
             Square(Column.A, 2): Piece(Color.WHITE),
             Square(Column.A, 3): Piece(Color.WHITE),
         }
+        board = Board()
+        board.piece_dict = piece_dict
         expected_squares = []
         assert (
-            _available_squares_below(Square(Column.A, 3), piece_dict)
+            _available_squares_below(Square(Column.A, 3), board)
             == expected_squares
         )

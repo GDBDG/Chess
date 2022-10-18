@@ -1,0 +1,62 @@
+"""
+Historic of a game
+* played moves
+* hashes of the config
+"""
+from itertools import product
+
+from app.src.model.game.board import Board
+from app.src.model.game.square import Square
+from app.src.model.miscenaleous.column import Column
+from app.src.model.move.empty_move import EmptyMove
+from app.src.model.move.move import Move
+
+
+class GameHistoric:
+    """
+    Contain previous states information
+    """
+
+    def __init__(self):
+        """
+        Constructor
+        """
+        self.move_historic: [Move] = [EmptyMove()]
+        self.config_historic = {}
+
+    def update_historic(self, move: Move, board: Board):
+        """
+        Update the configuration history
+        Use a custom hash from the piece_dict
+        a square state is encoded on 4 bits abcd
+        a: 1 if white, 0 other
+        bcd: 001 : bishop 9 | 1
+        bcd: 010 : king  a | 2
+        bcd: 011 : knight b | 3
+        bcd: 100 : pawn c | 4
+        bcd: 101 : queen d | 5
+        bcd: 110 : rook e | 6
+        bcd: 111 : piece (only useful for tests)
+        abcd: 0000 : empty square
+        config history bit value : A1A2...H8
+        @return:
+        """
+        self.move_historic.append(move)
+        # Calcul the config bit value
+        config_value = 0b0
+        for (column, row) in product(Column, range(1, 9)):
+            if Square(column, row) not in board.piece_dict:
+                config_value = config_value << 4
+            else:
+                config_value = (config_value << 4) + board.piece_dict[
+                    Square(column, row)
+                ].bit_value()
+        # Update the history
+        if config_value in self.config_historic:
+            self.config_historic[config_value] += 1
+            # TODO move in game state properly
+            # if self.config_historic[config_value] == 3:
+            #     self.state = GameState.DRAW
+            #     LOGGER.info("Draw with threefold rule")
+        else:
+            self.config_historic[config_value] = 1

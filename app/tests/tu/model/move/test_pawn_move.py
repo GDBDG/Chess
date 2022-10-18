@@ -1,10 +1,12 @@
 """
 Tests for the pawn moves
 """
-from app.src.model.game.game import Game
+from app.src.model.game.board import Board
+from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.en_passant import EnPassant
 from app.src.model.move.knight_promotion import KnightPromotion
 from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
@@ -39,16 +41,16 @@ def test_available_move_square_forward():
             Color.BLACK,
         ),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_white_move = [PawnMove(Square(Column.E, 3), Square(Column.E, 4))]
     expected_black_move = [PawnMove(Square(Column.C, 6), Square(Column.C, 5))]
     assert (
-        game.square_available_moves_no_castling(Square(Column.E, 3))
+        square_available_moves_no_castling(Square(Column.E, 3), board, GameHistoric())
         == expected_white_move
     )
     assert (
-        game.square_available_moves_no_castling(Square(Column.C, 6))
+        square_available_moves_no_castling(Square(Column.C, 6), board, GameHistoric())
         == expected_black_move
     )
 
@@ -71,8 +73,8 @@ def test_available_move_promotion():
         Square(Column.E, 7): Pawn(Color.WHITE),
         Square(Column.C, 2): Pawn(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_white_move = [
         QueenPromotion(Square(Column.E, 7), Square(Column.E, 8)),
         KnightPromotion(Square(Column.E, 7), Square(Column.E, 8)),
@@ -82,11 +84,11 @@ def test_available_move_promotion():
         KnightPromotion(Square(Column.C, 2), Square(Column.C, 1)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.E, 7))
+        square_available_moves_no_castling(Square(Column.E, 7), board, GameHistoric())
         == expected_white_move
     )
     assert (
-        game.square_available_moves_no_castling(Square(Column.C, 2))
+        square_available_moves_no_castling(Square(Column.C, 2), board, GameHistoric())
         == expected_black_move
     )
 
@@ -115,8 +117,8 @@ def test_available_capture():
         Square(Column.C, 5): Piece(Color.BLACK),
         Square(Column.D, 5): Piece(Color.WHITE),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_white = [
         CaptureMove(Square(Column.E, 3), Square(Column.F, 4)),
         CaptureMove(Square(Column.E, 3), Square(Column.D, 4)),
@@ -126,10 +128,10 @@ def test_available_capture():
         CaptureMove(Square(Column.C, 6), Square(Column.B, 5)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.E, 3)) == expected_white
+        square_available_moves_no_castling(Square(Column.E, 3), board, GameHistoric()) == expected_white
     )
     assert (
-        game.square_available_moves_no_castling(Square(Column.C, 6)) == expected_black
+        square_available_moves_no_castling(Square(Column.C, 6), board, GameHistoric()) == expected_black
     )
 
 
@@ -151,8 +153,8 @@ def test_available_promotion():
         Square(Column.F, 7): Pawn(Color.WHITE),
         Square(Column.E, 8): Piece(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_moves = [
         QueenPromotion(Square(Column.F, 7), Square(Column.F, 8)),
         KnightPromotion(Square(Column.F, 7), Square(Column.F, 8)),
@@ -160,7 +162,7 @@ def test_available_promotion():
         KnightPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.F, 7)) == expected_moves
+        square_available_moves_no_castling(Square(Column.F, 7), board, GameHistoric()) == expected_moves
     )
 
 
@@ -182,8 +184,8 @@ def test_initial_move():
         Square(Column.E, 2): Pawn(Color.WHITE),
         Square(Column.C, 7): Pawn(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_white = [
         Pawn2SquareMove(Square(Column.E, 2), Square(Column.E, 4)),
         PawnMove(Square(Column.E, 2), Square(Column.E, 3)),
@@ -193,10 +195,10 @@ def test_initial_move():
         PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.E, 2)) == expected_white
+        square_available_moves_no_castling(Square(Column.E, 2), board, GameHistoric()) == expected_white
     )
     assert (
-        game.square_available_moves_no_castling(Square(Column.C, 7)) == expected_black
+        square_available_moves_no_castling(Square(Column.C, 7), board, GameHistoric()) == expected_black
     )
 
 
@@ -222,33 +224,33 @@ def test_en_passant_available_destination():
         Square(Column.G, 5): Pawn(Color.WHITE),
         Square(Column.H, 5): Pawn(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
-
+    board = Board()
+    board.piece_dict = piece_dict
     last_move_white = Pawn2SquareMove(
         Square(Column.C, 2),
         Square(Column.C, 4),
     )
-    game.move_historic.append(last_move_white)
+    historic = GameHistoric()
+    historic.move_historic[-1] = last_move_white
     expected_moves = [
         PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
         EnPassant(Square(Column.B, 4), Square(Column.C, 3)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.B, 4)) == expected_moves
+        square_available_moves_no_castling(Square(Column.B, 4), board, historic) == expected_moves
     )
 
     last_move_black = Pawn2SquareMove(
         Square(Column.F, 7),
         Square(Column.F, 5),
     )
-    game.move_historic.append(last_move_black)
+    historic.move_historic[-1] = last_move_black
     expected_moves = [
         PawnMove(Square(Column.G, 5), Square(Column.G, 6)),
         EnPassant(Square(Column.G, 5), Square(Column.F, 6)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.G, 5)) == expected_moves
+        square_available_moves_no_castling(Square(Column.G, 5), board, historic) == expected_moves
     )
 
 
@@ -274,19 +276,19 @@ def test_en_passant_available_destination_none():
         Square(Column.G, 5): Pawn(Color.WHITE),
         Square(Column.H, 5): Pawn(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
-
+    board = Board()
+    board.piece_dict = piece_dict
+    historic = GameHistoric()
     last_move_white = PawnMove(
         Square(Column.C, 3),
         Square(Column.C, 4),
     )
-    game.move_historic.append(last_move_white)
+    historic.move_historic[-1] = last_move_white
     expected_moves = [
         PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.B, 4)) == expected_moves
+        square_available_moves_no_castling(Square(Column.B, 4), board, historic) == expected_moves
     )
 
     last_move_black = PawnMove(
@@ -296,7 +298,7 @@ def test_en_passant_available_destination_none():
     expected_moves = [
         PawnMove(Square(Column.G, 5), Square(Column.G, 6)),
     ]
-    game.move_historic.append(last_move_black)
+    historic.move_historic[-1] = last_move_black
     assert (
-        game.square_available_moves_no_castling(Square(Column.G, 5)) == expected_moves
+        square_available_moves_no_castling(Square(Column.G, 5), board, historic) == expected_moves
     )

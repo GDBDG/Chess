@@ -1,10 +1,11 @@
 """
 Tests for the queen moves
 """
-from app.src.model.game.game import Game
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.queen_move import QueenMove
 from app.src.model.pieces.piece import Piece
 from app.src.model.pieces.queen import Queen
@@ -33,8 +34,8 @@ def test_queen_move():
         Square(Column.F, 6): Piece(Color.BLACK),
         Square(Column.C, 3): Piece(Color.WHITE),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_moves = [
         QueenMove(Square(Column.D, 4), Square(Column.E, 4)),
         QueenMove(Square(Column.D, 4), Square(Column.F, 4)),
@@ -56,5 +57,5 @@ def test_queen_move():
         QueenMove(Square(Column.D, 4), Square(Column.A, 7)),
     ]
     assert (
-        game.square_available_moves_no_castling(Square(Column.D, 4)) == expected_moves
+        square_available_moves_no_castling(Square(Column.D, 4), board) == expected_moves
     )

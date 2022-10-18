@@ -1,10 +1,11 @@
 """
 Tests for Move class
 """
-from app.src.model.game.game import Game
+from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling
 from app.src.model.move.move import Move
 from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.king import King
@@ -30,10 +31,10 @@ def test_is_legal():
         Square(Column.D, 4): King(Color.WHITE),
         Square(Column.E, 4): Piece(Color.WHITE),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     move = Move(Square(Column.D, 4), Square(Column.C, 3))
-    assert game.is_move_legal(move)
+    assert move.is_move_legal(board)
 
 
 def test_is_not_legal1():
@@ -53,10 +54,10 @@ def test_is_not_legal1():
         Square(Column.A, 1): King(Color.WHITE),
         Square(Column.E, 1): Rook(Color.BLACK),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     move = Move(Square(Column.A, 1), Square(Column.A, 2))
-    assert not game.is_move_legal(move)
+    assert not move.is_move_legal(board)
 
 
 def test_is_not_legal2():
@@ -77,10 +78,10 @@ def test_is_not_legal2():
         Square(Column.E, 1): Rook(Color.BLACK),
         Square(Column.C, 1): Piece(Color.WHITE),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     move = Move(Square(Column.C, 1), Square(Column.C, 2))
-    assert not game.is_move_legal(move)
+    assert not move.is_move_legal(board)
 
 
 def test_get_move_with_legal_verification():
@@ -103,16 +104,16 @@ def test_get_move_with_legal_verification():
         Square(Column.E, 1): Rook(Color.BLACK),
         Square(Column.C, 1): Rook(Color.WHITE),
     }
-    game = Game()
-    game.piece_dict = piece_dict
+    board = Board()
+    board.piece_dict = piece_dict
     expected_moves = [
         RookMove(Square(Column.C, 1), Square(Column.D, 1)),
         RookMove(Square(Column.C, 1), Square(Column.E, 1)),
         RookMove(Square(Column.C, 1), Square(Column.B, 1)),
     ]
     assert (
-        game.square_available_moves_no_castling(
-            Square(Column.C, 1), legal_verification=True
+        square_available_moves_no_castling(
+            Square(Column.C, 1), board, legal_verification=True
         )
         == expected_moves
     )
