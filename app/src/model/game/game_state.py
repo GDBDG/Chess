@@ -41,5 +41,8 @@ class GameState:
                 self.state = GameState.DRAW
         # Dead position
         # TODO
+        # Threefold rule
+        if 3 in game_historic.config_historic.values():
+            self.state = GameState.DRAW
         # Update the player who has to play
         self.player = Color.BLACK if self.player == Color.WHITE else Color.WHITE

@@ -24,12 +24,12 @@ from app.src.model.pieces.rook import Rook
 def test_stalemate():
     """
     8 | | | | | | | | |
-    7 | | | | | | | | |
+    7 | |k| | | | | | |
     6 | | | | | | | | |
     5 | | | | | | | | |
-    4 | | | | | | | | |
-    3 | | | | | | |R| |
-    2 | | | | | | |R| |
+    4 | | | | | | |r| |
+    3 | | | | | | | | |
+    2 | | | | | | |r| |
     1 | | | | | | | |K|
        A B C D E F G H
     Test that a draw config changes the game status
@@ -39,11 +39,15 @@ def test_stalemate():
     piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 2): Rook(Color.BLACK),
-        Square(Column.G, 3): Rook(Color.BLACK),
+        Square(Column.G, 4): Rook(Color.BLACK),
+        Square(Column.B, 7): King(Color.BLACK),
     }
     board = Board()
     board.piece_dict = piece_dict
     game.board = board
+    game.game_state.player = Color.BLACK
+    game.white_castling_state._CastlingState__long_castling_available = False
+    game.apply_move(RookMove(Square(Column.G, 4), Square(Column.G, 3)))
     assert not game.available_moves_list()
     assert game.game_state.state == GameState.DRAW
 
@@ -234,20 +238,22 @@ def test_fifty_move():
     assert game.game_state.state == GameState.DRAW
     # Assert that a capture reset the counter
     game = Game()
-    game.fifty_counter = 98
+    game.game_state.fifty_counter = 98
     piece_dict = {
         Square(Column.A, 1): King(Color.WHITE),
         Square(Column.H, 1): Rook(Color.WHITE),
         Square(Column.H, 2): Rook(Color.BLACK),
+        Square(Column.B, 5): King(Color.BLACK),
+
     }
     board = Board()
     board.piece_dict = piece_dict
     game.board = board
 
     game.apply_move(RookMove(Square(Column.H, 1), Square(Column.H, 2)))
-    assert game.fifty_counter == 0
+    assert game.game_state.fifty_counter == 0
     # Assert that a pawn move reset the counter
     game = Game()
     game.game_state.fifty_counter = 98
     game.apply_move(Pawn2SquareMove(Square(Column.E, 2), Square(Column.E, 4)))
-    assert game.fifty_counter == 0
+    assert game.game_state.fifty_counter == 0

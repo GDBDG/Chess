@@ -38,8 +38,8 @@ class Move(ABC):
         """
         board_copy = copy.deepcopy(board)
         current_color = board_copy.piece_dict[self.origin].color
-        king_square = board_copy.get_king(current_color)
         self.apply_move(board_copy)
+        king_square = board_copy.get_king(current_color)
         from app.src.model.miscenaleous.utils import is_square_in_check
         return not is_square_in_check(current_color, king_square, board_copy, historic)
 

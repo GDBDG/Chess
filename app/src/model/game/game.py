@@ -11,7 +11,7 @@ from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.game_state import GameState
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.utils import square_available_moves_no_castling
+from app.src.model.miscenaleous.utils import square_available_moves_no_castling, is_square_in_check
 from app.src.model.move.move import Move
 from app.src.model.pieces.king import King
 from app.src.model.pieces.piece import Piece
@@ -88,6 +88,11 @@ class Game:
         # Update the game state
         self.update_castling_state()
         self.game_state.update_state(self.game_historic, capture)
+        # Draw with no moves
+        king_square = self.board.get_king(self.game_state.player)
+        if not is_square_in_check(self.game_state.player, king_square, self.board, self.game_historic) \
+            and self.available_moves_list() == []:
+            self.game_state.state = GameState.DRAW
 
     def update_castling_state(self):
         """

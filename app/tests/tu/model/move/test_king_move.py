@@ -88,6 +88,7 @@ def test_is_short_castling_not_available1():
     piece_dict = {
         Square(Column.E, 1): King(Color.WHITE),
         Square(Column.H, 1): Rook(Color.WHITE),
+        Square(Column.A, 1): King(Color.BLACK),
     }
     game = Game()
     board = Board()
@@ -109,6 +110,7 @@ def test_is_short_castling_not_available12():
     piece_dict = {
         Square(Column.E, 1): King(Color.WHITE),
         Square(Column.H, 1): Rook(Color.WHITE),
+        Square(Column.A, 6): King(Color.BLACK),
     }
     game = Game()
     board = Board()
@@ -251,6 +253,8 @@ def test_is_long_castling_not_available1():
     piece_dict = {
         Square(Column.E, 1): King(Color.WHITE),
         Square(Column.A, 1): Rook(Color.WHITE),
+        Square(Column.H, 7): King(Color.BLACK),
+
     }
     game = Game()
     board = Board()
@@ -272,6 +276,7 @@ def test_is_long_castling_not_available12():
     piece_dict = {
         Square(Column.E, 1): King(Color.WHITE),
         Square(Column.A, 1): Rook(Color.WHITE),
+        Square(Column.H, 7): King(Color.BLACK),
     }
     game = Game()
     board = Board()

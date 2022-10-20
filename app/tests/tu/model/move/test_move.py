@@ -56,7 +56,7 @@ def test_is_not_legal1():
     }
     board = Board()
     board.piece_dict = piece_dict
-    move = Move(Square(Column.A, 1), Square(Column.A, 2))
+    move = Move(Square(Column.A, 1), Square(Column.B, 1))
     assert not move.is_move_legal(board)
 
 
