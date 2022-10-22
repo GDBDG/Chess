@@ -6,7 +6,9 @@ from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.pawn import Pawn
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.square import Square
-from app.src.model.events.event_processor.move_processor import square_available_moves_no_castling
+from app.src.model.events.event_processor.move_processor import (
+    square_available_moves_no_castling,
+)
 from app.src.model.events.moves.en_passant import EnPassant
 from app.src.model.events.moves.knight_promotion import KnightPromotion
 from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture

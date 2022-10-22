@@ -1,5 +1,3 @@
 """
 Some useful functions
 """
-
-

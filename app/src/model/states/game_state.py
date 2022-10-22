@@ -40,6 +40,7 @@ class GameState:
             self.fifty_counter += 1
             if self.fifty_counter == 100:
                 self.state = GameState.DRAW
+        # pylint: disable=W0511
         # Dead position
         # TODO
         # Threefold rule

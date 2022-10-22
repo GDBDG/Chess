@@ -6,7 +6,9 @@ from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
-from app.src.model.events.event_processor.move_processor import square_available_moves_no_castling
+from app.src.model.events.event_processor.move_processor import (
+    square_available_moves_no_castling,
+)
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.states.board import Board
 
