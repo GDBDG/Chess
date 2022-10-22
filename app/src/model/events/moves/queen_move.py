@@ -1,7 +1,7 @@
 """
-Queen move
+Queen moves
 """
-from app.src.model.move.move import Move
+from app.src.model.events.moves.move import Move
 
 
 class QueenMove(Move):

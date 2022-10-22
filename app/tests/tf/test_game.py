@@ -1,12 +1,12 @@
 """
 Tests for the game class
 """
+from app.src.model.events.moves.knight_move import KnightMove
+from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
+from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.game.game import Game
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.column import Column
-from app.src.model.move.knight_move import KnightMove
-from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
-from app.src.model.move.pawn_move import PawnMove
 
 
 def test_available_moves_list():

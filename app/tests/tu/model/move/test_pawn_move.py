@@ -1,20 +1,20 @@
 """
 Tests for the pawn moves
 """
+from app.src.model.events.moves.en_passant import EnPassant
+from app.src.model.events.moves.knight_promotion import KnightPromotion
+from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
+from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
+from app.src.model.events.moves.pawn_capture import CaptureMove
+from app.src.model.events.moves.pawn_move import PawnMove
+from app.src.model.events.moves.queen_promotion import QueenPromotion
+from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
-from app.src.model.move.en_passant import EnPassant
-from app.src.model.move.knight_promotion import KnightPromotion
-from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
-from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
-from app.src.model.move.pawn_capture import CaptureMove
-from app.src.model.move.pawn_move import PawnMove
-from app.src.model.move.queen_promotion import QueenPromotion
-from app.src.model.move.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.pieces.pawn import Pawn
 from app.src.model.pieces.piece import Piece
 
@@ -30,7 +30,7 @@ def test_available_move_square_forward():
     2 | | | | | | | | |
     1 | | | | | | | | |
        A B C D E F G H
-    Test that a pawn can move forward if there is no piece in front of it
+    Test that a pawn can moves forward if there is no piece in front of it
     @return:
     """
     piece_dict = {
@@ -66,7 +66,7 @@ def test_available_move_promotion():
     2 | | |B| | | | | |
     1 | | | | | | | | |
        A B C D E F G H
-    Test that a pawn can move forward if there is no piece in front of it
+    Test that a pawn can moves forward if there is no piece in front of it
     @return:
     """
     piece_dict = {
@@ -177,7 +177,7 @@ def test_initial_move():
     2 | | | | |W| | | |
     1 | | | | | | | | |
        A B C D E F G H
-    Test that a pawn can move of 2 squares for its first movement
+    Test that a pawn can moves of 2 squares for its first movement
     @return:
     """
     piece_dict = {
@@ -265,7 +265,7 @@ def test_en_passant_available_destination_none():
     2 | | | | | | | | |
     1 | | | | | | | | |
        A B C D E F G H
-    Test that if the last move does not allow en passant, None is returned
+    Test that if the last moves does not allow en passant, None is returned
     @return:
     """
     piece_dict = {

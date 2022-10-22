@@ -5,6 +5,7 @@ Manage the game and store the current state
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.logger import LOGGER
+from app.src.model.events.moves.move import Move
 from app.src.model.game.board import Board
 from app.src.model.game.castling_state import CastlingState
 from app.src.model.game.game_historic import GameHistoric
@@ -12,7 +13,6 @@ from app.src.model.game.game_state import GameState
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling, is_square_in_check
-from app.src.model.move.move import Move
 from app.src.model.pieces.king import King
 from app.src.model.pieces.piece import Piece
 
@@ -69,9 +69,9 @@ class Game:
 
     def apply_move(self, move: Move):
         """
-        Apply a move
+        Apply a moves
         Changes the player
-        Assert that the move is valid
+        Assert that the moves is valid
         Assert historic has been updated
         Update the game state
         @param move:
@@ -79,9 +79,9 @@ class Game:
         """
         LOGGER.info("Call of apply_move")
         if move not in self.available_moves_list():
-            LOGGER.error("Invalid move")
+            LOGGER.error("Invalid moves")
             raise InvalidMoveError(move)
-        # Play the move
+        # Play the moves
         capture = move.apply_move(self.board)
         # Update the historic
         self.game_historic.update_historic(move, self.board)
@@ -96,8 +96,8 @@ class Game:
 
     def update_castling_state(self):
         """
-        After a move is played, update the game state (the castling variables)
-        Use the last move in history.
+        After a moves is played, update the game state (the castling variables)
+        Use the last moves in history.
         @return: None.
         """
         # Castling state update

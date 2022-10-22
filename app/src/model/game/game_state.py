@@ -2,9 +2,9 @@
 State (running, draw)
 Associated methods, (state update and getter)
 """
+from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.game.game_historic import GameHistoric
 from app.src.model.miscenaleous.color import Color
-from app.src.model.move.pawn_move import PawnMove
 
 
 class GameState:
@@ -30,7 +30,7 @@ class GameState:
         """
         Update the counter for the '50-moves' rule
         @param game_historic:
-        @param capture: boolean value if the last move was a capture
+        @param capture: boolean value if the last moves was a capture
         @return:
         """
         if capture or isinstance(game_historic.move_historic[-1], PawnMove):

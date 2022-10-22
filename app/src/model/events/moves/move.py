@@ -32,8 +32,8 @@ class Move(ABC):
         historic=None
     ) -> bool:
         """
-        Return a boolean value indicating whether the move is legal or not.
-        Applies the move in a copy, and check if the king is in the destination of opposite moves
+        Return a boolean value indicating whether the moves is legal or not.
+        Applies the moves in a copy, and check if the king is in the destination of opposite moves
         @return:
         """
         board_copy = copy.deepcopy(board)
@@ -45,10 +45,10 @@ class Move(ABC):
 
     def apply_move(self, board: Board) -> bool:
         """
-        Apply a move
+        Apply a moves
         Moves the piece.
         (Does no legal verification
-        @return: True if the move is a capture
+        @return: True if the moves is a capture
         """
         capture = self.destination in board.piece_dict
         board.piece_dict[self.destination] = board.piece_dict[self.origin]

@@ -4,10 +4,10 @@ Queen
 from app.src.model.available_move_getter.available_squares_getter import _available_squares_on_right, \
     _available_squares_on_left, _available_squares_upper, _available_squares_below, available_squares_diagonal_right_up, \
     available_squares_diagonal_right_down, available_squares_diagonal_left_up, available_squares_diagonal_left_down
+from app.src.model.events.moves.queen_move import QueenMove
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
-from app.src.model.move.queen_move import QueenMove
 from app.src.model.pieces.piece import Piece
 
 
@@ -20,7 +20,7 @@ class Queen(Piece):
     @staticmethod
     def available_squares(origin: Square, board: Board) -> [Square]:
         """
-            A queen move in line and diagonal, and can't go threw another piece,
+            A queen moves in line and diagonal, and can't go threw another piece,
             but can take a piece with a different color.
             @return: list of reachable squares
             """

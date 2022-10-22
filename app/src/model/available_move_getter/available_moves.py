@@ -5,20 +5,20 @@ Getter for the moves from origin
 from app.src.model.available_move_getter.available_squares_getter import (
     step_next_move,
 )
+from app.src.model.events.moves.en_passant import EnPassant
+from app.src.model.events.moves.knight_promotion import KnightPromotion
+from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
+from app.src.model.events.moves.move import Move
+from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
+from app.src.model.events.moves.pawn_capture import CaptureMove
+from app.src.model.events.moves.pawn_move import PawnMove
+from app.src.model.events.moves.queen_promotion import QueenPromotion
+from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.move.en_passant import EnPassant
-from app.src.model.move.knight_promotion import KnightPromotion
-from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
-from app.src.model.move.move import Move
-from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
-from app.src.model.move.pawn_capture import CaptureMove
-from app.src.model.move.pawn_move import PawnMove
-from app.src.model.move.queen_promotion import QueenPromotion
-from app.src.model.move.queen_promotion_capture import QueenPromotionCapture
 
 
 def get_pawn_forward_moves(
@@ -56,7 +56,7 @@ def get_pawn_forward_moves(
                     ),
                 )
             )
-        # classic move
+        # classic moves
         else:
             available_moves.append(
                 PawnMove(
@@ -75,7 +75,7 @@ def get_pawn_first_movement(
     board: Board,
 ) -> [Move]:
     """
-    Return the 2 squares move (if available)
+    Return the 2 squares moves (if available)
     @param board: 
     @param origin:
     @return:
@@ -135,7 +135,7 @@ def get_pawn_capture_moves(
 
 def _get_pawn_enpassant_moves(origin, board: Board, historic: GameHistoric) -> [Move]:
     """
-    Get the en passant move if available
+    Get the en passant moves if available
     @param origin:
     @return:
     """
@@ -186,7 +186,7 @@ def _add_pawn_capture_move(
                 KnightPromotionCapture(origin, destination),
             )
         )
-    # Classic move
+    # Classic moves
     if (
         destination in board.piece_dict
         and board.piece_dict[destination].color != board.get_current_color(origin)

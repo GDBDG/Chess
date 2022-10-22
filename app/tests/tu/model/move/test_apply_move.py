@@ -1,18 +1,18 @@
 """
-Tests move application
+Tests moves application
 """
+from app.src.model.events.moves.en_passant import EnPassant
+from app.src.model.events.moves.knight_promotion import KnightPromotion
+from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
+from app.src.model.events.moves.long_castling import LongCastling
+from app.src.model.events.moves.move import Move
+from app.src.model.events.moves.queen_promotion import QueenPromotion
+from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
+from app.src.model.events.moves.short_castling import ShortCastling
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.move.en_passant import EnPassant
-from app.src.model.move.knight_promotion import KnightPromotion
-from app.src.model.move.knight_promotion_capture import KnightPromotionCapture
-from app.src.model.move.long_castling import LongCastling
-from app.src.model.move.move import Move
-from app.src.model.move.queen_promotion import QueenPromotion
-from app.src.model.move.queen_promotion_capture import QueenPromotionCapture
-from app.src.model.move.short_castling import ShortCastling
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
 from app.src.model.pieces.pawn import Pawn
@@ -23,7 +23,7 @@ from app.src.model.pieces.rook import Rook
 
 def test_apply_move_no_capture():
     """
-    Test that a move is applied
+    Test that a moves is applied
     8 | | | | | | | | |
     7 | | | | | | | | |
     6 | | | | | | | | |
@@ -49,7 +49,7 @@ def test_apply_move_no_capture():
 
 def test_apply_move_capture():
     """
-    Test that a move is applied
+    Test that a moves is applied
     8 | | | | | | | | |
     7 | | | | | | | | |
     6 | | | | | | | | |

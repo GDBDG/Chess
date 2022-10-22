@@ -1,6 +1,6 @@
 """
 Tests for utils
-To move or rename properly.
+To moves or rename properly.
 """
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square

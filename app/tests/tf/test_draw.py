@@ -1,20 +1,20 @@
 """
 Tests for the draw rules:
-- stalemate (no legal move available)
+- stalemate (no legal moves available)
 - dead position
 """
 import pytest
 
+from app.src.model.events.moves.king_move import KingMove
+from app.src.model.events.moves.knight_move import KnightMove
+from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
+from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.game.board import Board
 from app.src.model.game.game import Game
 from app.src.model.game.game_state import GameState
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.move.king_move import KingMove
-from app.src.model.move.knight_move import KnightMove
-from app.src.model.move.pawn_2_square_move import Pawn2SquareMove
-from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
@@ -225,7 +225,7 @@ def test_threefold_repetition_rule():
 
 def test_fifty_move():
     """
-    Test the fifty move rule.
+    Test the fifty moves rule.
     @return:
     """
     game = Game()
@@ -252,7 +252,7 @@ def test_fifty_move():
 
     game.apply_move(RookMove(Square(Column.H, 1), Square(Column.H, 2)))
     assert game.game_state.fifty_counter == 0
-    # Assert that a pawn move reset the counter
+    # Assert that a pawn moves reset the counter
     game = Game()
     game.game_state.fifty_counter = 98
     game.apply_move(Pawn2SquareMove(Square(Column.E, 2), Square(Column.E, 4)))

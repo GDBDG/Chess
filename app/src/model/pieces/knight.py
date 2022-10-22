@@ -3,10 +3,10 @@ Knight
 """
 from copy import copy
 
+from app.src.model.events.moves.knight_move import KnightMove
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
-from app.src.model.move.knight_move import KnightMove
 from app.src.model.pieces.piece import Piece
 
 

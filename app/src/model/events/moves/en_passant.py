@@ -1,8 +1,8 @@
 """
-En passant move
+En passant moves
 """
+from app.src.model.events.moves.move import Move
 from app.src.model.game.square import Square
-from app.src.model.move.move import Move
 from app.src.model.pieces.piece import Piece
 
 
@@ -14,7 +14,7 @@ class EnPassant(Move):
     def apply_move(self, piece_dict: dict[Square, Piece]) -> bool:
         """
         Apply an En Passant capture
-        Does no legal verification, and does not check that the move is possible
+        Does no legal verification, and does not check that the moves is possible
         @param piece_dict: pieces in the game
         @return:
         """

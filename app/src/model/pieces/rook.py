@@ -3,10 +3,10 @@ Rook
 """
 from app.src.model.available_move_getter.available_squares_getter import _available_squares_on_right, \
     _available_squares_on_left, _available_squares_upper, _available_squares_below
+from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
-from app.src.model.move.rook_move import RookMove
 from app.src.model.pieces.piece import Piece
 
 
@@ -19,7 +19,7 @@ class Rook(Piece):
     @staticmethod
     def available_squares(origin: Square, board: Board) -> [Square]:
         """
-        A rook move in line, and can't go threw another piece,
+        A rook moves in line, and can't go threw another piece,
         but can take a piece with a different color.
         @param board:
         @return: list of reachable squares

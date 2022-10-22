@@ -4,11 +4,11 @@ Some useful functions
 from app.src.logger import LOGGER
 from app.src.model.available_move_getter.available_moves import get_pawn_first_movement, get_pawn_forward_moves, \
     get_pawn_capture_moves, _get_pawn_enpassant_moves
+from app.src.model.events.moves.move import Move
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
-from app.src.model.move.move import Move
 from app.src.model.pieces.bishop import Bishop
 from app.src.model.pieces.king import King
 from app.src.model.pieces.knight import Knight
@@ -29,7 +29,7 @@ def square_available_moves_no_castling(
     @param historic: useful only for pawn
     @param board:
     @param legal_verification: if a legal verification on the moves must be done
-    @param origin: Square origin for the move
+    @param origin: Square origin for the moves
     @return: a list with the available moves from origin
     """
     # pylint: disable=R0916
@@ -47,7 +47,7 @@ def square_available_moves_no_castling(
     elif type(origin_piece) == Pawn:
         # First movement
         available_moves = get_pawn_first_movement(origin, board)
-        # Forward move
+        # Forward moves
         available_moves.extend(get_pawn_forward_moves(origin, board))
         # Capture on the right
         available_moves.extend(get_pawn_capture_moves(origin, board))
@@ -63,7 +63,7 @@ def square_available_moves_no_castling(
 
 def is_square_in_check(color: Color, square: Square, board: Board, historic: GameHistoric = None) -> bool:
     """
-    Return a boolean indicating if a piece in a different color can move
+    Return a boolean indicating if a piece in a different color can moves
     to square (indicates if a piece of color *color* is in check)
     @param historic:
     @param board:

@@ -1,14 +1,14 @@
 """
 Empty Move, to initialize the game history
 """
+from app.src.model.events.moves.move import Move
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.column import Column
-from app.src.model.move.move import Move
 
 
 class EmptyMove(Move):
     """
-    Empty move class
+    Empty moves class
     """
 
     def __init__(

@@ -2,17 +2,17 @@
 Castling state (associated variables)
 One instance for white, and one for black
 """
+from app.src.model.events.moves.king_move import KingMove
+from app.src.model.events.moves.long_castling import LongCastling
+from app.src.model.events.moves.move import Move
+from app.src.model.events.moves.rook_move import RookMove
+from app.src.model.events.moves.short_castling import ShortCastling
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import is_square_in_check
-from app.src.model.move.king_move import KingMove
-from app.src.model.move.long_castling import LongCastling
-from app.src.model.move.move import Move
-from app.src.model.move.rook_move import RookMove
-from app.src.model.move.short_castling import ShortCastling
 
 
 class CastlingState:
@@ -33,7 +33,7 @@ class CastlingState:
 
     def update_castling_state(self, last_move: Move) -> None:
         """
-        Update the castling state with the last move
+        Update the castling state with the last moves
         @param last_move:
         @return:
         """

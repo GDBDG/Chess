@@ -1,5 +1,5 @@
 """
-Tests for available_square in move class
+Tests for available_square in moves class
 """
 from app.src.model.available_move_getter.available_squares_getter import (
     _available_squares_on_right,

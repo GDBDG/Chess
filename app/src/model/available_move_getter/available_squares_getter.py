@@ -315,9 +315,9 @@ def step_next_move(origin: Square, piece_dict) -> int:
     """
     Return +1 if the piece in origin is white, -1 if the piece is black
     else raises a ValueError
-    @param origin: origin Square for the move
+    @param origin: origin Square for the moves
     @param piece_dict: dict with the pieces in the game
-    @return: the step for the pawn move (+1 or -1)
+    @return: the step for the pawn moves (+1 or -1)
     """
     color = piece_dict[origin].color
     return int(color == Color.WHITE) - int(color == Color.BLACK)
@@ -357,7 +357,7 @@ def available_squares_queen(
     origin: Square, piece_dict
 ) -> [Square]:
     """
-    A queen move in line and diagonal, and can't go threw another piece,
+    A queen moves in line and diagonal, and can't go threw another piece,
     but can take a piece with a different color.
     @return: list of reachable squares
     """
@@ -425,7 +425,7 @@ def available_squares_rook(
     origin: Square, piece_dict
 ) -> [Square]:
     """
-    A rook move in line, and can't go threw another piece,
+    A rook moves in line, and can't go threw another piece,
     but can take a piece with a different color.
     @param piece_dict: {(Column, row): Piece} dict of the pieces in the game
     @return: list of reachable squares
