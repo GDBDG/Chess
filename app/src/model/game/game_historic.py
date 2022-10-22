@@ -3,13 +3,10 @@ Historic of a game
 * played moves
 * hashes of the config
 """
-from itertools import product
 
-from app.src.model.classes.square import Square
 from app.src.model.events.moves.empty_move import EmptyMove
 from app.src.model.events.moves.move import Move
 from app.src.model.game.board import Board
-from app.src.model.miscenaleous.column import Column
 
 
 class GameHistoric:
@@ -43,14 +40,7 @@ class GameHistoric:
         """
         self.move_historic.append(move)
         # Calcul the config bit value
-        config_value = 0b0
-        for (column, row) in product(Column, range(1, 9)):
-            if Square(column, row) not in board.piece_dict:
-                config_value = config_value << 4
-            else:
-                config_value = (config_value << 4) + board.piece_dict[
-                    Square(column, row)
-                ].bit_value()
+        config_value = board.dict_to_bit()
         # Update the history
         if config_value in self.config_historic:
             self.config_historic[config_value] += 1

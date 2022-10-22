@@ -2,6 +2,8 @@
 Castling state (associated variables)
 One instance for white, and one for black
 """
+from app.src.model.classes.const.color import Color
+from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
 from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.long_castling import LongCastling
@@ -10,8 +12,6 @@ from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.events.moves.short_castling import ShortCastling
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import is_square_in_check
 
 

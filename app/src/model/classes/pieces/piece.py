@@ -3,7 +3,7 @@ different pieces
 """
 from abc import ABC
 
-from app.src.model.miscenaleous.color import Color
+from app.src.model.classes.const.color import Color
 
 
 class Piece(ABC):

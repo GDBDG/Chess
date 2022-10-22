@@ -5,6 +5,7 @@ Manage the game and store the current state
 
 from app.src.exceptions.invalid_move_error import InvalidMoveError
 from app.src.logger import LOGGER
+from app.src.model.classes.const.color import Color
 from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.square import Square
@@ -13,7 +14,6 @@ from app.src.model.game.board import Board
 from app.src.model.game.castling_state import CastlingState
 from app.src.model.game.game_historic import GameHistoric
 from app.src.model.game.game_state import GameState
-from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling, is_square_in_check
 
 

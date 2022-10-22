@@ -1,6 +1,9 @@
 """
-Tests for GameHistoric
+Tests for the functions in utils.py
 """
+import pytest
+
+from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.bishop import Bishop
@@ -11,7 +14,6 @@ from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
 from app.src.model.game.board import Board
-from app.src.model.game.game_historic import GameHistoric
 
 
 def test_update_config_history():
@@ -36,10 +38,36 @@ def test_update_config_history():
         Square(Column.B, 5): Pawn(Color.WHITE),
         Square(Column.B, 2): Queen(Color.WHITE),
     }
-    move = Rook.move(Square(Column.E, 5), Square(Column.E, 6))
     board = Board()
     board.piece_dict = piece_dict
-    game_historic = GameHistoric()
-    game_historic.update_historic(move, board)
     expected_bit_value = 0xD00C00000000000000B000001000E0000002000 << 64
-    assert game_historic.config_historic[expected_bit_value] == 1
+    assert board.dict_to_bit() == expected_bit_value
+
+def test_get_king():
+    """
+    test the method is test_is_king_in_check in check
+    when the king is in check
+    @return:
+    """
+    piece_dict = {
+        Square(Column.E, 1): King(Color.WHITE),
+        Square(Column.E, 8): King(Color.BLACK),
+    }
+    board = Board()
+    board.piece_dict = piece_dict
+    assert Square(Column.E, 1) == board.get_king(Color.WHITE)
+    assert Square(Column.E, 8) == board.get_king(Color.BLACK)
+
+
+def test_get_king_no_king():
+    """
+    Test that get_get_king raises an error when there is no king
+    @return:
+    """
+    piece_dict = {
+        Square(Column.E, 1): King(Color.WHITE),
+    }
+    board = Board()
+    board.piece_dict = piece_dict
+    with pytest.raises(MissingKingError):
+        board.get_king(Color.BLACK)

@@ -1,8 +1,8 @@
 """
 Unit tests for the Square classes
 """
+from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
-from app.src.model.miscenaleous.column import Column
 
 
 def test_hash():

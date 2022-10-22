@@ -4,6 +4,7 @@ Some useful functions
 from app.src.logger import LOGGER
 from app.src.model.available_move_getter.available_moves import get_pawn_first_movement, get_pawn_forward_moves, \
     get_pawn_capture_moves, _get_pawn_enpassant_moves
+from app.src.model.classes.const.color import Color
 from app.src.model.classes.pieces.bishop import Bishop
 from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.knight import Knight
@@ -14,7 +15,6 @@ from app.src.model.classes.square import Square
 from app.src.model.events.moves.move import Move
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
-from app.src.model.miscenaleous.color import Color
 
 
 def square_available_moves_no_castling(

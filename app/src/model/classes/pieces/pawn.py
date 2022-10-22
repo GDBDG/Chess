@@ -1,8 +1,8 @@
 """
 Pawn
 """
+from app.src.model.classes.const.color import Color
 from app.src.model.classes.pieces.piece import Piece
-from app.src.model.miscenaleous.color import Color
 
 
 class Pawn(Piece):

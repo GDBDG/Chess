@@ -1,6 +1,8 @@
 """
 Tests moves application
 """
+from app.src.model.classes.const.color import Color
+from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.knight import Knight
 from app.src.model.classes.pieces.pawn import Pawn
@@ -17,8 +19,6 @@ from app.src.model.events.moves.queen_promotion import QueenPromotion
 from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.events.moves.short_castling import ShortCastling
 from app.src.model.game.board import Board
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
 
 
 def test_apply_move_no_capture():

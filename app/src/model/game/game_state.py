@@ -2,9 +2,9 @@
 State (running, draw)
 Associated methods, (state update and getter)
 """
+from app.src.model.classes.const.color import Color
 from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.game.game_historic import GameHistoric
-from app.src.model.miscenaleous.color import Color
 
 
 class GameState:

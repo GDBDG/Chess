@@ -3,10 +3,10 @@ Auxiliaries function for available_moves
 """
 from copy import copy
 
+from app.src.model.classes.const.color import Color
+from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
 from app.src.model.game.board import Board
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
 
 
 def available_squares_bishop(

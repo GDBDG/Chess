@@ -4,7 +4,7 @@ Row and column
 """
 from app.src.exceptions.row_error import RowError
 from app.src.logger import LOGGER
-from app.src.model.miscenaleous.column import Column
+from app.src.model.classes.const.column import Column
 
 
 class Square:

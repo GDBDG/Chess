@@ -1,10 +1,13 @@
 """
 Contains the game state (the pieces, and the associated methods)
 """
+from itertools import product
+
 from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.logger import LOGGER
+from app.src.model.classes.const.color import Color
+from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
-from app.src.model.miscenaleous.color import Color
 
 
 class Board:
@@ -16,7 +19,33 @@ class Board:
         """
         Constructor
         """
-        self.piece_dict = Board.set_initial_config()
+        self.piece_dict = Board.initial_config()
+
+    def dict_to_bit(self) -> int:
+        """
+        Return the bit value of a board
+        a square state is encoded on 4 bits abcd
+        a: 1 if white, 0 other
+        bcd: 001 : bishop 9 | 1
+        bcd: 010 : king  a | 2
+        bcd: 011 : knight b | 3
+        bcd: 100 : pawn c | 4
+        bcd: 101 : queen d | 5
+        bcd: 110 : rook e | 6
+        bcd: 111 : piece (only useful for tests)
+        abcd: 0000 : empty square
+        config history bit value : A1A2...H8
+        @return:
+        """
+        config_value = 0b0
+        for (column, row) in product(Column, range(1, 9)):
+            if Square(column, row) not in self.piece_dict:
+                config_value = config_value << 4
+            else:
+                config_value = (config_value << 4) + self.piece_dict[
+                    Square(column, row)
+                ].bit_value()
+        return config_value
 
     def get_current_color(
         self,
@@ -55,7 +84,7 @@ class Board:
         return king
 
     @staticmethod
-    def set_initial_config():
+    def initial_config():
         """
         Create an initial game config
         8 |R|k|B|Q|K|B|k|R|
@@ -71,8 +100,8 @@ class Board:
         """
         from app.src.logger import LOGGER
         from app.src.model.classes.square import Square
-        from app.src.model.miscenaleous.color import Color
-        from app.src.model.miscenaleous.column import Column
+        from app.src.model.classes.const.color import Color
+        from app.src.model.classes.const.column import Column
         from app.src.model.classes.pieces.bishop import Bishop
         from app.src.model.classes.pieces.king import King
         from app.src.model.classes.pieces.knight import Knight

@@ -5,6 +5,8 @@ Tests for the draw rules:
 """
 import pytest
 
+from app.src.model.classes.const.color import Color
+from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.bishop import Bishop
 from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.knight import Knight
@@ -17,8 +19,6 @@ from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.game.board import Board
 from app.src.model.game.game import Game
 from app.src.model.game.game_state import GameState
-from app.src.model.miscenaleous.color import Color
-from app.src.model.miscenaleous.column import Column
 
 
 def test_stalemate():
