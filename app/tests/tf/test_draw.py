@@ -46,6 +46,7 @@ def test_stalemate():
     board.piece_dict = piece_dict
     game.board = board
     game.game_state.player = Color.BLACK
+    # pylint: disable=C0103
     game.white_castling_state._CastlingState__long_castling_available = False
     game.apply_move(RookMove(Square(Column.G, 4), Square(Column.G, 3)))
     assert not game.available_moves_list()

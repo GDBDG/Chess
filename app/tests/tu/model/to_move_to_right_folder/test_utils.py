@@ -7,7 +7,7 @@ from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.bishop import Bishop
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
-from app.src.model.miscenaleous.utils import is_square_in_check
+from app.src.model.events.event_processor.move_processor import is_square_in_check
 from app.src.model.states.board import Board
 
 

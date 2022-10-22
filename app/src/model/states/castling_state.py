@@ -5,12 +5,12 @@ One instance for white, and one for black
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
+from app.src.model.events.event_processor.move_processor import is_square_in_check
 from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.long_castling import LongCastling
 from app.src.model.events.moves.move import Move
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.events.moves.short_castling import ShortCastling
-from app.src.model.miscenaleous.utils import is_square_in_check
 from app.src.model.states.board import Board
 from app.src.model.states.game_historic import GameHistoric
 
@@ -48,7 +48,8 @@ class CastlingState:
             self.__short_castling_available = False
 
     def __is_short_castling_available(self, board: Board, historic) -> bool:
-        # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
+        # sourcery skip: assign-if-exp, boolean-if-exp-identity,
+        # sourcery skip: reintroduce-else, remove-unnecessary-cast
         """
         Return if a long castling is available for the current color.
         | | | | |K|x|x|R|
@@ -82,7 +83,8 @@ class CastlingState:
     def __is_long_castling_available(
         self, board: Board, historic: GameHistoric
     ) -> bool:
-        # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
+        # sourcery skip: assign-if-exp, boolean-if-exp-identity,
+        # sourcery skip: reintroduce-else, remove-unnecessary-cast
         """
         Return if a long castling is available for the current color.
         |R|x|X|X|K| | | |
@@ -119,10 +121,6 @@ class CastlingState:
     def available_castling(
         self, board: Board, historic: GameHistoric
     ) -> [LongCastling, ShortCastling]:
-        """
-        Return the list with the available castling
-        @return: available castling list
-        """
         """
         |R|x|X|X|K| | | |
          A B C D E F G H

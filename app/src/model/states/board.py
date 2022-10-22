@@ -7,6 +7,12 @@ from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.logger import LOGGER
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
+from app.src.model.classes.pieces.bishop import Bishop
+from app.src.model.classes.pieces.king import King
+from app.src.model.classes.pieces.knight import Knight
+from app.src.model.classes.pieces.pawn import Pawn
+from app.src.model.classes.pieces.queen import Queen
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
 
 
@@ -69,8 +75,6 @@ class Board:
         @param color: color of the king
         @return: the origin of the king
         """
-        from app.src.model.classes.pieces.king import King
-
         king = next(
             (
                 square
@@ -99,16 +103,6 @@ class Board:
            A B C D E F G H
         @return:
         """
-        from app.src.logger import LOGGER
-        from app.src.model.classes.square import Square
-        from app.src.model.classes.const.color import Color
-        from app.src.model.classes.const.column import Column
-        from app.src.model.classes.pieces.bishop import Bishop
-        from app.src.model.classes.pieces.king import King
-        from app.src.model.classes.pieces.knight import Knight
-        from app.src.model.classes.pieces.pawn import Pawn
-        from app.src.model.classes.pieces.queen import Queen
-        from app.src.model.classes.pieces.rook import Rook
 
         LOGGER.info("Initial game config creation")
         return {
