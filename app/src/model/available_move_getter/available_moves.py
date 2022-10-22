@@ -5,6 +5,7 @@ Getter for the moves from origin
 from app.src.model.available_move_getter.available_squares_getter import (
     step_next_move,
 )
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.en_passant import EnPassant
 from app.src.model.events.moves.knight_promotion import KnightPromotion
 from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
@@ -16,7 +17,6 @@ from app.src.model.events.moves.queen_promotion import QueenPromotion
 from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 

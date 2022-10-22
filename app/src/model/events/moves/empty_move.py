@@ -1,8 +1,8 @@
 """
 Empty Move, to initialize the game history
 """
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.move import Move
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.column import Column
 
 

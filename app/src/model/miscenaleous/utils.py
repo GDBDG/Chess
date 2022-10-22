@@ -10,10 +10,10 @@ from app.src.model.classes.pieces.knight import Knight
 from app.src.model.classes.pieces.pawn import Pawn
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.move import Move
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 
 

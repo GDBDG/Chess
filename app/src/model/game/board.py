@@ -3,7 +3,7 @@ Contains the game state (the pieces, and the associated methods)
 """
 from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.logger import LOGGER
-from app.src.model.game.square import Square
+from app.src.model.classes.square import Square
 from app.src.model.miscenaleous.color import Color
 
 
@@ -70,7 +70,7 @@ class Board:
         @return:
         """
         from app.src.logger import LOGGER
-        from app.src.model.game.square import Square
+        from app.src.model.classes.square import Square
         from app.src.model.miscenaleous.color import Color
         from app.src.model.miscenaleous.column import Column
         from app.src.model.classes.pieces.bishop import Bishop

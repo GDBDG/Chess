@@ -5,10 +5,10 @@ Historic of a game
 """
 from itertools import product
 
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.empty_move import EmptyMove
 from app.src.model.events.moves.move import Move
 from app.src.model.game.board import Board
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.column import Column
 
 

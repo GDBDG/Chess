@@ -9,6 +9,7 @@ from app.src.model.classes.pieces.bishop import Bishop
 from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.knight import Knight
 from app.src.model.classes.pieces.rook import Rook
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.knight_move import KnightMove
 from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
@@ -16,7 +17,6 @@ from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.game.board import Board
 from app.src.model.game.game import Game
 from app.src.model.game.game_state import GameState
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 

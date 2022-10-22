@@ -5,8 +5,8 @@ Simplification: only queen and knight (bishop and rook are useless)
 """
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.pieces.queen import Queen
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.pawn_move import PawnMove
-from app.src.model.game.square import Square
 
 
 class QueenPromotionCapture(PawnMove):

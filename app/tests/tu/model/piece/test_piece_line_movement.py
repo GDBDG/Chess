@@ -8,8 +8,8 @@ from app.src.model.available_move_getter.available_squares_getter import (
     _available_squares_below,
 )
 from app.src.model.classes.pieces.piece import Piece
+from app.src.model.classes.square import Square
 from app.src.model.game.board import Board
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 

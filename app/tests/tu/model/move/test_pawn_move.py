@@ -3,6 +3,7 @@ Tests for the pawn moves
 """
 from app.src.model.classes.pieces.pawn import Pawn
 from app.src.model.classes.pieces.piece import Piece
+from app.src.model.classes.square import Square
 from app.src.model.events.moves.en_passant import EnPassant
 from app.src.model.events.moves.knight_promotion import KnightPromotion
 from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
@@ -13,7 +14,6 @@ from app.src.model.events.moves.queen_promotion import QueenPromotion
 from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.game.board import Board
 from app.src.model.game.game_historic import GameHistoric
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling

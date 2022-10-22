@@ -4,8 +4,8 @@ Abstract classes for movements
 import copy
 from abc import ABC
 
+from app.src.model.classes.square import Square
 from app.src.model.game.board import Board
-from app.src.model.game.square import Square
 
 
 class Move(ABC):

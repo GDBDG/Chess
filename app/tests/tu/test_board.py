@@ -5,8 +5,8 @@ import pytest
 
 from app.src.exceptions.missing_king_error import MissingKingError
 from app.src.model.classes.pieces.king import King
+from app.src.model.classes.square import Square
 from app.src.model.game.board import Board
-from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 
