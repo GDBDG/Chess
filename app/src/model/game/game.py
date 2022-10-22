@@ -10,11 +10,14 @@ from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.square import Square
 from app.src.model.events.moves.move import Move
-from app.src.model.game.board import Board
-from app.src.model.game.castling_state import CastlingState
-from app.src.model.game.game_historic import GameHistoric
-from app.src.model.game.game_state import GameState
-from app.src.model.miscenaleous.utils import square_available_moves_no_castling, is_square_in_check
+from app.src.model.miscenaleous.utils import (
+    square_available_moves_no_castling,
+    is_square_in_check,
+)
+from app.src.model.states.board import Board
+from app.src.model.states.castling_state import CastlingState
+from app.src.model.states.game_historic import GameHistoric
+from app.src.model.states.game_state import GameState
 
 
 class Game:
@@ -90,8 +93,12 @@ class Game:
         self.game_state.update_state(self.game_historic, capture)
         # Draw with no moves
         king_square = self.board.get_king(self.game_state.player)
-        if not is_square_in_check(self.game_state.player, king_square, self.board, self.game_historic) \
-            and self.available_moves_list() == []:
+        if (
+            not is_square_in_check(
+                self.game_state.player, king_square, self.board, self.game_historic
+            )
+            and not self.available_moves_list()
+        ):
             self.game_state.state = GameState.DRAW
 
     def update_castling_state(self):
@@ -102,9 +109,13 @@ class Game:
         """
         # Castling state update
         if self.player == Color.WHITE:
-            self.white_castling_state.update_castling_state(self.game_historic.move_historic[-1])
+            self.white_castling_state.update_castling_state(
+                self.game_historic.move_historic[-1]
+            )
         else:
-            self.black_castling_state.update_castling_state(self.game_historic.move_historic[-1])
+            self.black_castling_state.update_castling_state(
+                self.game_historic.move_historic[-1]
+            )
 
     def square_available_moves(self, origin, legal_verification=False) -> [Move]:
         """
@@ -118,7 +129,15 @@ class Game:
         )
         if type(self.piece_dict[origin]) == King:
             if self.player == Color.WHITE:
-                available_moves.extend(self.white_castling_state.available_castling(self.board, self.game_historic))
+                available_moves.extend(
+                    self.white_castling_state.available_castling(
+                        self.board, self.game_historic
+                    )
+                )
             else:
-                available_moves.extend(self.black_castling_state.available_castling(self.board, self.game_historic))
+                available_moves.extend(
+                    self.black_castling_state.available_castling(
+                        self.board, self.game_historic
+                    )
+                )
         return available_moves

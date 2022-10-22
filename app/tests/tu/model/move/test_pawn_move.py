@@ -14,9 +14,9 @@ from app.src.model.events.moves.pawn_capture import CaptureMove
 from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.events.moves.queen_promotion import QueenPromotion
 from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
-from app.src.model.game.board import Board
-from app.src.model.game.game_historic import GameHistoric
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
+from app.src.model.states.board import Board
+from app.src.model.states.game_historic import GameHistoric
 
 
 def test_available_move_square_forward():
@@ -128,10 +128,12 @@ def test_available_capture():
         CaptureMove(Square(Column.C, 6), Square(Column.B, 5)),
     ]
     assert (
-        square_available_moves_no_castling(Square(Column.E, 3), board, GameHistoric()) == expected_white
+        square_available_moves_no_castling(Square(Column.E, 3), board, GameHistoric())
+        == expected_white
     )
     assert (
-        square_available_moves_no_castling(Square(Column.C, 6), board, GameHistoric()) == expected_black
+        square_available_moves_no_castling(Square(Column.C, 6), board, GameHistoric())
+        == expected_black
     )
 
 
@@ -162,7 +164,8 @@ def test_available_promotion():
         KnightPromotionCapture(Square(Column.F, 7), Square(Column.E, 8)),
     ]
     assert (
-        square_available_moves_no_castling(Square(Column.F, 7), board, GameHistoric()) == expected_moves
+        square_available_moves_no_castling(Square(Column.F, 7), board, GameHistoric())
+        == expected_moves
     )
 
 
@@ -195,10 +198,12 @@ def test_initial_move():
         PawnMove(Square(Column.C, 7), Square(Column.C, 6)),
     ]
     assert (
-        square_available_moves_no_castling(Square(Column.E, 2), board, GameHistoric()) == expected_white
+        square_available_moves_no_castling(Square(Column.E, 2), board, GameHistoric())
+        == expected_white
     )
     assert (
-        square_available_moves_no_castling(Square(Column.C, 7), board, GameHistoric()) == expected_black
+        square_available_moves_no_castling(Square(Column.C, 7), board, GameHistoric())
+        == expected_black
     )
 
 
@@ -237,7 +242,8 @@ def test_en_passant_available_destination():
         EnPassant(Square(Column.B, 4), Square(Column.C, 3)),
     ]
     assert (
-        square_available_moves_no_castling(Square(Column.B, 4), board, historic) == expected_moves
+        square_available_moves_no_castling(Square(Column.B, 4), board, historic)
+        == expected_moves
     )
 
     last_move_black = Pawn2SquareMove(
@@ -250,7 +256,8 @@ def test_en_passant_available_destination():
         EnPassant(Square(Column.G, 5), Square(Column.F, 6)),
     ]
     assert (
-        square_available_moves_no_castling(Square(Column.G, 5), board, historic) == expected_moves
+        square_available_moves_no_castling(Square(Column.G, 5), board, historic)
+        == expected_moves
     )
 
 
@@ -288,7 +295,8 @@ def test_en_passant_available_destination_none():
         PawnMove(Square(Column.B, 4), Square(Column.B, 3)),
     ]
     assert (
-        square_available_moves_no_castling(Square(Column.B, 4), board, historic) == expected_moves
+        square_available_moves_no_castling(Square(Column.B, 4), board, historic)
+        == expected_moves
     )
 
     last_move_black = PawnMove(
@@ -300,5 +308,6 @@ def test_en_passant_available_destination_none():
     ]
     historic.move_historic[-1] = last_move_black
     assert (
-        square_available_moves_no_castling(Square(Column.G, 5), board, historic) == expected_moves
+        square_available_moves_no_castling(Square(Column.G, 5), board, historic)
+        == expected_moves
     )

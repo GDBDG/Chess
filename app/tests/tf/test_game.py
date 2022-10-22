@@ -100,5 +100,3 @@ def test_available_moves_list():
         ),
     ]
     assert game.available_moves_list() == expected_moves
-
-

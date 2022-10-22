@@ -75,7 +75,8 @@ class Board:
             (
                 square
                 for square in self.piece_dict
-                if type(self.piece_dict[square]) == King and self.piece_dict[square].color == color
+                if type(self.piece_dict[square]) == King
+                   and self.piece_dict[square].color == color
             ),
             None,
         )
@@ -108,6 +109,7 @@ class Board:
         from app.src.model.classes.pieces.pawn import Pawn
         from app.src.model.classes.pieces.queen import Queen
         from app.src.model.classes.pieces.rook import Rook
+
         LOGGER.info("Initial game config creation")
         return {
             # White pieces

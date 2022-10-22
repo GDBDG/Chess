@@ -6,7 +6,7 @@ Historic of a game
 
 from app.src.model.events.moves.empty_move import EmptyMove
 from app.src.model.events.moves.move import Move
-from app.src.model.game.board import Board
+from app.src.model.states.board import Board
 
 
 class GameHistoric:
@@ -44,9 +44,5 @@ class GameHistoric:
         # Update the history
         if config_value in self.config_historic:
             self.config_historic[config_value] += 1
-            # TODO moves in game state properly
-            # if self.config_historic[config_value] == 3:
-            #     self.state = GameState.DRAW
-            #     LOGGER.info("Draw with threefold rule")
         else:
             self.config_historic[config_value] = 1

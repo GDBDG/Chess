@@ -4,7 +4,7 @@ Associated methods, (state update and getter)
 """
 from app.src.model.classes.const.color import Color
 from app.src.model.events.moves.pawn_move import PawnMove
-from app.src.model.game.game_historic import GameHistoric
+from app.src.model.states.game_historic import GameHistoric
 
 
 class GameState:
@@ -13,6 +13,7 @@ class GameState:
     Manage state (running, draw, win)
     Manage draw rules
     """
+
     RUNNING = "running"
     WHITE_WIN = "+/-"
     BLACK_WIN = "-/+"

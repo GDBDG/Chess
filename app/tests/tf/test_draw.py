@@ -16,9 +16,9 @@ from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.knight_move import KnightMove
 from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
 from app.src.model.events.moves.rook_move import RookMove
-from app.src.model.game.board import Board
 from app.src.model.game.game import Game
-from app.src.model.game.game_state import GameState
+from app.src.model.states.board import Board
+from app.src.model.states.game_state import GameState
 
 
 def test_stalemate():
@@ -191,33 +191,15 @@ def test_threefold_repetition_rule():
     game.game_state.player = Color.BLACK
     move_list = [
         RookMove(Square(Column.B, 7), Square(Column.A, 7)),  # 1
-        RookMove(
-            Square(Column.A, 8), Square(Column.H, 8)
-        ),
-        RookMove(
-            Square(Column.A, 7), Square(Column.G, 7)
-        ),
-        RookMove(
-            Square(Column.H, 8), Square(Column.D, 8)
-        ),
-        RookMove(
-            Square(Column.G, 7), Square(Column.A, 7)
-        ),
-        RookMove(
-            Square(Column.D, 8), Square(Column.A, 8)
-        ),  # 2
-        KingMove(
-            Square(Column.G, 3), Square(Column.G, 4)
-        ),
-        KingMove(
-            Square(Column.H, 1), Square(Column.G, 1)
-        ),
-        KingMove(
-            Square(Column.G, 4), Square(Column.G, 3)
-        ),
-        KingMove(
-            Square(Column.G, 1), Square(Column.H, 1)
-        ),  # 3
+        RookMove(Square(Column.A, 8), Square(Column.H, 8)),
+        RookMove(Square(Column.A, 7), Square(Column.G, 7)),
+        RookMove(Square(Column.H, 8), Square(Column.D, 8)),
+        RookMove(Square(Column.G, 7), Square(Column.A, 7)),
+        RookMove(Square(Column.D, 8), Square(Column.A, 8)),  # 2
+        KingMove(Square(Column.G, 3), Square(Column.G, 4)),
+        KingMove(Square(Column.H, 1), Square(Column.G, 1)),
+        KingMove(Square(Column.G, 4), Square(Column.G, 3)),
+        KingMove(Square(Column.G, 1), Square(Column.H, 1)),  # 3
     ]
     list(map(game.apply_move, move_list))
     assert game.game_state.state == GameState.DRAW
@@ -244,7 +226,6 @@ def test_fifty_move():
         Square(Column.H, 1): Rook(Color.WHITE),
         Square(Column.H, 2): Rook(Color.BLACK),
         Square(Column.B, 5): King(Color.BLACK),
-
     }
     board = Board()
     board.piece_dict = piece_dict

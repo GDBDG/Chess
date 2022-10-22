@@ -18,7 +18,7 @@ from app.src.model.events.moves.move import Move
 from app.src.model.events.moves.queen_promotion import QueenPromotion
 from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
 from app.src.model.events.moves.short_castling import ShortCastling
-from app.src.model.game.board import Board
+from app.src.model.states.board import Board
 
 
 def test_apply_move_no_capture():

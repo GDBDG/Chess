@@ -7,8 +7,8 @@ from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.square import Square
 from app.src.model.events.moves.queen_move import QueenMove
-from app.src.model.game.board import Board
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
+from app.src.model.states.board import Board
 
 
 def test_queen_move():

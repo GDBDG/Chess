@@ -13,7 +13,7 @@ from app.src.model.classes.pieces.pawn import Pawn
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
-from app.src.model.game.board import Board
+from app.src.model.states.board import Board
 
 
 def test_update_config_history():
@@ -42,6 +42,7 @@ def test_update_config_history():
     board.piece_dict = piece_dict
     expected_bit_value = 0xD00C00000000000000B000001000E0000002000 << 64
     assert board.dict_to_bit() == expected_bit_value
+
 
 def test_get_king():
     """

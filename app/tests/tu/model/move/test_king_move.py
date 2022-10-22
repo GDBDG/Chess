@@ -12,9 +12,9 @@ from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.long_castling import LongCastling
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.events.moves.short_castling import ShortCastling
-from app.src.model.game.board import Board
 from app.src.model.game.game import Game
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
+from app.src.model.states.board import Board
 
 short_castle = ShortCastling(Square(Column.E, 1))
 long_castle = LongCastling(Square(Column.E, 1))
@@ -254,7 +254,6 @@ def test_is_long_castling_not_available1():
         Square(Column.E, 1): King(Color.WHITE),
         Square(Column.A, 1): Rook(Color.WHITE),
         Square(Column.H, 7): King(Color.BLACK),
-
     }
     game = Game()
     board = Board()

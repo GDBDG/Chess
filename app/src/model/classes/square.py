@@ -26,7 +26,7 @@ class Square:
         self.row = row
 
     @staticmethod
-    def add_square(column: int, row: int, available_squares):
+    def add_square(column: int, row: int, available_squares) -> None:
         """
         Add the square with coordinate column and row in available_squares
         if it is in square_list

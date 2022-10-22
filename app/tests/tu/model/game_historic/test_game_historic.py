@@ -10,8 +10,8 @@ from app.src.model.classes.pieces.pawn import Pawn
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
-from app.src.model.game.board import Board
-from app.src.model.game.game_historic import GameHistoric
+from app.src.model.states.board import Board
+from app.src.model.states.game_historic import GameHistoric
 
 
 def test_update_config_history():

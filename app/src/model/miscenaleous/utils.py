@@ -2,8 +2,12 @@
 Some useful functions
 """
 from app.src.logger import LOGGER
-from app.src.model.available_move_getter.available_moves import get_pawn_first_movement, get_pawn_forward_moves, \
-    get_pawn_capture_moves, _get_pawn_enpassant_moves
+from app.src.model.available_move_getter.available_moves import (
+    get_pawn_first_movement,
+    get_pawn_forward_moves,
+    get_pawn_capture_moves,
+    get_pawn_enpassant_moves,
+)
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.pieces.bishop import Bishop
 from app.src.model.classes.pieces.king import King
@@ -13,8 +17,9 @@ from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
 from app.src.model.events.moves.move import Move
-from app.src.model.game.board import Board
-from app.src.model.game.game_historic import GameHistoric
+from app.src.model.events.square_getter.square_getter import available_squares
+from app.src.model.states.board import Board
+from app.src.model.states.game_historic import GameHistoric
 
 
 def square_available_moves_no_castling(
@@ -33,15 +38,13 @@ def square_available_moves_no_castling(
     @return: a list with the available moves from origin
     """
     # pylint: disable=R0916
-    LOGGER.info("Get available moves called for bishop")
+    LOGGER.info("Get available moves called")
     origin_piece = board.piece_dict[origin]
     available_moves = []
     if type(origin_piece) in [Bishop, King, Knight, Queen, Rook]:
         available_moves.extend(
             origin_piece.move(origin, destination)
-            for destination in origin_piece.available_squares(
-                origin, board
-            )
+            for destination in available_squares(origin, board)
         )
     # pawn
     elif type(origin_piece) == Pawn:
@@ -52,7 +55,7 @@ def square_available_moves_no_castling(
         # Capture on the right
         available_moves.extend(get_pawn_capture_moves(origin, board))
         # En passant
-        available_moves.extend(_get_pawn_enpassant_moves(origin, board, historic))
+        available_moves.extend(get_pawn_enpassant_moves(origin, board, historic))
     else:
         raise ValueError("Unknown pieces in origin")
     # Remove moves if they are illegal
@@ -61,7 +64,9 @@ def square_available_moves_no_castling(
     return available_moves
 
 
-def is_square_in_check(color: Color, square: Square, board: Board, historic: GameHistoric = None) -> bool:
+def is_square_in_check(
+    color: Color, square: Square, board: Board, historic: GameHistoric = None
+) -> bool:
     """
     Return a boolean indicating if a piece in a different color can moves
     to square (indicates if a piece of color *color* is in check)

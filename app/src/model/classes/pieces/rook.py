@@ -1,59 +1,17 @@
 """
 Rook
 """
-from app.src.model.available_move_getter.available_squares_getter import _available_squares_on_right, \
-    _available_squares_on_left, _available_squares_upper, _available_squares_below
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.pieces.piece import Piece
-from app.src.model.classes.square import Square
 from app.src.model.events.moves.rook_move import RookMove
-from app.src.model.game.board import Board
 
 
 class Rook(Piece):
     """
     Rook classes
     """
-    move = RookMove
 
-    @staticmethod
-    def available_squares(origin: Square, board: Board) -> [Square]:
-        """
-        A rook moves in line, and can't go threw another piece,
-        but can take a piece with a different color.
-        @param board:
-        @return: list of reachable squares
-        """
-        available_squares: list[Square] = []
-        # right squares
-        available_squares.extend(
-            _available_squares_on_right(
-                origin,
-                board
-            )
-        )
-        # left squares
-        available_squares.extend(
-            _available_squares_on_left(
-                origin,
-                board
-            )
-        )
-        # up squares
-        available_squares.extend(
-            _available_squares_upper(
-                origin,
-                board
-            )
-        )
-        # down squares
-        available_squares.extend(
-            _available_squares_below(
-                origin,
-                board
-            )
-        )
-        return available_squares
+    move = RookMove
 
     def bit_value(self):
         """

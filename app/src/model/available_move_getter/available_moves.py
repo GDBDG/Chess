@@ -17,8 +17,8 @@ from app.src.model.events.moves.pawn_capture import CaptureMove
 from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.events.moves.queen_promotion import QueenPromotion
 from app.src.model.events.moves.queen_promotion_capture import QueenPromotionCapture
-from app.src.model.game.board import Board
-from app.src.model.game.game_historic import GameHistoric
+from app.src.model.states.board import Board
+from app.src.model.states.game_historic import GameHistoric
 
 
 def get_pawn_forward_moves(
@@ -27,7 +27,7 @@ def get_pawn_forward_moves(
 ) -> [Move]:
     """
     Return the available forward moves for a pawn
-    @param board: 
+    @param board:
     @param origin:
     @return:
     """
@@ -76,7 +76,7 @@ def get_pawn_first_movement(
 ) -> [Move]:
     """
     Return the 2 squares moves (if available)
-    @param board: 
+    @param board:
     @param origin:
     @return:
     """
@@ -90,7 +90,9 @@ def get_pawn_first_movement(
         )
         and Square(origin.column, origin.row + step_next_move(origin, board.piece_dict))
         not in board.piece_dict
-        and Square(origin.column, origin.row + 2 * step_next_move(origin, board.piece_dict))
+        and Square(
+        origin.column, origin.row + 2 * step_next_move(origin, board.piece_dict)
+    )
         not in board.piece_dict
     ):
         available_moves.append(
@@ -133,7 +135,7 @@ def get_pawn_capture_moves(
     return available_moves
 
 
-def _get_pawn_enpassant_moves(origin, board: Board, historic: GameHistoric) -> [Move]:
+def get_pawn_enpassant_moves(origin, board: Board, historic: GameHistoric) -> [Move]:
     """
     Get the en passant moves if available
     @param origin:

@@ -5,7 +5,7 @@ import copy
 from abc import ABC
 
 from app.src.model.classes.square import Square
-from app.src.model.game.board import Board
+from app.src.model.states.board import Board
 
 
 class Move(ABC):
@@ -26,11 +26,7 @@ class Move(ABC):
         self.origin = origin
         self.destination = destination
 
-    def is_move_legal(
-        self,
-        board: Board,
-        historic=None
-    ) -> bool:
+    def is_move_legal(self, board: Board, historic=None) -> bool:
         """
         Return a boolean value indicating whether the moves is legal or not.
         Applies the moves in a copy, and check if the king is in the destination of opposite moves
@@ -41,6 +37,7 @@ class Move(ABC):
         self.apply_move(board_copy)
         king_square = board_copy.get_king(current_color)
         from app.src.model.miscenaleous.utils import is_square_in_check
+
         return not is_square_in_check(current_color, king_square, board_copy, historic)
 
     def apply_move(self, board: Board) -> bool:

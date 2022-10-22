@@ -6,12 +6,10 @@ from copy import copy
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
-from app.src.model.game.board import Board
+from app.src.model.states.board import Board
 
 
-def available_squares_bishop(
-    origin: Square, piece_dict
-) -> [Square]:
+def available_squares_bishop(origin: Square, piece_dict) -> [Square]:
     """
     A bishop moves in diagonal, and can't go threw another piece,
     Can take a piece with different color
@@ -133,7 +131,7 @@ def available_squares_diagonal_right_up(
     )
 
 
-def _available_squares_below(
+def available_squares_below(
     origin: Square,
     board: Board,
 ):
@@ -154,7 +152,7 @@ def _available_squares_below(
     )
 
 
-def _available_squares_upper(
+def available_squares_upper(
     origin: Square,
     board: Board,
 ):
@@ -175,7 +173,7 @@ def _available_squares_upper(
     )
 
 
-def _available_squares_on_left(
+def available_squares_on_left(
     origin: Square,
     board: Board,
 ):
@@ -199,7 +197,7 @@ def _available_squares_on_left(
     )
 
 
-def _available_squares_on_right(
+def available_squares_on_right(
     origin: Square,
     board: Board,
 ):
@@ -224,11 +222,7 @@ def _available_squares_on_right(
     )
 
 
-def _available_square_on_side_line(
-    origin: Square,
-    squares: [Square],
-    board: Board
-):
+def _available_square_on_side_line(origin: Square, squares: [Square], board: Board):
     """
     Returns the available squares on only one side.
     (for ex on the right side, or diagonal right).
@@ -251,66 +245,6 @@ def _available_square_on_side_line(
     return available_squares
 
 
-def available_squares_knight(
-    origin: Square, piece_dict
-) -> [Square]:
-    """
-    Return the available squares
-    @return: list of reachable squares
-    """
-    available_squares: list[Square] = []
-    color = get_current_color(origin, piece_dict)
-    # up squares
-    Square.add_square(
-        origin.column.value - 1,
-        origin.row + 2,
-        available_squares,
-    )
-    Square.add_square(
-        origin.column.value + 1,
-        origin.row + 2,
-        available_squares,
-    )
-    # down squares
-    Square.add_square(
-        origin.column.value - 1,
-        origin.row - 2,
-        available_squares,
-    )
-    Square.add_square(
-        origin.column.value + 1,
-        origin.row - 2,
-        available_squares,
-    )
-    # right squares
-    Square.add_square(
-        origin.column.value + 2,
-        origin.row - 1,
-        available_squares,
-    )
-    Square.add_square(
-        origin.column.value + 2,
-        origin.row + 1,
-        available_squares,
-    )
-    # left squares
-    Square.add_square(
-        origin.column.value - 2,
-        origin.row - 1,
-        available_squares,
-    )
-    Square.add_square(
-        origin.column.value - 2,
-        origin.row + 1,
-        available_squares,
-    )
-    # Remove squares in available_squares if there is a piece with the same color
-    for square in copy(available_squares):
-        if square in piece_dict and piece_dict[square].color == color:
-            available_squares.remove(square)
-    return available_squares
-
-
 def step_next_move(origin: Square, piece_dict) -> int:
     """
     Return +1 if the piece in origin is white, -1 if the piece is black
@@ -323,9 +257,7 @@ def step_next_move(origin: Square, piece_dict) -> int:
     return int(color == Color.WHITE) - int(color == Color.BLACK)
 
 
-def available_squares_king(
-    origin: Square, piece_dict
-) -> [Square]:
+def available_squares_king(origin: Square, piece_dict) -> [Square]:
     """
     The king moves exactly one square horizontally, vertically, or diagonally
     (Does not return the castling squares
@@ -353,9 +285,7 @@ def available_squares_king(
     return available_squares
 
 
-def available_squares_queen(
-    origin: Square, piece_dict
-) -> [Square]:
+def available_squares_queen(origin: Square, piece_dict) -> [Square]:
     """
     A queen moves in line and diagonal, and can't go threw another piece,
     but can take a piece with a different color.
@@ -364,28 +294,28 @@ def available_squares_queen(
     available_squares: list[Square] = []
     # right squares
     available_squares.extend(
-        _available_squares_on_right(
+        available_squares_on_right(
             origin,
             piece_dict,
         )
     )
     # left squares
     available_squares.extend(
-        _available_squares_on_left(
+        available_squares_on_left(
             origin,
             piece_dict,
         )
     )
     # up squares
     available_squares.extend(
-        _available_squares_upper(
+        available_squares_upper(
             origin,
             piece_dict,
         )
     )
     # down squares
     available_squares.extend(
-        _available_squares_below(
+        available_squares_below(
             origin,
             piece_dict,
         )
@@ -421,9 +351,7 @@ def available_squares_queen(
     return available_squares
 
 
-def available_squares_rook(
-    origin: Square, piece_dict
-) -> [Square]:
+def available_squares_rook(origin: Square, piece_dict) -> [Square]:
     """
     A rook moves in line, and can't go threw another piece,
     but can take a piece with a different color.
@@ -433,28 +361,28 @@ def available_squares_rook(
     available_squares: list[Square] = []
     # right squares
     available_squares.extend(
-        _available_squares_on_right(
+        available_squares_on_right(
             origin,
             piece_dict,
         )
     )
     # left squares
     available_squares.extend(
-        _available_squares_on_left(
+        available_squares_on_left(
             origin,
             piece_dict,
         )
     )
     # up squares
     available_squares.extend(
-        _available_squares_upper(
+        available_squares_upper(
             origin,
             piece_dict,
         )
     )
     # down squares
     available_squares.extend(
-        _available_squares_below(
+        available_squares_below(
             origin,
             piece_dict,
         )

@@ -10,9 +10,9 @@ from app.src.model.events.moves.long_castling import LongCastling
 from app.src.model.events.moves.move import Move
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.events.moves.short_castling import ShortCastling
-from app.src.model.game.board import Board
-from app.src.model.game.game_historic import GameHistoric
 from app.src.model.miscenaleous.utils import is_square_in_check
+from app.src.model.states.board import Board
+from app.src.model.states.game_historic import GameHistoric
 
 
 class CastlingState:
@@ -44,9 +44,7 @@ class CastlingState:
             Column.A, self.__row
         ):
             self.__long_castling_available = False
-        if isinstance(last_move, RookMove) and last_move.origin == Square(
-            Column.H, 1
-        ):
+        if isinstance(last_move, RookMove) and last_move.origin == Square(Column.H, 1):
             self.__short_castling_available = False
 
     def __is_short_castling_available(self, board: Board, historic) -> bool:
@@ -63,7 +61,9 @@ class CastlingState:
         @return:
         """
         # check if the king is not in check
-        if is_square_in_check(self.color, Square(Column.E, self.__row), board, historic):
+        if is_square_in_check(
+            self.color, Square(Column.E, self.__row), board, historic
+        ):
             return False
         if (
             Square(Column.F, self.__row) in board.piece_dict
@@ -72,16 +72,16 @@ class CastlingState:
             return False
         # check if x are not in check
         if is_square_in_check(
-            self.color,
-            Square(Column.F, self.__row), board, historic
+            self.color, Square(Column.F, self.__row), board, historic
         ) or is_square_in_check(
-            self.color,
-            Square(Column.G, self.__row), board, historic
+            self.color, Square(Column.G, self.__row), board, historic
         ):
             return False
         return True
 
-    def __is_long_castling_available(self, board: Board, historic: GameHistoric) -> bool:
+    def __is_long_castling_available(
+        self, board: Board, historic: GameHistoric
+    ) -> bool:
         # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
         """
         Return if a long castling is available for the current color.
@@ -96,7 +96,9 @@ class CastlingState:
         @return:
         """
         # check if the king is not in check
-        if is_square_in_check(self.color, Square(Column.E, self.__row), board, historic):
+        if is_square_in_check(
+            self.color, Square(Column.E, self.__row), board, historic
+        ):
             return False
         # check if x are empty
         if (
@@ -107,16 +109,16 @@ class CastlingState:
             return False
         # check if X are not in check
         if is_square_in_check(
-            self.color,
-            Square(Column.D, self.__row), board, historic
+            self.color, Square(Column.D, self.__row), board, historic
         ) or is_square_in_check(
-            self.color,
-            Square(Column.C, self.__row), board, historic
+            self.color, Square(Column.C, self.__row), board, historic
         ):
             return False
         return True
 
-    def available_castling(self, board: Board, historic: GameHistoric) -> [LongCastling, ShortCastling]:
+    def available_castling(
+        self, board: Board, historic: GameHistoric
+    ) -> [LongCastling, ShortCastling]:
         """
         Return the list with the available castling
         @return: available castling list

@@ -11,7 +11,7 @@ from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.square import Square
-from app.src.model.game.board import Board
+from app.src.model.states.board import Board
 
 
 class TestPiece:
