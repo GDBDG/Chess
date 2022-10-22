@@ -1,5 +1,5 @@
 """
-Unit tests for the Square class
+Unit tests for the Square classes
 """
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.column import Column

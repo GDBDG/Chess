@@ -5,6 +5,10 @@ Tests for the draw rules:
 """
 import pytest
 
+from app.src.model.classes.pieces.bishop import Bishop
+from app.src.model.classes.pieces.king import King
+from app.src.model.classes.pieces.knight import Knight
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.knight_move import KnightMove
 from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove
@@ -15,10 +19,6 @@ from app.src.model.game.game_state import GameState
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.pieces.bishop import Bishop
-from app.src.model.pieces.king import King
-from app.src.model.pieces.knight import Knight
-from app.src.model.pieces.rook import Rook
 
 
 def test_stalemate():

@@ -3,15 +3,15 @@ Knight Promotion.
 Promotion: when a pawn reaches the last line: can turn into another piece.
 Simplification: only Knight and knight (bishop and rook are useless)
 """
+from app.src.model.classes.pieces.knight import Knight
+from app.src.model.classes.pieces.piece import Piece
 from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.game.square import Square
-from app.src.model.pieces.knight import Knight
-from app.src.model.pieces.piece import Piece
 
 
 class KnightPromotion(PawnMove):
     """
-    Knight promotion class.
+    Knight promotion classes.
     """
 
     def __repr__(self):

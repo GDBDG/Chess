@@ -1,15 +1,15 @@
 """
 Long castling
 """
+from app.src.model.classes.pieces.piece import Piece
 from app.src.model.events.moves.move import Move
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.column import Column
-from app.src.model.pieces.piece import Piece
 
 
 class LongCastling(Move):
     """
-    Long castling class.
+    Long castling classes.
     origin: the king
     """
 

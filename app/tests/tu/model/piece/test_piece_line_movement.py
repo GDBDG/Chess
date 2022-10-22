@@ -1,5 +1,5 @@
 """
-Tests for available_square in moves class
+Tests for available_square in moves classes
 """
 from app.src.model.available_move_getter.available_squares_getter import (
     _available_squares_on_right,
@@ -7,16 +7,16 @@ from app.src.model.available_move_getter.available_squares_getter import (
     _available_squares_upper,
     _available_squares_below,
 )
+from app.src.model.classes.pieces.piece import Piece
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
-from app.src.model.pieces.piece import Piece
 
 
 class TestMoveAvailableSquare:
     """
-    test class
+    test classes
     """
 
     def test_available_square_on_right_case1(self):

@@ -8,7 +8,7 @@ from app.src.model.miscenaleous.color import Color
 
 class Piece(ABC):
     """
-    Abstract class for piece objects
+    Abstract classes for piece objects
     """
 
     def __init__(self, color: Color):

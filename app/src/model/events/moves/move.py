@@ -1,5 +1,5 @@
 """
-Abstract class for movements
+Abstract classes for movements
 """
 import copy
 from abc import ABC
@@ -10,7 +10,7 @@ from app.src.model.game.square import Square
 
 class Move(ABC):
     """
-    Abstract class
+    Abstract classes
     """
 
     def __init__(

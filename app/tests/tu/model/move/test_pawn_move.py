@@ -1,6 +1,8 @@
 """
 Tests for the pawn moves
 """
+from app.src.model.classes.pieces.pawn import Pawn
+from app.src.model.classes.pieces.piece import Piece
 from app.src.model.events.moves.en_passant import EnPassant
 from app.src.model.events.moves.knight_promotion import KnightPromotion
 from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
@@ -15,8 +17,6 @@ from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
-from app.src.model.pieces.pawn import Pawn
-from app.src.model.pieces.piece import Piece
 
 
 def test_available_move_square_forward():

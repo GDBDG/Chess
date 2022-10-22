@@ -8,7 +8,7 @@ from app.src.model.miscenaleous.column import Column
 
 class EmptyMove(Move):
     """
-    Empty moves class
+    Empty moves classes
     """
 
     def __init__(

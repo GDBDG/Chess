@@ -40,7 +40,7 @@ class Board:
         @param color: color of the king
         @return: the origin of the king
         """
-        from app.src.model.pieces.king import King
+        from app.src.model.classes.pieces.king import King
 
         king = next(
             (
@@ -73,12 +73,12 @@ class Board:
         from app.src.model.game.square import Square
         from app.src.model.miscenaleous.color import Color
         from app.src.model.miscenaleous.column import Column
-        from app.src.model.pieces.bishop import Bishop
-        from app.src.model.pieces.king import King
-        from app.src.model.pieces.knight import Knight
-        from app.src.model.pieces.pawn import Pawn
-        from app.src.model.pieces.queen import Queen
-        from app.src.model.pieces.rook import Rook
+        from app.src.model.classes.pieces.bishop import Bishop
+        from app.src.model.classes.pieces.king import King
+        from app.src.model.classes.pieces.knight import Knight
+        from app.src.model.classes.pieces.pawn import Pawn
+        from app.src.model.classes.pieces.queen import Queen
+        from app.src.model.classes.pieces.rook import Rook
         LOGGER.info("Initial game config creation")
         return {
             # White pieces

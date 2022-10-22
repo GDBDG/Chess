@@ -2,13 +2,13 @@
 Tests for utils
 To moves or rename properly.
 """
+from app.src.model.classes.pieces.bishop import Bishop
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import is_square_in_check
-from app.src.model.pieces.bishop import Bishop
-from app.src.model.pieces.rook import Rook
 
 
 def test_is_square_in_check():

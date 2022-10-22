@@ -1,13 +1,13 @@
 """
 Pawn
 """
+from app.src.model.classes.pieces.piece import Piece
 from app.src.model.miscenaleous.color import Color
-from app.src.model.pieces.piece import Piece
 
 
 class Pawn(Piece):
     """
-    Pawn class
+    Pawn classes
     """
 
     def bit_value(self):

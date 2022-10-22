@@ -1,5 +1,5 @@
 """
-Tests for the game class
+Tests for the game classes
 """
 from app.src.model.events.moves.knight_move import KnightMove
 from app.src.model.events.moves.pawn_2_square_move import Pawn2SquareMove

@@ -5,7 +5,7 @@ Error if there is no king in the game
 
 class MissingKingError(Exception):
     """
-    Error class
+    Error classes
     """
 
     def __init__(self):

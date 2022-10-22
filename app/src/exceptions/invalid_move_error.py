@@ -6,7 +6,7 @@ from app.src.model.events.moves.move import Move
 
 class InvalidMoveError(ValueError):
     """
-    Custom Error class
+    Custom Error classes
     """
 
     def __init__(self, move: Move, reason: str = ""):

@@ -1,6 +1,10 @@
 """
 Test tht it is possible to get the king moves
 """
+from app.src.model.classes.pieces.king import King
+from app.src.model.classes.pieces.pawn import Pawn
+from app.src.model.classes.pieces.piece import Piece
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.events.moves.king_move import KingMove
 from app.src.model.events.moves.long_castling import LongCastling
 from app.src.model.events.moves.rook_move import RookMove
@@ -11,10 +15,6 @@ from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
-from app.src.model.pieces.king import King
-from app.src.model.pieces.pawn import Pawn
-from app.src.model.pieces.piece import Piece
-from app.src.model.pieces.rook import Rook
 
 short_castle = ShortCastling(Square(Column.E, 1))
 long_castle = LongCastling(Square(Column.E, 1))

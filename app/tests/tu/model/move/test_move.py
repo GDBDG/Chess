@@ -1,6 +1,9 @@
 """
-Tests for Move class
+Tests for Move classes
 """
+from app.src.model.classes.pieces.king import King
+from app.src.model.classes.pieces.piece import Piece
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.events.moves.move import Move
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.game.board import Board
@@ -8,9 +11,6 @@ from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
-from app.src.model.pieces.king import King
-from app.src.model.pieces.piece import Piece
-from app.src.model.pieces.rook import Rook
 
 
 def test_is_legal():

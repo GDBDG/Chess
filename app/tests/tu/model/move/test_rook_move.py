@@ -1,14 +1,14 @@
 """
 Unit tests for the rook moves
 """
+from app.src.model.classes.pieces.piece import Piece
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.game.board import Board
 from app.src.model.game.square import Square
 from app.src.model.miscenaleous.color import Color
 from app.src.model.miscenaleous.column import Column
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
-from app.src.model.pieces.piece import Piece
-from app.src.model.pieces.rook import Rook
 
 
 def test_available_moves():
