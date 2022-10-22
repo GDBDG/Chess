@@ -131,9 +131,7 @@ class TestMoveAvailableSquare:
             Square(Column.E, 1),
             Square(Column.D, 1),
         ]
-        assert (
-            available_squares_on_left(Square(Column.F, 1), board) == expected_squares
-        )
+        assert available_squares_on_left(Square(Column.F, 1), board) == expected_squares
 
     def test_available_square_on_left_case2(self):
         """
@@ -152,9 +150,7 @@ class TestMoveAvailableSquare:
             Square(Column.D, 1),
             Square(Column.C, 1),
         ]
-        assert (
-            available_squares_on_left(Square(Column.F, 1), board) == expected_squares
-        )
+        assert available_squares_on_left(Square(Column.F, 1), board) == expected_squares
 
     def test_available_square_on_left_case3(self):
         """
@@ -171,9 +167,7 @@ class TestMoveAvailableSquare:
             Square(Column.B, 1),
             Square(Column.A, 1),
         ]
-        assert (
-            available_squares_on_left(Square(Column.C, 1), board) == expected_squares
-        )
+        assert available_squares_on_left(Square(Column.C, 1), board) == expected_squares
 
     def test_available_square_on_left_case4(self):
         """
@@ -187,9 +181,7 @@ class TestMoveAvailableSquare:
         board = Board()
         board.piece_dict = piece_dict
         expected_squares = []
-        assert (
-            available_squares_on_left(Square(Column.A, 1), board) == expected_squares
-        )
+        assert available_squares_on_left(Square(Column.A, 1), board) == expected_squares
 
     def test_available_square_on_left_case5(self):
         """
@@ -204,9 +196,7 @@ class TestMoveAvailableSquare:
         board = Board()
         board.piece_dict = piece_dict
         expected_squares = []
-        assert (
-            available_squares_on_left(Square(Column.D, 1), board) == expected_squares
-        )
+        assert available_squares_on_left(Square(Column.D, 1), board) == expected_squares
 
     def test_available_square_upper_case1(self):
         """

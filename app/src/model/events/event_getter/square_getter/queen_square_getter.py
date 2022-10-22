@@ -1,9 +1,16 @@
 """
 Square getter for queen
 """
-from app.src.model.available_move_getter.available_squares_getter import available_squares_on_right, \
-    available_squares_on_left, available_squares_upper, available_squares_below, available_squares_diagonal_right_up, \
-    available_squares_diagonal_right_down, available_squares_diagonal_left_up, available_squares_diagonal_left_down
+from app.src.model.available_move_getter.available_squares_getter import (
+    available_squares_on_right,
+    available_squares_on_left,
+    available_squares_upper,
+    available_squares_below,
+    available_squares_diagonal_right_up,
+    available_squares_diagonal_right_down,
+    available_squares_diagonal_left_up,
+    available_squares_diagonal_left_down,
+)
 from app.src.model.classes.square import Square
 from app.src.model.states.board import Board
 

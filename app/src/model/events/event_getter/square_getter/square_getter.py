@@ -8,11 +8,17 @@ from app.src.model.classes.pieces.knight import Knight
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
-from app.src.model.events.square_getter.bishop_square_getter import bishop_available_squares
-from app.src.model.events.square_getter.king_square_getter import king_available_squares
-from app.src.model.events.square_getter.knight_square_getter import knight_available_squares
-from app.src.model.events.square_getter.queen_square_getter import queen_available_squares
-from app.src.model.events.square_getter.rook_square_getter import rook_available_squares
+from app.src.model.events.event_getter.square_getter.bishop_square_getter import (
+    bishop_available_squares,
+)
+from app.src.model.events.event_getter.square_getter.king_square_getter import king_available_squares
+from app.src.model.events.event_getter.square_getter.knight_square_getter import (
+    knight_available_squares,
+)
+from app.src.model.events.event_getter.square_getter.queen_square_getter import (
+    queen_available_squares,
+)
+from app.src.model.events.event_getter.square_getter.rook_square_getter import rook_available_squares
 from app.src.model.states.board import Board
 
 

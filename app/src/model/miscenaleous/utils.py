@@ -16,8 +16,9 @@ from app.src.model.classes.pieces.pawn import Pawn
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
+from app.src.model.events.event_getter.square_getter.square_getter import available_squares
+from app.src.model.events.event_processor.move_processor import is_move_legal
 from app.src.model.events.moves.move import Move
-from app.src.model.events.square_getter.square_getter import available_squares
 from app.src.model.states.board import Board
 from app.src.model.states.game_historic import GameHistoric
 
@@ -60,7 +61,7 @@ def square_available_moves_no_castling(
         raise ValueError("Unknown pieces in origin")
     # Remove moves if they are illegal
     if legal_verification:
-        return [move for move in available_moves if move.is_move_legal(board, historic)]
+        return [move for move in available_moves if is_move_legal(move, board, historic)]
     return available_moves
 
 

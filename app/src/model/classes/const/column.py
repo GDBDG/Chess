@@ -8,6 +8,7 @@ class Column(Enum):
     """
     Simple enum to define the row coordinates
     """
+
     A = 1
     B = 2
     C = 3

@@ -9,6 +9,7 @@ from app.src.model.classes.const.color import Color
 from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.square import Square
+from app.src.model.events.event_processor.move_processor import apply_move
 from app.src.model.events.moves.move import Move
 from app.src.model.miscenaleous.utils import (
     square_available_moves_no_castling,
@@ -85,7 +86,7 @@ class Game:
             LOGGER.error("Invalid moves")
             raise InvalidMoveError(move)
         # Play the moves
-        capture = move.apply_move(self.board)
+        capture = apply_move(move, self.board)
         # Update the historic
         self.game_historic.update_historic(move, self.board)
         # Update the game state

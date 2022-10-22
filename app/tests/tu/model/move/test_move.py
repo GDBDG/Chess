@@ -7,6 +7,7 @@ from app.src.model.classes.pieces.king import King
 from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
+from app.src.model.events.event_processor.move_processor import is_move_legal
 from app.src.model.events.moves.move import Move
 from app.src.model.events.moves.rook_move import RookMove
 from app.src.model.miscenaleous.utils import square_available_moves_no_castling
@@ -34,7 +35,7 @@ def test_is_legal():
     board = Board()
     board.piece_dict = piece_dict
     move = Move(Square(Column.D, 4), Square(Column.C, 3))
-    assert move.is_move_legal(board)
+    assert is_move_legal(move, board)
 
 
 def test_is_not_legal1():
@@ -57,7 +58,7 @@ def test_is_not_legal1():
     board = Board()
     board.piece_dict = piece_dict
     move = Move(Square(Column.A, 1), Square(Column.B, 1))
-    assert not move.is_move_legal(board)
+    assert not is_move_legal(move, board)
 
 
 def test_is_not_legal2():
@@ -81,7 +82,7 @@ def test_is_not_legal2():
     board = Board()
     board.piece_dict = piece_dict
     move = Move(Square(Column.C, 1), Square(Column.C, 2))
-    assert not move.is_move_legal(board)
+    assert not is_move_legal(move, board)
 
 
 def test_get_move_with_legal_verification():

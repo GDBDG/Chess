@@ -10,6 +10,7 @@ from app.src.model.classes.pieces.piece import Piece
 from app.src.model.classes.pieces.queen import Queen
 from app.src.model.classes.pieces.rook import Rook
 from app.src.model.classes.square import Square
+from app.src.model.events.event_processor.move_processor import apply_move
 from app.src.model.events.moves.en_passant import EnPassant
 from app.src.model.events.moves.knight_promotion import KnightPromotion
 from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
@@ -41,7 +42,7 @@ def test_apply_move_no_capture():
     board = Board()
     board.piece_dict = piece_dict
     move = Move(Square(Column.E, 2), Square(Column.E, 4))
-    capture = move.apply_move(board)
+    capture = apply_move(move, board)
     assert piece_dict[Square(Column.E, 4)] == Piece(Color.WHITE)
     assert Square(Column.E, 2) not in piece_dict
     assert not capture
@@ -68,7 +69,7 @@ def test_apply_move_capture():
     }
     board.piece_dict = piece_dict
     move = Move(Square(Column.E, 2), Square(Column.E, 4))
-    capture = move.apply_move(board)
+    capture = apply_move(move, board)
     assert piece_dict[Square(Column.E, 4)] == Piece(Color.WHITE)
     assert Square(Column.E, 2) not in piece_dict
     assert capture

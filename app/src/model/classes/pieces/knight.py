@@ -14,7 +14,6 @@ class Knight(Piece):
 
     move = KnightMove
 
-
     def bit_value(self) -> int:
         """
         Return the bit value, used for the piece_dict hash
