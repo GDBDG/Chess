@@ -27,6 +27,43 @@ class Board:
         """
         self.piece_dict = Board.initial_config()
 
+    def get_piece_type_counter(self):
+        """
+        Return a dict with the number of each piece in the game.
+        One counter for both players
+        @return:
+        """
+        piece_counter = {Bishop: 0, King: 0, Knight: 0, Pawn: 0, Queen: 0, Rook: 0}
+        for piece in self.piece_dict.values():
+            piece_counter[piece.__class__] += 1
+        return piece_counter
+
+    def are_bishop_in_dead_position(self) -> bool:
+        """
+        Must be called if there are 2 bishops and 2 kings in the game.
+        (Only purpose: to detect a draw in game)
+        Return if the bishops are in a dead position
+        (king and bishop against king and bishop, with both bishops on squares of the same color)
+        @return:
+        """
+        if self.get_piece_type_counter() != {
+            Bishop: 2,
+            King: 2,
+            Knight: 0,
+            Pawn: 0,
+            Queen: 0,
+            Rook: 0,
+        }:
+            return False
+        square_color = []
+        bishop_color = []
+        for square, piece in self.piece_dict.items():
+            print(piece)
+            if isinstance(piece, Bishop):
+                square_color.append(square.square_color())
+                bishop_color.append(piece.color)
+        return square_color[0] == square_color[1] and bishop_color[0] != bishop_color[1]
+
     def dict_to_bit(self) -> int:
         """
         Return the bit value of a board
