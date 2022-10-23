@@ -1,18 +1,18 @@
 """
-Custom error : invalid move
+Custom error : invalid moves
 """
-from app.src.model.miscenaleous.move import Move
+from app.src.model.events.moves.move import Move
 
 
 class InvalidMoveError(ValueError):
     """
-    Custom Error class
+    Custom Error classes
     """
 
     def __init__(self, move: Move, reason: str = ""):
         """
         Constructor
-        @param move: move that is invalid,
+        @param move: moves that is invalid,
         """
         super().__init__()
         self.message = f"{move} is invalid:\n{reason}"
