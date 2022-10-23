@@ -3,7 +3,6 @@ Tests for the draw rules:
 - stalemate (no legal moves available)
 - dead position
 """
-import pytest
 
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
@@ -53,7 +52,6 @@ def test_stalemate():
     assert game.game_state.state == GameState.DRAW
 
 
-@pytest.mark.skip(reason="not yet implemented")
 def test_dead_position1():
     """
     Test that a dead position leads to a draw.
@@ -69,18 +67,17 @@ def test_dead_position1():
        A B C D E F G H
     @return:
     """
-    game = Game()
     piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
     }
     board = Board()
     board.piece_dict = piece_dict
-    game.board = board
-    assert game.game_state.state == GameState.DRAW
+    game_state = GameState()
+    game_state.dead_position_rule(board)
+    assert game_state.state == GameState.DRAW
 
 
-@pytest.mark.skip(reason="not yet implemented")
 def test_dead_position2():
     """
     Test that a dead position leads to a draw.
@@ -96,7 +93,6 @@ def test_dead_position2():
        A B C D E F G H
     @return:
     """
-    game = Game()
     piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
@@ -104,11 +100,11 @@ def test_dead_position2():
     }
     board = Board()
     board.piece_dict = piece_dict
-    game.board = board
-    assert game.game_state.state == GameState.DRAW
+    game_state = GameState()
+    game_state.dead_position_rule(board)
+    assert game_state.state == GameState.DRAW
 
 
-@pytest.mark.skip(reason="not yet implemented")
 def test_dead_position3():
     """
     Test that a dead position leads to a draw.
@@ -124,7 +120,6 @@ def test_dead_position3():
        A B C D E F G H
     @return:
     """
-    game = Game()
     piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
@@ -132,11 +127,11 @@ def test_dead_position3():
     }
     board = Board()
     board.piece_dict = piece_dict
-    game.board = board
-    assert game.game_state.state == GameState.DRAW
+    game_state = GameState()
+    game_state.dead_position_rule(board)
+    assert game_state.state == GameState.DRAW
 
 
-@pytest.mark.skip(reason="not yet implemented")
 def test_dead_position4():
     """
     Test that a dead position leads to a draw.
@@ -144,25 +139,25 @@ def test_dead_position4():
     8 | | | | | | | | |
     7 | | | | | | | | |
     6 | | | | | | | | |
-    5 | | | | | | | | |
+    5 | | | |b| | | | |
     4 | | | | | | | | |
-    3 | | | |b| | |B| |
+    3 | | | |B| | |k| |
     2 | | | | | | | | |
     1 | | | | | | | |W|
        A B C D E F G H
     @return:
     """
-    game = Game()
     piece_dict = {
         Square(Column.H, 1): King(Color.WHITE),
         Square(Column.G, 3): King(Color.BLACK),
-        Square(Column.D, 3): Knight(Color.WHITE),
-        Square(Column.D, 5): Knight(Color.BLACK),
+        Square(Column.D, 3): Bishop(Color.WHITE),
+        Square(Column.D, 5): Bishop(Color.BLACK),
     }
     board = Board()
     board.piece_dict = piece_dict
-    game.board = board
-    assert game.game_state.state == GameState.DRAW
+    game_state = GameState()
+    game_state.dead_position_rule(board)
+    assert game_state.state == GameState.DRAW
 
 
 def test_threefold_repetition_rule():
