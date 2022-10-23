@@ -27,6 +27,17 @@ class Board:
         """
         self.piece_dict = Board.initial_config()
 
+    def get_piece_type_counter(self):
+        """
+        Return a dict with the number of each piece in the game.
+        One counter for both players
+        @return:
+        """
+        piece_counter = {Bishop: 0, King: 0, Knight: 0, Pawn: 0, Queen: 0, Rook: 0}
+        for piece in self.piece_dict.values():
+            piece_counter[piece.__class__] += 1
+        return piece_counter
+
     def dict_to_bit(self) -> int:
         """
         Return the bit value of a board
