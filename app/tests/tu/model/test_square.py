@@ -24,7 +24,7 @@ def test_square_color():
     from its coordinates
     @return:
     """
-    assert Square.square_color(Column.A, 1) == Color.BLACK
-    assert Square.square_color(Column.A, 2) == Color.WHITE
-    assert Square.square_color(Column.B, 3) == Color.WHITE
-    assert Square.square_color(Column.D, 6) == Color.BLACK
+    assert Square(Column.A, 1).square_color() == Color.BLACK
+    assert Square(Column.A, 2).square_color() == Color.WHITE
+    assert Square(Column.B, 3).square_color() == Color.WHITE
+    assert Square(Column.D, 6).square_color() == Color.BLACK

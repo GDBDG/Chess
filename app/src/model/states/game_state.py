@@ -3,6 +3,12 @@ State (running, draw)
 Associated methods, (state update and getter)
 """
 from app.src.model.classes.const.color import Color
+from app.src.model.classes.pieces.bishop import Bishop
+from app.src.model.classes.pieces.king import King
+from app.src.model.classes.pieces.knight import Knight
+from app.src.model.classes.pieces.pawn import Pawn
+from app.src.model.classes.pieces.queen import Queen
+from app.src.model.classes.pieces.rook import Rook
 from app.src.model.events.moves.pawn_move import PawnMove
 from app.src.model.states.board import Board
 from app.src.model.states.game_historic import GameHistoric
@@ -56,6 +62,19 @@ class GameState:
         @param board:
         @return:
         """
+        piece_counter = board.get_piece_type_counter()
+        dead_position_boards = [
+            {Bishop: 0, King: 2, Knight: 0, Pawn: 0, Queen: 0, Rook: 0},
+            {Bishop: 1, King: 2, Knight: 0, Pawn: 0, Queen: 0, Rook: 0},
+            {Bishop: 0, King: 2, Knight: 1, Pawn: 0, Queen: 0, Rook: 0},
+        ]
+        if piece_counter in dead_position_boards:
+            self.state = GameState.DRAW
+        if (
+            piece_counter == {Bishop: 2, King: 2, Knight: 0, Pawn: 0, Queen: 0, Rook: 0}
+            and board.are_bishop_in_dead_position()
+        ):
+            self.state = GameState.DRAW
 
     def update_state(self, game_historic: GameHistoric, capture: bool):
         """

@@ -38,8 +38,7 @@ class Square:
         if 1 <= column <= 8 and 1 <= row <= 8:
             available_squares.append(Square(Column(column), row))
 
-    @staticmethod
-    def square_color(column: Column, row: int) -> Color:
+    def square_color(self) -> Color:
         """
         Return the color of a square from its coordinates
         @param column: column coordinate
@@ -47,7 +46,7 @@ class Square:
         @return:
         """
         # white
-        return Color.WHITE if (column.value + row) % 2 else Color.BLACK
+        return Color.WHITE if (self.column.value + self.row) % 2 else Color.BLACK
 
     def __repr__(self):
         return f"({self.column.name},{self.row})"
