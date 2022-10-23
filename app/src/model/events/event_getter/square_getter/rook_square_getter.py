@@ -1,13 +1,13 @@
 """
 Rook square getter, form, origin@
 """
-from app.src.model.available_move_getter.available_squares_getter import (
+from app.src.model.classes.square import Square
+from app.src.model.events.event_getter.square_getter.utils_available_squares_getter import (
     available_squares_on_right,
     available_squares_on_left,
     available_squares_upper,
     available_squares_below,
 )
-from app.src.model.classes.square import Square
 from app.src.model.states.board import Board
 
 

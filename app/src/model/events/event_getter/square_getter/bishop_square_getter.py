@@ -1,13 +1,13 @@
 """
 Square getter for a bishop (available square from origin}
 """
-from app.src.model.available_move_getter.available_squares_getter import (
+from app.src.model.classes.square import Square
+from app.src.model.events.event_getter.square_getter.utils_available_squares_getter import (
     available_squares_diagonal_right_up,
     available_squares_diagonal_right_down,
     available_squares_diagonal_left_up,
     available_squares_diagonal_left_down,
 )
-from app.src.model.classes.square import Square
 from app.src.model.states.board import Board
 
 

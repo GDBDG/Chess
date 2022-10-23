@@ -1,16 +1,16 @@
 """
 Tests for piece (diagonal movements)
 """
-from app.src.model.available_move_getter.available_squares_getter import (
+from app.src.model.classes.const.color import Color
+from app.src.model.classes.const.column import Column
+from app.src.model.classes.pieces.piece import Piece
+from app.src.model.classes.square import Square
+from app.src.model.events.event_getter.square_getter.utils_available_squares_getter import (
     available_squares_diagonal_right_up,
     available_squares_diagonal_right_down,
     available_squares_diagonal_left_up,
     available_squares_diagonal_left_down,
 )
-from app.src.model.classes.const.color import Color
-from app.src.model.classes.const.column import Column
-from app.src.model.classes.pieces.piece import Piece
-from app.src.model.classes.square import Square
 from app.src.model.states.board import Board
 
 

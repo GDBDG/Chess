@@ -2,12 +2,12 @@
 Getter for the moves from origin
 """
 
-from app.src.model.available_move_getter.available_squares_getter import (
-    step_next_move,
-)
 from app.src.model.classes.const.color import Color
 from app.src.model.classes.const.column import Column
 from app.src.model.classes.square import Square
+from app.src.model.events.event_getter.square_getter.utils_available_squares_getter import (
+    step_next_move,
+)
 from app.src.model.events.moves.en_passant import EnPassant
 from app.src.model.events.moves.knight_promotion import KnightPromotion
 from app.src.model.events.moves.knight_promotion_capture import KnightPromotionCapture
