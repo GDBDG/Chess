@@ -72,3 +72,12 @@ def test_get_king_no_king():
     board.piece_dict = piece_dict
     with pytest.raises(MissingKingError):
         board.get_king(Color.BLACK)
+
+
+def test_get_piece_type_counter():
+    """
+    Test get_piece_type_counter
+    @return:
+    """
+    board = Board()
+    assert board.get_piece_type_counter() == {Bishop: 4, King: 2, Knight: 4, Pawn: 16, Queen: 2, Rook: 4}
