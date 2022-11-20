@@ -4,20 +4,20 @@ Tests for the draw rules:
 - dead position
 """
 
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.bishop import Bishop
-from src.domain.classes.pieces.king import King
-from src.domain.classes.pieces.knight import Knight
-from src.domain.classes.pieces.rook import Rook
-from src.domain.classes.square import Square
-from src.domain.events.moves.king_move import KingMove
-from src.domain.events.moves.knight_move import KnightMove
-from src.domain.events.moves.pawn_2_square_move import Pawn2SquareMove
-from src.domain.events.moves.rook_move import RookMove
-from src.domain.game.game import Game
-from src.domain.states.board import Board
-from src.domain.states.game_state import GameState
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.bishop import Bishop
+from src.CHESS.domain.classes.pieces.king import King
+from src.CHESS.domain.classes.pieces.knight import Knight
+from src.CHESS.domain.classes.pieces.rook import Rook
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.moves.king_move import KingMove
+from src.CHESS.domain.events.moves.knight_move import KnightMove
+from src.CHESS.domain.events.moves.pawn_2_square_move import Pawn2SquareMove
+from src.CHESS.domain.events.moves.rook_move import RookMove
+from src.CHESS.domain.game.game import Game
+from src.CHESS.domain.states.board import Board
+from src.CHESS.domain.states.game_state import GameState
 
 
 def test_stalemate():

@@ -1,9 +1,9 @@
 """
 Unit tests for the Square classes
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.square import Square
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.square import Square
 
 
 def test_hash():

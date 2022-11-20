@@ -1,17 +1,17 @@
 """
 Tests for GameHistoric
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.bishop import Bishop
-from src.domain.classes.pieces.king import King
-from src.domain.classes.pieces.knight import Knight
-from src.domain.classes.pieces.pawn import Pawn
-from src.domain.classes.pieces.queen import Queen
-from src.domain.classes.pieces.rook import Rook
-from src.domain.classes.square import Square
-from src.domain.states.board import Board
-from src.domain.states.game_historic import GameHistoric
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.bishop import Bishop
+from src.CHESS.domain.classes.pieces.king import King
+from src.CHESS.domain.classes.pieces.knight import Knight
+from src.CHESS.domain.classes.pieces.pawn import Pawn
+from src.CHESS.domain.classes.pieces.queen import Queen
+from src.CHESS.domain.classes.pieces.rook import Rook
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.states.board import Board
+from src.CHESS.domain.states.game_historic import GameHistoric
 
 
 def test_update_config_history():

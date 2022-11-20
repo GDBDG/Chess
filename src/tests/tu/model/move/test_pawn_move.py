@@ -1,24 +1,26 @@
 """
 Tests for the pawn moves
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.pawn import Pawn
-from src.domain.classes.pieces.piece import Piece
-from src.domain.classes.square import Square
-from src.domain.events.event_processor.move_processor import (
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.pawn import Pawn
+from src.CHESS.domain.classes.pieces.piece import Piece
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.event_processor.move_processor import (
     square_available_moves_no_castling,
 )
-from src.domain.events.moves.en_passant import EnPassant
-from src.domain.events.moves.knight_promotion import KnightPromotion
-from src.domain.events.moves.knight_promotion_capture import KnightPromotionCapture
-from src.domain.events.moves.pawn_2_square_move import Pawn2SquareMove
-from src.domain.events.moves.pawn_capture import CaptureMove
-from src.domain.events.moves.pawn_move import PawnMove
-from src.domain.events.moves.queen_promotion import QueenPromotion
-from src.domain.events.moves.queen_promotion_capture import QueenPromotionCapture
-from src.domain.states.board import Board
-from src.domain.states.game_historic import GameHistoric
+from src.CHESS.domain.events.moves.en_passant import EnPassant
+from src.CHESS.domain.events.moves.knight_promotion import KnightPromotion
+from src.CHESS.domain.events.moves.knight_promotion_capture import (
+    KnightPromotionCapture,
+)
+from src.CHESS.domain.events.moves.pawn_2_square_move import Pawn2SquareMove
+from src.CHESS.domain.events.moves.pawn_capture import CaptureMove
+from src.CHESS.domain.events.moves.pawn_move import PawnMove
+from src.CHESS.domain.events.moves.queen_promotion import QueenPromotion
+from src.CHESS.domain.events.moves.queen_promotion_capture import QueenPromotionCapture
+from src.CHESS.domain.states.board import Board
+from src.CHESS.domain.states.game_historic import GameHistoric
 
 
 def test_available_move_square_forward():

@@ -1,25 +1,27 @@
 """
 Tests moves application
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.king import King
-from src.domain.classes.pieces.knight import Knight
-from src.domain.classes.pieces.pawn import Pawn
-from src.domain.classes.pieces.piece import Piece
-from src.domain.classes.pieces.queen import Queen
-from src.domain.classes.pieces.rook import Rook
-from src.domain.classes.square import Square
-from src.domain.events.event_processor.move_processor import apply_move
-from src.domain.events.moves.en_passant import EnPassant
-from src.domain.events.moves.knight_promotion import KnightPromotion
-from src.domain.events.moves.knight_promotion_capture import KnightPromotionCapture
-from src.domain.events.moves.long_castling import LongCastling
-from src.domain.events.moves.move import Move
-from src.domain.events.moves.queen_promotion import QueenPromotion
-from src.domain.events.moves.queen_promotion_capture import QueenPromotionCapture
-from src.domain.events.moves.short_castling import ShortCastling
-from src.domain.states.board import Board
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.king import King
+from src.CHESS.domain.classes.pieces.knight import Knight
+from src.CHESS.domain.classes.pieces.pawn import Pawn
+from src.CHESS.domain.classes.pieces.piece import Piece
+from src.CHESS.domain.classes.pieces.queen import Queen
+from src.CHESS.domain.classes.pieces.rook import Rook
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.event_processor.move_processor import apply_move
+from src.CHESS.domain.events.moves.en_passant import EnPassant
+from src.CHESS.domain.events.moves.knight_promotion import KnightPromotion
+from src.CHESS.domain.events.moves.knight_promotion_capture import (
+    KnightPromotionCapture,
+)
+from src.CHESS.domain.events.moves.long_castling import LongCastling
+from src.CHESS.domain.events.moves.move import Move
+from src.CHESS.domain.events.moves.queen_promotion import QueenPromotion
+from src.CHESS.domain.events.moves.queen_promotion_capture import QueenPromotionCapture
+from src.CHESS.domain.events.moves.short_castling import ShortCastling
+from src.CHESS.domain.states.board import Board
 
 
 def test_apply_move_no_capture():

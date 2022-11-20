@@ -1,12 +1,12 @@
 """
 Tests for the game classes
 """
-from src.domain.classes.const.column import Column
-from src.domain.classes.square import Square
-from src.domain.events.moves.knight_move import KnightMove
-from src.domain.events.moves.pawn_2_square_move import Pawn2SquareMove
-from src.domain.events.moves.pawn_move import PawnMove
-from src.domain.game.game import Game
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.moves.knight_move import KnightMove
+from src.CHESS.domain.events.moves.pawn_2_square_move import Pawn2SquareMove
+from src.CHESS.domain.events.moves.pawn_move import PawnMove
+from src.CHESS.domain.game.game import Game
 
 
 def test_available_moves_list():

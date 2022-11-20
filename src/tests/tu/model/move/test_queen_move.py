@@ -1,16 +1,16 @@
 """
 Tests for the queen moves
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.piece import Piece
-from src.domain.classes.pieces.queen import Queen
-from src.domain.classes.square import Square
-from src.domain.events.event_processor.move_processor import (
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.piece import Piece
+from src.CHESS.domain.classes.pieces.queen import Queen
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.event_processor.move_processor import (
     square_available_moves_no_castling,
 )
-from src.domain.events.moves.queen_move import QueenMove
-from src.domain.states.board import Board
+from src.CHESS.domain.events.moves.queen_move import QueenMove
+from src.CHESS.domain.states.board import Board
 
 
 def test_queen_move():

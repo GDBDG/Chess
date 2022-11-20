@@ -1,17 +1,17 @@
 """
 Tests for piece (diagonal movements)
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.piece import Piece
-from src.domain.classes.square import Square
-from src.domain.events.event_getter.square_getter.utils_available_squares_getter import (
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.piece import Piece
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.event_getter.square_getter.utils_available_squares_getter import (
     available_squares_diagonal_right_up,
     available_squares_diagonal_right_down,
     available_squares_diagonal_left_up,
     available_squares_diagonal_left_down,
 )
-from src.domain.states.board import Board
+from src.CHESS.domain.states.board import Board
 
 
 class TestPiece:

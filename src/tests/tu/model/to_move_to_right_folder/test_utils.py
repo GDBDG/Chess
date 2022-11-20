@@ -2,13 +2,13 @@
 Tests for utils
 To moves or rename properly.
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.bishop import Bishop
-from src.domain.classes.pieces.rook import Rook
-from src.domain.classes.square import Square
-from src.domain.events.event_processor.move_processor import is_square_in_check
-from src.domain.states.board import Board
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.bishop import Bishop
+from src.CHESS.domain.classes.pieces.rook import Rook
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.event_processor.move_processor import is_square_in_check
+from src.CHESS.domain.states.board import Board
 
 
 def test_is_square_in_check():

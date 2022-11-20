@@ -1,22 +1,23 @@
 """
 Test tht it is possible to get the king moves
 """
-from src.domain.classes.const.color import Color
-from src.domain.classes.const.column import Column
-from src.domain.classes.pieces.king import King
-from src.domain.classes.pieces.pawn import Pawn
-from src.domain.classes.pieces.piece import Piece
-from src.domain.classes.pieces.rook import Rook
-from src.domain.classes.square import Square
-from src.domain.events.event_processor.move_processor import (
+from src.CHESS.domain.classes.const.color import Color
+from src.CHESS.domain.classes.const.column import Column
+from src.CHESS.domain.classes.pieces.king import King
+from src.CHESS.domain.classes.pieces.pawn import Pawn
+from src.CHESS.domain.classes.pieces.piece import Piece
+from src.CHESS.domain.classes.pieces.rook import Rook
+from src.CHESS.domain.classes.square import Square
+from src.CHESS.domain.events.event_processor.move_processor import (
     square_available_moves_no_castling,
 )
-from src.domain.events.moves.king_move import KingMove
-from src.domain.events.moves.long_castling import LongCastling
-from src.domain.events.moves.rook_move import RookMove
-from src.domain.events.moves.short_castling import ShortCastling
-from src.domain.game.game import Game
-from src.domain.states.board import Board
+from src.CHESS.domain.events.moves.king_move import KingMove
+
+from src.CHESS.domain.events.moves.long_castling import LongCastling
+from src.CHESS.domain.events.moves.rook_move import RookMove
+from src.CHESS.domain.events.moves.short_castling import ShortCastling
+from src.CHESS.domain.game.game import Game
+from src.CHESS.domain.states.board import Board
 
 short_castle = ShortCastling(Square(Column.E, 1))
 long_castle = LongCastling(Square(Column.E, 1))

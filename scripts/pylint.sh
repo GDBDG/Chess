@@ -5,4 +5,4 @@
 # C0103 : local disable bug, necessary in test to mock private attributes
 echo "==================================="
 echo "Run pylint"
-poetry run pylint --disable=R0903,R0801,W0212,C0123,C0103 ./app
+poetry run pylint --disable=R0903,R0801,W0212,C0123,C0103 ./src
