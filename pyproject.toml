@@ -5,10 +5,11 @@ description = "Chess UI, and chess IA"
 authors = ["Guillaume de Bigault de Granrut <guillaume.degranrut@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.10,<3.11"
 JSON-log-formatter = "^0.5.1"
 coloredlogs = "^15.0.1"
 logger = "^1.4"
+PySide6 = "^6.4.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.5"
