@@ -8,10 +8,10 @@ from datetime import datetime
 import coloredlogs
 import json_log_formatter
 
-from src.CHESS.constants import PROJECT_DIR
+from src.CHESS.constants import SOURCE_DIR
 
 APP_LOG_LEVEL = "DEBUG"
-LOG_DIR = PROJECT_DIR / "logs/"
+LOG_DIR = SOURCE_DIR / "logs/"
 LOG_FILE = LOG_DIR / "logfile.json"
 
 
